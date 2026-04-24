@@ -2,34 +2,33 @@ model Product {
     id          String @id @default(uuid())
     name        String
     slug        String @unique
-    description String @db.Text
+    description String
     gender      String
 
     brandName   String
     brandOrigin String
 
-    mainCategory String
-    subCategory  String
-    itemCategory String
+    itemId String
+    item   Item   @relation(fields: [itemId], references: [id])
 
     currentPrice    Float
-    oldPrice        Float
-    discountPercent Int
-
-    stock Int @default(0)
-    sold  Int @default(0)
-
-    aiStylistInfo Json
-    metadata      Json
+    oldPrice        Float?
+    discountPercent Int?
 
     thumbnail String
     images    ProductImage[]
 
+    stock Int @default(0)
+    sold  Int @default(0)
+
+    aiStylistInfo Json?
+
     isFlashSale    Boolean   @default(false)
     flashStartAt   DateTime?
     flashExpiresAt DateTime?
-    flashDiscount  Int?
-    timerLabel     String?
+    flashDiscount  Float?
+
+    timerLabel String?
 
     variants Variant[]
     reviews  Review[]

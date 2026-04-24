@@ -146,7 +146,7 @@ export type VariantGroupByArgs<ExtArgs extends runtime.Types.Extensions.Internal
 export type VariantGroupByOutputType = {
   id: string
   name: string
-  hex: string
+  hex: string | null
   sizes: string[]
   productId: string
   _count: VariantCountAggregateOutputType | null
@@ -175,7 +175,7 @@ export type VariantWhereInput = {
   NOT?: Prisma.VariantWhereInput | Prisma.VariantWhereInput[]
   id?: Prisma.StringFilter<"Variant"> | string
   name?: Prisma.StringFilter<"Variant"> | string
-  hex?: Prisma.StringFilter<"Variant"> | string
+  hex?: Prisma.StringNullableFilter<"Variant"> | string | null
   sizes?: Prisma.StringNullableListFilter<"Variant">
   productId?: Prisma.StringFilter<"Variant"> | string
   product?: Prisma.XOR<Prisma.ProductScalarRelationFilter, Prisma.ProductWhereInput>
@@ -184,7 +184,7 @@ export type VariantWhereInput = {
 export type VariantOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
-  hex?: Prisma.SortOrder
+  hex?: Prisma.SortOrderInput | Prisma.SortOrder
   sizes?: Prisma.SortOrder
   productId?: Prisma.SortOrder
   product?: Prisma.ProductOrderByWithRelationInput
@@ -196,7 +196,7 @@ export type VariantWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.VariantWhereInput[]
   NOT?: Prisma.VariantWhereInput | Prisma.VariantWhereInput[]
   name?: Prisma.StringFilter<"Variant"> | string
-  hex?: Prisma.StringFilter<"Variant"> | string
+  hex?: Prisma.StringNullableFilter<"Variant"> | string | null
   sizes?: Prisma.StringNullableListFilter<"Variant">
   productId?: Prisma.StringFilter<"Variant"> | string
   product?: Prisma.XOR<Prisma.ProductScalarRelationFilter, Prisma.ProductWhereInput>
@@ -205,7 +205,7 @@ export type VariantWhereUniqueInput = Prisma.AtLeast<{
 export type VariantOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
-  hex?: Prisma.SortOrder
+  hex?: Prisma.SortOrderInput | Prisma.SortOrder
   sizes?: Prisma.SortOrder
   productId?: Prisma.SortOrder
   _count?: Prisma.VariantCountOrderByAggregateInput
@@ -219,7 +219,7 @@ export type VariantScalarWhereWithAggregatesInput = {
   NOT?: Prisma.VariantScalarWhereWithAggregatesInput | Prisma.VariantScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"Variant"> | string
   name?: Prisma.StringWithAggregatesFilter<"Variant"> | string
-  hex?: Prisma.StringWithAggregatesFilter<"Variant"> | string
+  hex?: Prisma.StringNullableWithAggregatesFilter<"Variant"> | string | null
   sizes?: Prisma.StringNullableListFilter<"Variant">
   productId?: Prisma.StringWithAggregatesFilter<"Variant"> | string
 }
@@ -227,7 +227,7 @@ export type VariantScalarWhereWithAggregatesInput = {
 export type VariantCreateInput = {
   id?: string
   name: string
-  hex: string
+  hex?: string | null
   sizes?: Prisma.VariantCreatesizesInput | string[]
   product: Prisma.ProductCreateNestedOneWithoutVariantsInput
 }
@@ -235,7 +235,7 @@ export type VariantCreateInput = {
 export type VariantUncheckedCreateInput = {
   id?: string
   name: string
-  hex: string
+  hex?: string | null
   sizes?: Prisma.VariantCreatesizesInput | string[]
   productId: string
 }
@@ -243,7 +243,7 @@ export type VariantUncheckedCreateInput = {
 export type VariantUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  hex?: Prisma.StringFieldUpdateOperationsInput | string
+  hex?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sizes?: Prisma.VariantUpdatesizesInput | string[]
   product?: Prisma.ProductUpdateOneRequiredWithoutVariantsNestedInput
 }
@@ -251,7 +251,7 @@ export type VariantUpdateInput = {
 export type VariantUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  hex?: Prisma.StringFieldUpdateOperationsInput | string
+  hex?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sizes?: Prisma.VariantUpdatesizesInput | string[]
   productId?: Prisma.StringFieldUpdateOperationsInput | string
 }
@@ -259,7 +259,7 @@ export type VariantUncheckedUpdateInput = {
 export type VariantCreateManyInput = {
   id?: string
   name: string
-  hex: string
+  hex?: string | null
   sizes?: Prisma.VariantCreatesizesInput | string[]
   productId: string
 }
@@ -267,14 +267,14 @@ export type VariantCreateManyInput = {
 export type VariantUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  hex?: Prisma.StringFieldUpdateOperationsInput | string
+  hex?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sizes?: Prisma.VariantUpdatesizesInput | string[]
 }
 
 export type VariantUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  hex?: Prisma.StringFieldUpdateOperationsInput | string
+  hex?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sizes?: Prisma.VariantUpdatesizesInput | string[]
   productId?: Prisma.StringFieldUpdateOperationsInput | string
 }
@@ -373,14 +373,14 @@ export type VariantUpdatesizesInput = {
 export type VariantCreateWithoutProductInput = {
   id?: string
   name: string
-  hex: string
+  hex?: string | null
   sizes?: Prisma.VariantCreatesizesInput | string[]
 }
 
 export type VariantUncheckedCreateWithoutProductInput = {
   id?: string
   name: string
-  hex: string
+  hex?: string | null
   sizes?: Prisma.VariantCreatesizesInput | string[]
 }
 
@@ -416,7 +416,7 @@ export type VariantScalarWhereInput = {
   NOT?: Prisma.VariantScalarWhereInput | Prisma.VariantScalarWhereInput[]
   id?: Prisma.StringFilter<"Variant"> | string
   name?: Prisma.StringFilter<"Variant"> | string
-  hex?: Prisma.StringFilter<"Variant"> | string
+  hex?: Prisma.StringNullableFilter<"Variant"> | string | null
   sizes?: Prisma.StringNullableListFilter<"Variant">
   productId?: Prisma.StringFilter<"Variant"> | string
 }
@@ -424,28 +424,28 @@ export type VariantScalarWhereInput = {
 export type VariantCreateManyProductInput = {
   id?: string
   name: string
-  hex: string
+  hex?: string | null
   sizes?: Prisma.VariantCreatesizesInput | string[]
 }
 
 export type VariantUpdateWithoutProductInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  hex?: Prisma.StringFieldUpdateOperationsInput | string
+  hex?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sizes?: Prisma.VariantUpdatesizesInput | string[]
 }
 
 export type VariantUncheckedUpdateWithoutProductInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  hex?: Prisma.StringFieldUpdateOperationsInput | string
+  hex?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sizes?: Prisma.VariantUpdatesizesInput | string[]
 }
 
 export type VariantUncheckedUpdateManyWithoutProductInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  hex?: Prisma.StringFieldUpdateOperationsInput | string
+  hex?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   sizes?: Prisma.VariantUpdatesizesInput | string[]
 }
 
@@ -505,7 +505,7 @@ export type $VariantPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     name: string
-    hex: string
+    hex: string | null
     sizes: string[]
     productId: string
   }, ExtArgs["result"]["variant"]>

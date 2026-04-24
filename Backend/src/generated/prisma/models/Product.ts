@@ -52,15 +52,13 @@ export type ProductMinAggregateOutputType = {
   gender: string | null
   brandName: string | null
   brandOrigin: string | null
-  mainCategory: string | null
-  subCategory: string | null
-  itemCategory: string | null
+  itemId: string | null
   currentPrice: number | null
   oldPrice: number | null
   discountPercent: number | null
+  thumbnail: string | null
   stock: number | null
   sold: number | null
-  thumbnail: string | null
   isFlashSale: boolean | null
   flashStartAt: Date | null
   flashExpiresAt: Date | null
@@ -78,15 +76,13 @@ export type ProductMaxAggregateOutputType = {
   gender: string | null
   brandName: string | null
   brandOrigin: string | null
-  mainCategory: string | null
-  subCategory: string | null
-  itemCategory: string | null
+  itemId: string | null
   currentPrice: number | null
   oldPrice: number | null
   discountPercent: number | null
+  thumbnail: string | null
   stock: number | null
   sold: number | null
-  thumbnail: string | null
   isFlashSale: boolean | null
   flashStartAt: Date | null
   flashExpiresAt: Date | null
@@ -104,17 +100,14 @@ export type ProductCountAggregateOutputType = {
   gender: number
   brandName: number
   brandOrigin: number
-  mainCategory: number
-  subCategory: number
-  itemCategory: number
+  itemId: number
   currentPrice: number
   oldPrice: number
   discountPercent: number
+  thumbnail: number
   stock: number
   sold: number
   aiStylistInfo: number
-  metadata: number
-  thumbnail: number
   isFlashSale: number
   flashStartAt: number
   flashExpiresAt: number
@@ -152,15 +145,13 @@ export type ProductMinAggregateInputType = {
   gender?: true
   brandName?: true
   brandOrigin?: true
-  mainCategory?: true
-  subCategory?: true
-  itemCategory?: true
+  itemId?: true
   currentPrice?: true
   oldPrice?: true
   discountPercent?: true
+  thumbnail?: true
   stock?: true
   sold?: true
-  thumbnail?: true
   isFlashSale?: true
   flashStartAt?: true
   flashExpiresAt?: true
@@ -178,15 +169,13 @@ export type ProductMaxAggregateInputType = {
   gender?: true
   brandName?: true
   brandOrigin?: true
-  mainCategory?: true
-  subCategory?: true
-  itemCategory?: true
+  itemId?: true
   currentPrice?: true
   oldPrice?: true
   discountPercent?: true
+  thumbnail?: true
   stock?: true
   sold?: true
-  thumbnail?: true
   isFlashSale?: true
   flashStartAt?: true
   flashExpiresAt?: true
@@ -204,17 +193,14 @@ export type ProductCountAggregateInputType = {
   gender?: true
   brandName?: true
   brandOrigin?: true
-  mainCategory?: true
-  subCategory?: true
-  itemCategory?: true
+  itemId?: true
   currentPrice?: true
   oldPrice?: true
   discountPercent?: true
+  thumbnail?: true
   stock?: true
   sold?: true
   aiStylistInfo?: true
-  metadata?: true
-  thumbnail?: true
   isFlashSale?: true
   flashStartAt?: true
   flashExpiresAt?: true
@@ -319,17 +305,14 @@ export type ProductGroupByOutputType = {
   gender: string
   brandName: string
   brandOrigin: string
-  mainCategory: string
-  subCategory: string
-  itemCategory: string
+  itemId: string
   currentPrice: number
-  oldPrice: number
-  discountPercent: number
+  oldPrice: number | null
+  discountPercent: number | null
+  thumbnail: string
   stock: number
   sold: number
-  aiStylistInfo: runtime.JsonValue
-  metadata: runtime.JsonValue
-  thumbnail: string
+  aiStylistInfo: runtime.JsonValue | null
   isFlashSale: boolean
   flashStartAt: Date | null
   flashExpiresAt: Date | null
@@ -370,24 +353,22 @@ export type ProductWhereInput = {
   gender?: Prisma.StringFilter<"Product"> | string
   brandName?: Prisma.StringFilter<"Product"> | string
   brandOrigin?: Prisma.StringFilter<"Product"> | string
-  mainCategory?: Prisma.StringFilter<"Product"> | string
-  subCategory?: Prisma.StringFilter<"Product"> | string
-  itemCategory?: Prisma.StringFilter<"Product"> | string
+  itemId?: Prisma.StringFilter<"Product"> | string
   currentPrice?: Prisma.FloatFilter<"Product"> | number
-  oldPrice?: Prisma.FloatFilter<"Product"> | number
-  discountPercent?: Prisma.IntFilter<"Product"> | number
+  oldPrice?: Prisma.FloatNullableFilter<"Product"> | number | null
+  discountPercent?: Prisma.IntNullableFilter<"Product"> | number | null
+  thumbnail?: Prisma.StringFilter<"Product"> | string
   stock?: Prisma.IntFilter<"Product"> | number
   sold?: Prisma.IntFilter<"Product"> | number
-  aiStylistInfo?: Prisma.JsonFilter<"Product">
-  metadata?: Prisma.JsonFilter<"Product">
-  thumbnail?: Prisma.StringFilter<"Product"> | string
+  aiStylistInfo?: Prisma.JsonNullableFilter<"Product">
   isFlashSale?: Prisma.BoolFilter<"Product"> | boolean
   flashStartAt?: Prisma.DateTimeNullableFilter<"Product"> | Date | string | null
   flashExpiresAt?: Prisma.DateTimeNullableFilter<"Product"> | Date | string | null
-  flashDiscount?: Prisma.IntNullableFilter<"Product"> | number | null
+  flashDiscount?: Prisma.FloatNullableFilter<"Product"> | number | null
   timerLabel?: Prisma.StringNullableFilter<"Product"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Product"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Product"> | Date | string
+  item?: Prisma.XOR<Prisma.ItemScalarRelationFilter, Prisma.ItemWhereInput>
   images?: Prisma.ProductImageListRelationFilter
   variants?: Prisma.VariantListRelationFilter
   reviews?: Prisma.ReviewListRelationFilter
@@ -401,17 +382,14 @@ export type ProductOrderByWithRelationInput = {
   gender?: Prisma.SortOrder
   brandName?: Prisma.SortOrder
   brandOrigin?: Prisma.SortOrder
-  mainCategory?: Prisma.SortOrder
-  subCategory?: Prisma.SortOrder
-  itemCategory?: Prisma.SortOrder
+  itemId?: Prisma.SortOrder
   currentPrice?: Prisma.SortOrder
-  oldPrice?: Prisma.SortOrder
-  discountPercent?: Prisma.SortOrder
+  oldPrice?: Prisma.SortOrderInput | Prisma.SortOrder
+  discountPercent?: Prisma.SortOrderInput | Prisma.SortOrder
+  thumbnail?: Prisma.SortOrder
   stock?: Prisma.SortOrder
   sold?: Prisma.SortOrder
-  aiStylistInfo?: Prisma.SortOrder
-  metadata?: Prisma.SortOrder
-  thumbnail?: Prisma.SortOrder
+  aiStylistInfo?: Prisma.SortOrderInput | Prisma.SortOrder
   isFlashSale?: Prisma.SortOrder
   flashStartAt?: Prisma.SortOrderInput | Prisma.SortOrder
   flashExpiresAt?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -419,6 +397,7 @@ export type ProductOrderByWithRelationInput = {
   timerLabel?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  item?: Prisma.ItemOrderByWithRelationInput
   images?: Prisma.ProductImageOrderByRelationAggregateInput
   variants?: Prisma.VariantOrderByRelationAggregateInput
   reviews?: Prisma.ReviewOrderByRelationAggregateInput
@@ -435,24 +414,22 @@ export type ProductWhereUniqueInput = Prisma.AtLeast<{
   gender?: Prisma.StringFilter<"Product"> | string
   brandName?: Prisma.StringFilter<"Product"> | string
   brandOrigin?: Prisma.StringFilter<"Product"> | string
-  mainCategory?: Prisma.StringFilter<"Product"> | string
-  subCategory?: Prisma.StringFilter<"Product"> | string
-  itemCategory?: Prisma.StringFilter<"Product"> | string
+  itemId?: Prisma.StringFilter<"Product"> | string
   currentPrice?: Prisma.FloatFilter<"Product"> | number
-  oldPrice?: Prisma.FloatFilter<"Product"> | number
-  discountPercent?: Prisma.IntFilter<"Product"> | number
+  oldPrice?: Prisma.FloatNullableFilter<"Product"> | number | null
+  discountPercent?: Prisma.IntNullableFilter<"Product"> | number | null
+  thumbnail?: Prisma.StringFilter<"Product"> | string
   stock?: Prisma.IntFilter<"Product"> | number
   sold?: Prisma.IntFilter<"Product"> | number
-  aiStylistInfo?: Prisma.JsonFilter<"Product">
-  metadata?: Prisma.JsonFilter<"Product">
-  thumbnail?: Prisma.StringFilter<"Product"> | string
+  aiStylistInfo?: Prisma.JsonNullableFilter<"Product">
   isFlashSale?: Prisma.BoolFilter<"Product"> | boolean
   flashStartAt?: Prisma.DateTimeNullableFilter<"Product"> | Date | string | null
   flashExpiresAt?: Prisma.DateTimeNullableFilter<"Product"> | Date | string | null
-  flashDiscount?: Prisma.IntNullableFilter<"Product"> | number | null
+  flashDiscount?: Prisma.FloatNullableFilter<"Product"> | number | null
   timerLabel?: Prisma.StringNullableFilter<"Product"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Product"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Product"> | Date | string
+  item?: Prisma.XOR<Prisma.ItemScalarRelationFilter, Prisma.ItemWhereInput>
   images?: Prisma.ProductImageListRelationFilter
   variants?: Prisma.VariantListRelationFilter
   reviews?: Prisma.ReviewListRelationFilter
@@ -466,17 +443,14 @@ export type ProductOrderByWithAggregationInput = {
   gender?: Prisma.SortOrder
   brandName?: Prisma.SortOrder
   brandOrigin?: Prisma.SortOrder
-  mainCategory?: Prisma.SortOrder
-  subCategory?: Prisma.SortOrder
-  itemCategory?: Prisma.SortOrder
+  itemId?: Prisma.SortOrder
   currentPrice?: Prisma.SortOrder
-  oldPrice?: Prisma.SortOrder
-  discountPercent?: Prisma.SortOrder
+  oldPrice?: Prisma.SortOrderInput | Prisma.SortOrder
+  discountPercent?: Prisma.SortOrderInput | Prisma.SortOrder
+  thumbnail?: Prisma.SortOrder
   stock?: Prisma.SortOrder
   sold?: Prisma.SortOrder
-  aiStylistInfo?: Prisma.SortOrder
-  metadata?: Prisma.SortOrder
-  thumbnail?: Prisma.SortOrder
+  aiStylistInfo?: Prisma.SortOrderInput | Prisma.SortOrder
   isFlashSale?: Prisma.SortOrder
   flashStartAt?: Prisma.SortOrderInput | Prisma.SortOrder
   flashExpiresAt?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -502,21 +476,18 @@ export type ProductScalarWhereWithAggregatesInput = {
   gender?: Prisma.StringWithAggregatesFilter<"Product"> | string
   brandName?: Prisma.StringWithAggregatesFilter<"Product"> | string
   brandOrigin?: Prisma.StringWithAggregatesFilter<"Product"> | string
-  mainCategory?: Prisma.StringWithAggregatesFilter<"Product"> | string
-  subCategory?: Prisma.StringWithAggregatesFilter<"Product"> | string
-  itemCategory?: Prisma.StringWithAggregatesFilter<"Product"> | string
+  itemId?: Prisma.StringWithAggregatesFilter<"Product"> | string
   currentPrice?: Prisma.FloatWithAggregatesFilter<"Product"> | number
-  oldPrice?: Prisma.FloatWithAggregatesFilter<"Product"> | number
-  discountPercent?: Prisma.IntWithAggregatesFilter<"Product"> | number
+  oldPrice?: Prisma.FloatNullableWithAggregatesFilter<"Product"> | number | null
+  discountPercent?: Prisma.IntNullableWithAggregatesFilter<"Product"> | number | null
+  thumbnail?: Prisma.StringWithAggregatesFilter<"Product"> | string
   stock?: Prisma.IntWithAggregatesFilter<"Product"> | number
   sold?: Prisma.IntWithAggregatesFilter<"Product"> | number
-  aiStylistInfo?: Prisma.JsonWithAggregatesFilter<"Product">
-  metadata?: Prisma.JsonWithAggregatesFilter<"Product">
-  thumbnail?: Prisma.StringWithAggregatesFilter<"Product"> | string
+  aiStylistInfo?: Prisma.JsonNullableWithAggregatesFilter<"Product">
   isFlashSale?: Prisma.BoolWithAggregatesFilter<"Product"> | boolean
   flashStartAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Product"> | Date | string | null
   flashExpiresAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Product"> | Date | string | null
-  flashDiscount?: Prisma.IntNullableWithAggregatesFilter<"Product"> | number | null
+  flashDiscount?: Prisma.FloatNullableWithAggregatesFilter<"Product"> | number | null
   timerLabel?: Prisma.StringNullableWithAggregatesFilter<"Product"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Product"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Product"> | Date | string
@@ -530,17 +501,13 @@ export type ProductCreateInput = {
   gender: string
   brandName: string
   brandOrigin: string
-  mainCategory: string
-  subCategory: string
-  itemCategory: string
   currentPrice: number
-  oldPrice: number
-  discountPercent: number
+  oldPrice?: number | null
+  discountPercent?: number | null
+  thumbnail: string
   stock?: number
   sold?: number
-  aiStylistInfo: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  metadata: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  thumbnail: string
+  aiStylistInfo?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   isFlashSale?: boolean
   flashStartAt?: Date | string | null
   flashExpiresAt?: Date | string | null
@@ -548,6 +515,7 @@ export type ProductCreateInput = {
   timerLabel?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  item: Prisma.ItemCreateNestedOneWithoutProductsInput
   images?: Prisma.ProductImageCreateNestedManyWithoutProductInput
   variants?: Prisma.VariantCreateNestedManyWithoutProductInput
   reviews?: Prisma.ReviewCreateNestedManyWithoutProductInput
@@ -561,17 +529,14 @@ export type ProductUncheckedCreateInput = {
   gender: string
   brandName: string
   brandOrigin: string
-  mainCategory: string
-  subCategory: string
-  itemCategory: string
+  itemId: string
   currentPrice: number
-  oldPrice: number
-  discountPercent: number
+  oldPrice?: number | null
+  discountPercent?: number | null
+  thumbnail: string
   stock?: number
   sold?: number
-  aiStylistInfo: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  metadata: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  thumbnail: string
+  aiStylistInfo?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   isFlashSale?: boolean
   flashStartAt?: Date | string | null
   flashExpiresAt?: Date | string | null
@@ -592,24 +557,21 @@ export type ProductUpdateInput = {
   gender?: Prisma.StringFieldUpdateOperationsInput | string
   brandName?: Prisma.StringFieldUpdateOperationsInput | string
   brandOrigin?: Prisma.StringFieldUpdateOperationsInput | string
-  mainCategory?: Prisma.StringFieldUpdateOperationsInput | string
-  subCategory?: Prisma.StringFieldUpdateOperationsInput | string
-  itemCategory?: Prisma.StringFieldUpdateOperationsInput | string
   currentPrice?: Prisma.FloatFieldUpdateOperationsInput | number
-  oldPrice?: Prisma.FloatFieldUpdateOperationsInput | number
-  discountPercent?: Prisma.IntFieldUpdateOperationsInput | number
+  oldPrice?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  discountPercent?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  thumbnail?: Prisma.StringFieldUpdateOperationsInput | string
   stock?: Prisma.IntFieldUpdateOperationsInput | number
   sold?: Prisma.IntFieldUpdateOperationsInput | number
-  aiStylistInfo?: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  metadata?: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  thumbnail?: Prisma.StringFieldUpdateOperationsInput | string
+  aiStylistInfo?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   isFlashSale?: Prisma.BoolFieldUpdateOperationsInput | boolean
   flashStartAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   flashExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  flashDiscount?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  flashDiscount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   timerLabel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  item?: Prisma.ItemUpdateOneRequiredWithoutProductsNestedInput
   images?: Prisma.ProductImageUpdateManyWithoutProductNestedInput
   variants?: Prisma.VariantUpdateManyWithoutProductNestedInput
   reviews?: Prisma.ReviewUpdateManyWithoutProductNestedInput
@@ -623,21 +585,18 @@ export type ProductUncheckedUpdateInput = {
   gender?: Prisma.StringFieldUpdateOperationsInput | string
   brandName?: Prisma.StringFieldUpdateOperationsInput | string
   brandOrigin?: Prisma.StringFieldUpdateOperationsInput | string
-  mainCategory?: Prisma.StringFieldUpdateOperationsInput | string
-  subCategory?: Prisma.StringFieldUpdateOperationsInput | string
-  itemCategory?: Prisma.StringFieldUpdateOperationsInput | string
+  itemId?: Prisma.StringFieldUpdateOperationsInput | string
   currentPrice?: Prisma.FloatFieldUpdateOperationsInput | number
-  oldPrice?: Prisma.FloatFieldUpdateOperationsInput | number
-  discountPercent?: Prisma.IntFieldUpdateOperationsInput | number
+  oldPrice?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  discountPercent?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  thumbnail?: Prisma.StringFieldUpdateOperationsInput | string
   stock?: Prisma.IntFieldUpdateOperationsInput | number
   sold?: Prisma.IntFieldUpdateOperationsInput | number
-  aiStylistInfo?: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  metadata?: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  thumbnail?: Prisma.StringFieldUpdateOperationsInput | string
+  aiStylistInfo?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   isFlashSale?: Prisma.BoolFieldUpdateOperationsInput | boolean
   flashStartAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   flashExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  flashDiscount?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  flashDiscount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   timerLabel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -654,17 +613,14 @@ export type ProductCreateManyInput = {
   gender: string
   brandName: string
   brandOrigin: string
-  mainCategory: string
-  subCategory: string
-  itemCategory: string
+  itemId: string
   currentPrice: number
-  oldPrice: number
-  discountPercent: number
+  oldPrice?: number | null
+  discountPercent?: number | null
+  thumbnail: string
   stock?: number
   sold?: number
-  aiStylistInfo: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  metadata: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  thumbnail: string
+  aiStylistInfo?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   isFlashSale?: boolean
   flashStartAt?: Date | string | null
   flashExpiresAt?: Date | string | null
@@ -682,21 +638,17 @@ export type ProductUpdateManyMutationInput = {
   gender?: Prisma.StringFieldUpdateOperationsInput | string
   brandName?: Prisma.StringFieldUpdateOperationsInput | string
   brandOrigin?: Prisma.StringFieldUpdateOperationsInput | string
-  mainCategory?: Prisma.StringFieldUpdateOperationsInput | string
-  subCategory?: Prisma.StringFieldUpdateOperationsInput | string
-  itemCategory?: Prisma.StringFieldUpdateOperationsInput | string
   currentPrice?: Prisma.FloatFieldUpdateOperationsInput | number
-  oldPrice?: Prisma.FloatFieldUpdateOperationsInput | number
-  discountPercent?: Prisma.IntFieldUpdateOperationsInput | number
+  oldPrice?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  discountPercent?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  thumbnail?: Prisma.StringFieldUpdateOperationsInput | string
   stock?: Prisma.IntFieldUpdateOperationsInput | number
   sold?: Prisma.IntFieldUpdateOperationsInput | number
-  aiStylistInfo?: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  metadata?: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  thumbnail?: Prisma.StringFieldUpdateOperationsInput | string
+  aiStylistInfo?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   isFlashSale?: Prisma.BoolFieldUpdateOperationsInput | boolean
   flashStartAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   flashExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  flashDiscount?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  flashDiscount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   timerLabel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -710,24 +662,31 @@ export type ProductUncheckedUpdateManyInput = {
   gender?: Prisma.StringFieldUpdateOperationsInput | string
   brandName?: Prisma.StringFieldUpdateOperationsInput | string
   brandOrigin?: Prisma.StringFieldUpdateOperationsInput | string
-  mainCategory?: Prisma.StringFieldUpdateOperationsInput | string
-  subCategory?: Prisma.StringFieldUpdateOperationsInput | string
-  itemCategory?: Prisma.StringFieldUpdateOperationsInput | string
+  itemId?: Prisma.StringFieldUpdateOperationsInput | string
   currentPrice?: Prisma.FloatFieldUpdateOperationsInput | number
-  oldPrice?: Prisma.FloatFieldUpdateOperationsInput | number
-  discountPercent?: Prisma.IntFieldUpdateOperationsInput | number
+  oldPrice?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  discountPercent?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  thumbnail?: Prisma.StringFieldUpdateOperationsInput | string
   stock?: Prisma.IntFieldUpdateOperationsInput | number
   sold?: Prisma.IntFieldUpdateOperationsInput | number
-  aiStylistInfo?: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  metadata?: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  thumbnail?: Prisma.StringFieldUpdateOperationsInput | string
+  aiStylistInfo?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   isFlashSale?: Prisma.BoolFieldUpdateOperationsInput | boolean
   flashStartAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   flashExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  flashDiscount?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  flashDiscount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   timerLabel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type ProductListRelationFilter = {
+  every?: Prisma.ProductWhereInput
+  some?: Prisma.ProductWhereInput
+  none?: Prisma.ProductWhereInput
+}
+
+export type ProductOrderByRelationAggregateInput = {
+  _count?: Prisma.SortOrder
 }
 
 export type ProductCountOrderByAggregateInput = {
@@ -738,17 +697,14 @@ export type ProductCountOrderByAggregateInput = {
   gender?: Prisma.SortOrder
   brandName?: Prisma.SortOrder
   brandOrigin?: Prisma.SortOrder
-  mainCategory?: Prisma.SortOrder
-  subCategory?: Prisma.SortOrder
-  itemCategory?: Prisma.SortOrder
+  itemId?: Prisma.SortOrder
   currentPrice?: Prisma.SortOrder
   oldPrice?: Prisma.SortOrder
   discountPercent?: Prisma.SortOrder
+  thumbnail?: Prisma.SortOrder
   stock?: Prisma.SortOrder
   sold?: Prisma.SortOrder
   aiStylistInfo?: Prisma.SortOrder
-  metadata?: Prisma.SortOrder
-  thumbnail?: Prisma.SortOrder
   isFlashSale?: Prisma.SortOrder
   flashStartAt?: Prisma.SortOrder
   flashExpiresAt?: Prisma.SortOrder
@@ -775,15 +731,13 @@ export type ProductMaxOrderByAggregateInput = {
   gender?: Prisma.SortOrder
   brandName?: Prisma.SortOrder
   brandOrigin?: Prisma.SortOrder
-  mainCategory?: Prisma.SortOrder
-  subCategory?: Prisma.SortOrder
-  itemCategory?: Prisma.SortOrder
+  itemId?: Prisma.SortOrder
   currentPrice?: Prisma.SortOrder
   oldPrice?: Prisma.SortOrder
   discountPercent?: Prisma.SortOrder
+  thumbnail?: Prisma.SortOrder
   stock?: Prisma.SortOrder
   sold?: Prisma.SortOrder
-  thumbnail?: Prisma.SortOrder
   isFlashSale?: Prisma.SortOrder
   flashStartAt?: Prisma.SortOrder
   flashExpiresAt?: Prisma.SortOrder
@@ -801,15 +755,13 @@ export type ProductMinOrderByAggregateInput = {
   gender?: Prisma.SortOrder
   brandName?: Prisma.SortOrder
   brandOrigin?: Prisma.SortOrder
-  mainCategory?: Prisma.SortOrder
-  subCategory?: Prisma.SortOrder
-  itemCategory?: Prisma.SortOrder
+  itemId?: Prisma.SortOrder
   currentPrice?: Prisma.SortOrder
   oldPrice?: Prisma.SortOrder
   discountPercent?: Prisma.SortOrder
+  thumbnail?: Prisma.SortOrder
   stock?: Prisma.SortOrder
   sold?: Prisma.SortOrder
-  thumbnail?: Prisma.SortOrder
   isFlashSale?: Prisma.SortOrder
   flashStartAt?: Prisma.SortOrder
   flashExpiresAt?: Prisma.SortOrder
@@ -833,12 +785,66 @@ export type ProductScalarRelationFilter = {
   isNot?: Prisma.ProductWhereInput
 }
 
-export type StringFieldUpdateOperationsInput = {
-  set?: string
+export type ProductCreateNestedManyWithoutItemInput = {
+  create?: Prisma.XOR<Prisma.ProductCreateWithoutItemInput, Prisma.ProductUncheckedCreateWithoutItemInput> | Prisma.ProductCreateWithoutItemInput[] | Prisma.ProductUncheckedCreateWithoutItemInput[]
+  connectOrCreate?: Prisma.ProductCreateOrConnectWithoutItemInput | Prisma.ProductCreateOrConnectWithoutItemInput[]
+  createMany?: Prisma.ProductCreateManyItemInputEnvelope
+  connect?: Prisma.ProductWhereUniqueInput | Prisma.ProductWhereUniqueInput[]
+}
+
+export type ProductUncheckedCreateNestedManyWithoutItemInput = {
+  create?: Prisma.XOR<Prisma.ProductCreateWithoutItemInput, Prisma.ProductUncheckedCreateWithoutItemInput> | Prisma.ProductCreateWithoutItemInput[] | Prisma.ProductUncheckedCreateWithoutItemInput[]
+  connectOrCreate?: Prisma.ProductCreateOrConnectWithoutItemInput | Prisma.ProductCreateOrConnectWithoutItemInput[]
+  createMany?: Prisma.ProductCreateManyItemInputEnvelope
+  connect?: Prisma.ProductWhereUniqueInput | Prisma.ProductWhereUniqueInput[]
+}
+
+export type ProductUpdateManyWithoutItemNestedInput = {
+  create?: Prisma.XOR<Prisma.ProductCreateWithoutItemInput, Prisma.ProductUncheckedCreateWithoutItemInput> | Prisma.ProductCreateWithoutItemInput[] | Prisma.ProductUncheckedCreateWithoutItemInput[]
+  connectOrCreate?: Prisma.ProductCreateOrConnectWithoutItemInput | Prisma.ProductCreateOrConnectWithoutItemInput[]
+  upsert?: Prisma.ProductUpsertWithWhereUniqueWithoutItemInput | Prisma.ProductUpsertWithWhereUniqueWithoutItemInput[]
+  createMany?: Prisma.ProductCreateManyItemInputEnvelope
+  set?: Prisma.ProductWhereUniqueInput | Prisma.ProductWhereUniqueInput[]
+  disconnect?: Prisma.ProductWhereUniqueInput | Prisma.ProductWhereUniqueInput[]
+  delete?: Prisma.ProductWhereUniqueInput | Prisma.ProductWhereUniqueInput[]
+  connect?: Prisma.ProductWhereUniqueInput | Prisma.ProductWhereUniqueInput[]
+  update?: Prisma.ProductUpdateWithWhereUniqueWithoutItemInput | Prisma.ProductUpdateWithWhereUniqueWithoutItemInput[]
+  updateMany?: Prisma.ProductUpdateManyWithWhereWithoutItemInput | Prisma.ProductUpdateManyWithWhereWithoutItemInput[]
+  deleteMany?: Prisma.ProductScalarWhereInput | Prisma.ProductScalarWhereInput[]
+}
+
+export type ProductUncheckedUpdateManyWithoutItemNestedInput = {
+  create?: Prisma.XOR<Prisma.ProductCreateWithoutItemInput, Prisma.ProductUncheckedCreateWithoutItemInput> | Prisma.ProductCreateWithoutItemInput[] | Prisma.ProductUncheckedCreateWithoutItemInput[]
+  connectOrCreate?: Prisma.ProductCreateOrConnectWithoutItemInput | Prisma.ProductCreateOrConnectWithoutItemInput[]
+  upsert?: Prisma.ProductUpsertWithWhereUniqueWithoutItemInput | Prisma.ProductUpsertWithWhereUniqueWithoutItemInput[]
+  createMany?: Prisma.ProductCreateManyItemInputEnvelope
+  set?: Prisma.ProductWhereUniqueInput | Prisma.ProductWhereUniqueInput[]
+  disconnect?: Prisma.ProductWhereUniqueInput | Prisma.ProductWhereUniqueInput[]
+  delete?: Prisma.ProductWhereUniqueInput | Prisma.ProductWhereUniqueInput[]
+  connect?: Prisma.ProductWhereUniqueInput | Prisma.ProductWhereUniqueInput[]
+  update?: Prisma.ProductUpdateWithWhereUniqueWithoutItemInput | Prisma.ProductUpdateWithWhereUniqueWithoutItemInput[]
+  updateMany?: Prisma.ProductUpdateManyWithWhereWithoutItemInput | Prisma.ProductUpdateManyWithWhereWithoutItemInput[]
+  deleteMany?: Prisma.ProductScalarWhereInput | Prisma.ProductScalarWhereInput[]
 }
 
 export type FloatFieldUpdateOperationsInput = {
   set?: number
+  increment?: number
+  decrement?: number
+  multiply?: number
+  divide?: number
+}
+
+export type NullableFloatFieldUpdateOperationsInput = {
+  set?: number | null
+  increment?: number
+  decrement?: number
+  multiply?: number
+  divide?: number
+}
+
+export type NullableIntFieldUpdateOperationsInput = {
+  set?: number | null
   increment?: number
   decrement?: number
   multiply?: number
@@ -859,22 +865,6 @@ export type BoolFieldUpdateOperationsInput = {
 
 export type NullableDateTimeFieldUpdateOperationsInput = {
   set?: Date | string | null
-}
-
-export type NullableIntFieldUpdateOperationsInput = {
-  set?: number | null
-  increment?: number
-  decrement?: number
-  multiply?: number
-  divide?: number
-}
-
-export type NullableStringFieldUpdateOperationsInput = {
-  set?: string | null
-}
-
-export type DateTimeFieldUpdateOperationsInput = {
-  set?: Date | string
 }
 
 export type ProductCreateNestedOneWithoutImagesInput = {
@@ -919,6 +909,114 @@ export type ProductUpdateOneRequiredWithoutVariantsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.ProductUpdateToOneWithWhereWithoutVariantsInput, Prisma.ProductUpdateWithoutVariantsInput>, Prisma.ProductUncheckedUpdateWithoutVariantsInput>
 }
 
+export type ProductCreateWithoutItemInput = {
+  id?: string
+  name: string
+  slug: string
+  description: string
+  gender: string
+  brandName: string
+  brandOrigin: string
+  currentPrice: number
+  oldPrice?: number | null
+  discountPercent?: number | null
+  thumbnail: string
+  stock?: number
+  sold?: number
+  aiStylistInfo?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  isFlashSale?: boolean
+  flashStartAt?: Date | string | null
+  flashExpiresAt?: Date | string | null
+  flashDiscount?: number | null
+  timerLabel?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  images?: Prisma.ProductImageCreateNestedManyWithoutProductInput
+  variants?: Prisma.VariantCreateNestedManyWithoutProductInput
+  reviews?: Prisma.ReviewCreateNestedManyWithoutProductInput
+}
+
+export type ProductUncheckedCreateWithoutItemInput = {
+  id?: string
+  name: string
+  slug: string
+  description: string
+  gender: string
+  brandName: string
+  brandOrigin: string
+  currentPrice: number
+  oldPrice?: number | null
+  discountPercent?: number | null
+  thumbnail: string
+  stock?: number
+  sold?: number
+  aiStylistInfo?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  isFlashSale?: boolean
+  flashStartAt?: Date | string | null
+  flashExpiresAt?: Date | string | null
+  flashDiscount?: number | null
+  timerLabel?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  images?: Prisma.ProductImageUncheckedCreateNestedManyWithoutProductInput
+  variants?: Prisma.VariantUncheckedCreateNestedManyWithoutProductInput
+  reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutProductInput
+}
+
+export type ProductCreateOrConnectWithoutItemInput = {
+  where: Prisma.ProductWhereUniqueInput
+  create: Prisma.XOR<Prisma.ProductCreateWithoutItemInput, Prisma.ProductUncheckedCreateWithoutItemInput>
+}
+
+export type ProductCreateManyItemInputEnvelope = {
+  data: Prisma.ProductCreateManyItemInput | Prisma.ProductCreateManyItemInput[]
+  skipDuplicates?: boolean
+}
+
+export type ProductUpsertWithWhereUniqueWithoutItemInput = {
+  where: Prisma.ProductWhereUniqueInput
+  update: Prisma.XOR<Prisma.ProductUpdateWithoutItemInput, Prisma.ProductUncheckedUpdateWithoutItemInput>
+  create: Prisma.XOR<Prisma.ProductCreateWithoutItemInput, Prisma.ProductUncheckedCreateWithoutItemInput>
+}
+
+export type ProductUpdateWithWhereUniqueWithoutItemInput = {
+  where: Prisma.ProductWhereUniqueInput
+  data: Prisma.XOR<Prisma.ProductUpdateWithoutItemInput, Prisma.ProductUncheckedUpdateWithoutItemInput>
+}
+
+export type ProductUpdateManyWithWhereWithoutItemInput = {
+  where: Prisma.ProductScalarWhereInput
+  data: Prisma.XOR<Prisma.ProductUpdateManyMutationInput, Prisma.ProductUncheckedUpdateManyWithoutItemInput>
+}
+
+export type ProductScalarWhereInput = {
+  AND?: Prisma.ProductScalarWhereInput | Prisma.ProductScalarWhereInput[]
+  OR?: Prisma.ProductScalarWhereInput[]
+  NOT?: Prisma.ProductScalarWhereInput | Prisma.ProductScalarWhereInput[]
+  id?: Prisma.StringFilter<"Product"> | string
+  name?: Prisma.StringFilter<"Product"> | string
+  slug?: Prisma.StringFilter<"Product"> | string
+  description?: Prisma.StringFilter<"Product"> | string
+  gender?: Prisma.StringFilter<"Product"> | string
+  brandName?: Prisma.StringFilter<"Product"> | string
+  brandOrigin?: Prisma.StringFilter<"Product"> | string
+  itemId?: Prisma.StringFilter<"Product"> | string
+  currentPrice?: Prisma.FloatFilter<"Product"> | number
+  oldPrice?: Prisma.FloatNullableFilter<"Product"> | number | null
+  discountPercent?: Prisma.IntNullableFilter<"Product"> | number | null
+  thumbnail?: Prisma.StringFilter<"Product"> | string
+  stock?: Prisma.IntFilter<"Product"> | number
+  sold?: Prisma.IntFilter<"Product"> | number
+  aiStylistInfo?: Prisma.JsonNullableFilter<"Product">
+  isFlashSale?: Prisma.BoolFilter<"Product"> | boolean
+  flashStartAt?: Prisma.DateTimeNullableFilter<"Product"> | Date | string | null
+  flashExpiresAt?: Prisma.DateTimeNullableFilter<"Product"> | Date | string | null
+  flashDiscount?: Prisma.FloatNullableFilter<"Product"> | number | null
+  timerLabel?: Prisma.StringNullableFilter<"Product"> | string | null
+  createdAt?: Prisma.DateTimeFilter<"Product"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"Product"> | Date | string
+}
+
 export type ProductCreateWithoutImagesInput = {
   id?: string
   name: string
@@ -927,17 +1025,13 @@ export type ProductCreateWithoutImagesInput = {
   gender: string
   brandName: string
   brandOrigin: string
-  mainCategory: string
-  subCategory: string
-  itemCategory: string
   currentPrice: number
-  oldPrice: number
-  discountPercent: number
+  oldPrice?: number | null
+  discountPercent?: number | null
+  thumbnail: string
   stock?: number
   sold?: number
-  aiStylistInfo: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  metadata: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  thumbnail: string
+  aiStylistInfo?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   isFlashSale?: boolean
   flashStartAt?: Date | string | null
   flashExpiresAt?: Date | string | null
@@ -945,6 +1039,7 @@ export type ProductCreateWithoutImagesInput = {
   timerLabel?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  item: Prisma.ItemCreateNestedOneWithoutProductsInput
   variants?: Prisma.VariantCreateNestedManyWithoutProductInput
   reviews?: Prisma.ReviewCreateNestedManyWithoutProductInput
 }
@@ -957,17 +1052,14 @@ export type ProductUncheckedCreateWithoutImagesInput = {
   gender: string
   brandName: string
   brandOrigin: string
-  mainCategory: string
-  subCategory: string
-  itemCategory: string
+  itemId: string
   currentPrice: number
-  oldPrice: number
-  discountPercent: number
+  oldPrice?: number | null
+  discountPercent?: number | null
+  thumbnail: string
   stock?: number
   sold?: number
-  aiStylistInfo: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  metadata: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  thumbnail: string
+  aiStylistInfo?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   isFlashSale?: boolean
   flashStartAt?: Date | string | null
   flashExpiresAt?: Date | string | null
@@ -1003,24 +1095,21 @@ export type ProductUpdateWithoutImagesInput = {
   gender?: Prisma.StringFieldUpdateOperationsInput | string
   brandName?: Prisma.StringFieldUpdateOperationsInput | string
   brandOrigin?: Prisma.StringFieldUpdateOperationsInput | string
-  mainCategory?: Prisma.StringFieldUpdateOperationsInput | string
-  subCategory?: Prisma.StringFieldUpdateOperationsInput | string
-  itemCategory?: Prisma.StringFieldUpdateOperationsInput | string
   currentPrice?: Prisma.FloatFieldUpdateOperationsInput | number
-  oldPrice?: Prisma.FloatFieldUpdateOperationsInput | number
-  discountPercent?: Prisma.IntFieldUpdateOperationsInput | number
+  oldPrice?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  discountPercent?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  thumbnail?: Prisma.StringFieldUpdateOperationsInput | string
   stock?: Prisma.IntFieldUpdateOperationsInput | number
   sold?: Prisma.IntFieldUpdateOperationsInput | number
-  aiStylistInfo?: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  metadata?: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  thumbnail?: Prisma.StringFieldUpdateOperationsInput | string
+  aiStylistInfo?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   isFlashSale?: Prisma.BoolFieldUpdateOperationsInput | boolean
   flashStartAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   flashExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  flashDiscount?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  flashDiscount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   timerLabel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  item?: Prisma.ItemUpdateOneRequiredWithoutProductsNestedInput
   variants?: Prisma.VariantUpdateManyWithoutProductNestedInput
   reviews?: Prisma.ReviewUpdateManyWithoutProductNestedInput
 }
@@ -1033,21 +1122,18 @@ export type ProductUncheckedUpdateWithoutImagesInput = {
   gender?: Prisma.StringFieldUpdateOperationsInput | string
   brandName?: Prisma.StringFieldUpdateOperationsInput | string
   brandOrigin?: Prisma.StringFieldUpdateOperationsInput | string
-  mainCategory?: Prisma.StringFieldUpdateOperationsInput | string
-  subCategory?: Prisma.StringFieldUpdateOperationsInput | string
-  itemCategory?: Prisma.StringFieldUpdateOperationsInput | string
+  itemId?: Prisma.StringFieldUpdateOperationsInput | string
   currentPrice?: Prisma.FloatFieldUpdateOperationsInput | number
-  oldPrice?: Prisma.FloatFieldUpdateOperationsInput | number
-  discountPercent?: Prisma.IntFieldUpdateOperationsInput | number
+  oldPrice?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  discountPercent?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  thumbnail?: Prisma.StringFieldUpdateOperationsInput | string
   stock?: Prisma.IntFieldUpdateOperationsInput | number
   sold?: Prisma.IntFieldUpdateOperationsInput | number
-  aiStylistInfo?: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  metadata?: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  thumbnail?: Prisma.StringFieldUpdateOperationsInput | string
+  aiStylistInfo?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   isFlashSale?: Prisma.BoolFieldUpdateOperationsInput | boolean
   flashStartAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   flashExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  flashDiscount?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  flashDiscount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   timerLabel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1063,17 +1149,13 @@ export type ProductCreateWithoutReviewsInput = {
   gender: string
   brandName: string
   brandOrigin: string
-  mainCategory: string
-  subCategory: string
-  itemCategory: string
   currentPrice: number
-  oldPrice: number
-  discountPercent: number
+  oldPrice?: number | null
+  discountPercent?: number | null
+  thumbnail: string
   stock?: number
   sold?: number
-  aiStylistInfo: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  metadata: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  thumbnail: string
+  aiStylistInfo?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   isFlashSale?: boolean
   flashStartAt?: Date | string | null
   flashExpiresAt?: Date | string | null
@@ -1081,6 +1163,7 @@ export type ProductCreateWithoutReviewsInput = {
   timerLabel?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  item: Prisma.ItemCreateNestedOneWithoutProductsInput
   images?: Prisma.ProductImageCreateNestedManyWithoutProductInput
   variants?: Prisma.VariantCreateNestedManyWithoutProductInput
 }
@@ -1093,17 +1176,14 @@ export type ProductUncheckedCreateWithoutReviewsInput = {
   gender: string
   brandName: string
   brandOrigin: string
-  mainCategory: string
-  subCategory: string
-  itemCategory: string
+  itemId: string
   currentPrice: number
-  oldPrice: number
-  discountPercent: number
+  oldPrice?: number | null
+  discountPercent?: number | null
+  thumbnail: string
   stock?: number
   sold?: number
-  aiStylistInfo: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  metadata: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  thumbnail: string
+  aiStylistInfo?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   isFlashSale?: boolean
   flashStartAt?: Date | string | null
   flashExpiresAt?: Date | string | null
@@ -1139,24 +1219,21 @@ export type ProductUpdateWithoutReviewsInput = {
   gender?: Prisma.StringFieldUpdateOperationsInput | string
   brandName?: Prisma.StringFieldUpdateOperationsInput | string
   brandOrigin?: Prisma.StringFieldUpdateOperationsInput | string
-  mainCategory?: Prisma.StringFieldUpdateOperationsInput | string
-  subCategory?: Prisma.StringFieldUpdateOperationsInput | string
-  itemCategory?: Prisma.StringFieldUpdateOperationsInput | string
   currentPrice?: Prisma.FloatFieldUpdateOperationsInput | number
-  oldPrice?: Prisma.FloatFieldUpdateOperationsInput | number
-  discountPercent?: Prisma.IntFieldUpdateOperationsInput | number
+  oldPrice?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  discountPercent?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  thumbnail?: Prisma.StringFieldUpdateOperationsInput | string
   stock?: Prisma.IntFieldUpdateOperationsInput | number
   sold?: Prisma.IntFieldUpdateOperationsInput | number
-  aiStylistInfo?: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  metadata?: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  thumbnail?: Prisma.StringFieldUpdateOperationsInput | string
+  aiStylistInfo?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   isFlashSale?: Prisma.BoolFieldUpdateOperationsInput | boolean
   flashStartAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   flashExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  flashDiscount?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  flashDiscount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   timerLabel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  item?: Prisma.ItemUpdateOneRequiredWithoutProductsNestedInput
   images?: Prisma.ProductImageUpdateManyWithoutProductNestedInput
   variants?: Prisma.VariantUpdateManyWithoutProductNestedInput
 }
@@ -1169,21 +1246,18 @@ export type ProductUncheckedUpdateWithoutReviewsInput = {
   gender?: Prisma.StringFieldUpdateOperationsInput | string
   brandName?: Prisma.StringFieldUpdateOperationsInput | string
   brandOrigin?: Prisma.StringFieldUpdateOperationsInput | string
-  mainCategory?: Prisma.StringFieldUpdateOperationsInput | string
-  subCategory?: Prisma.StringFieldUpdateOperationsInput | string
-  itemCategory?: Prisma.StringFieldUpdateOperationsInput | string
+  itemId?: Prisma.StringFieldUpdateOperationsInput | string
   currentPrice?: Prisma.FloatFieldUpdateOperationsInput | number
-  oldPrice?: Prisma.FloatFieldUpdateOperationsInput | number
-  discountPercent?: Prisma.IntFieldUpdateOperationsInput | number
+  oldPrice?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  discountPercent?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  thumbnail?: Prisma.StringFieldUpdateOperationsInput | string
   stock?: Prisma.IntFieldUpdateOperationsInput | number
   sold?: Prisma.IntFieldUpdateOperationsInput | number
-  aiStylistInfo?: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  metadata?: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  thumbnail?: Prisma.StringFieldUpdateOperationsInput | string
+  aiStylistInfo?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   isFlashSale?: Prisma.BoolFieldUpdateOperationsInput | boolean
   flashStartAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   flashExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  flashDiscount?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  flashDiscount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   timerLabel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1199,17 +1273,13 @@ export type ProductCreateWithoutVariantsInput = {
   gender: string
   brandName: string
   brandOrigin: string
-  mainCategory: string
-  subCategory: string
-  itemCategory: string
   currentPrice: number
-  oldPrice: number
-  discountPercent: number
+  oldPrice?: number | null
+  discountPercent?: number | null
+  thumbnail: string
   stock?: number
   sold?: number
-  aiStylistInfo: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  metadata: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  thumbnail: string
+  aiStylistInfo?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   isFlashSale?: boolean
   flashStartAt?: Date | string | null
   flashExpiresAt?: Date | string | null
@@ -1217,6 +1287,7 @@ export type ProductCreateWithoutVariantsInput = {
   timerLabel?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  item: Prisma.ItemCreateNestedOneWithoutProductsInput
   images?: Prisma.ProductImageCreateNestedManyWithoutProductInput
   reviews?: Prisma.ReviewCreateNestedManyWithoutProductInput
 }
@@ -1229,17 +1300,14 @@ export type ProductUncheckedCreateWithoutVariantsInput = {
   gender: string
   brandName: string
   brandOrigin: string
-  mainCategory: string
-  subCategory: string
-  itemCategory: string
+  itemId: string
   currentPrice: number
-  oldPrice: number
-  discountPercent: number
+  oldPrice?: number | null
+  discountPercent?: number | null
+  thumbnail: string
   stock?: number
   sold?: number
-  aiStylistInfo: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  metadata: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  thumbnail: string
+  aiStylistInfo?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   isFlashSale?: boolean
   flashStartAt?: Date | string | null
   flashExpiresAt?: Date | string | null
@@ -1275,24 +1343,21 @@ export type ProductUpdateWithoutVariantsInput = {
   gender?: Prisma.StringFieldUpdateOperationsInput | string
   brandName?: Prisma.StringFieldUpdateOperationsInput | string
   brandOrigin?: Prisma.StringFieldUpdateOperationsInput | string
-  mainCategory?: Prisma.StringFieldUpdateOperationsInput | string
-  subCategory?: Prisma.StringFieldUpdateOperationsInput | string
-  itemCategory?: Prisma.StringFieldUpdateOperationsInput | string
   currentPrice?: Prisma.FloatFieldUpdateOperationsInput | number
-  oldPrice?: Prisma.FloatFieldUpdateOperationsInput | number
-  discountPercent?: Prisma.IntFieldUpdateOperationsInput | number
+  oldPrice?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  discountPercent?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  thumbnail?: Prisma.StringFieldUpdateOperationsInput | string
   stock?: Prisma.IntFieldUpdateOperationsInput | number
   sold?: Prisma.IntFieldUpdateOperationsInput | number
-  aiStylistInfo?: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  metadata?: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  thumbnail?: Prisma.StringFieldUpdateOperationsInput | string
+  aiStylistInfo?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   isFlashSale?: Prisma.BoolFieldUpdateOperationsInput | boolean
   flashStartAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   flashExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  flashDiscount?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  flashDiscount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   timerLabel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  item?: Prisma.ItemUpdateOneRequiredWithoutProductsNestedInput
   images?: Prisma.ProductImageUpdateManyWithoutProductNestedInput
   reviews?: Prisma.ReviewUpdateManyWithoutProductNestedInput
 }
@@ -1305,26 +1370,125 @@ export type ProductUncheckedUpdateWithoutVariantsInput = {
   gender?: Prisma.StringFieldUpdateOperationsInput | string
   brandName?: Prisma.StringFieldUpdateOperationsInput | string
   brandOrigin?: Prisma.StringFieldUpdateOperationsInput | string
-  mainCategory?: Prisma.StringFieldUpdateOperationsInput | string
-  subCategory?: Prisma.StringFieldUpdateOperationsInput | string
-  itemCategory?: Prisma.StringFieldUpdateOperationsInput | string
+  itemId?: Prisma.StringFieldUpdateOperationsInput | string
   currentPrice?: Prisma.FloatFieldUpdateOperationsInput | number
-  oldPrice?: Prisma.FloatFieldUpdateOperationsInput | number
-  discountPercent?: Prisma.IntFieldUpdateOperationsInput | number
+  oldPrice?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  discountPercent?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  thumbnail?: Prisma.StringFieldUpdateOperationsInput | string
   stock?: Prisma.IntFieldUpdateOperationsInput | number
   sold?: Prisma.IntFieldUpdateOperationsInput | number
-  aiStylistInfo?: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  metadata?: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  thumbnail?: Prisma.StringFieldUpdateOperationsInput | string
+  aiStylistInfo?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   isFlashSale?: Prisma.BoolFieldUpdateOperationsInput | boolean
   flashStartAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   flashExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  flashDiscount?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  flashDiscount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   timerLabel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   images?: Prisma.ProductImageUncheckedUpdateManyWithoutProductNestedInput
   reviews?: Prisma.ReviewUncheckedUpdateManyWithoutProductNestedInput
+}
+
+export type ProductCreateManyItemInput = {
+  id?: string
+  name: string
+  slug: string
+  description: string
+  gender: string
+  brandName: string
+  brandOrigin: string
+  currentPrice: number
+  oldPrice?: number | null
+  discountPercent?: number | null
+  thumbnail: string
+  stock?: number
+  sold?: number
+  aiStylistInfo?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  isFlashSale?: boolean
+  flashStartAt?: Date | string | null
+  flashExpiresAt?: Date | string | null
+  flashDiscount?: number | null
+  timerLabel?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type ProductUpdateWithoutItemInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  gender?: Prisma.StringFieldUpdateOperationsInput | string
+  brandName?: Prisma.StringFieldUpdateOperationsInput | string
+  brandOrigin?: Prisma.StringFieldUpdateOperationsInput | string
+  currentPrice?: Prisma.FloatFieldUpdateOperationsInput | number
+  oldPrice?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  discountPercent?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  thumbnail?: Prisma.StringFieldUpdateOperationsInput | string
+  stock?: Prisma.IntFieldUpdateOperationsInput | number
+  sold?: Prisma.IntFieldUpdateOperationsInput | number
+  aiStylistInfo?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  isFlashSale?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  flashStartAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  flashExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  flashDiscount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  timerLabel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  images?: Prisma.ProductImageUpdateManyWithoutProductNestedInput
+  variants?: Prisma.VariantUpdateManyWithoutProductNestedInput
+  reviews?: Prisma.ReviewUpdateManyWithoutProductNestedInput
+}
+
+export type ProductUncheckedUpdateWithoutItemInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  gender?: Prisma.StringFieldUpdateOperationsInput | string
+  brandName?: Prisma.StringFieldUpdateOperationsInput | string
+  brandOrigin?: Prisma.StringFieldUpdateOperationsInput | string
+  currentPrice?: Prisma.FloatFieldUpdateOperationsInput | number
+  oldPrice?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  discountPercent?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  thumbnail?: Prisma.StringFieldUpdateOperationsInput | string
+  stock?: Prisma.IntFieldUpdateOperationsInput | number
+  sold?: Prisma.IntFieldUpdateOperationsInput | number
+  aiStylistInfo?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  isFlashSale?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  flashStartAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  flashExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  flashDiscount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  timerLabel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  images?: Prisma.ProductImageUncheckedUpdateManyWithoutProductNestedInput
+  variants?: Prisma.VariantUncheckedUpdateManyWithoutProductNestedInput
+  reviews?: Prisma.ReviewUncheckedUpdateManyWithoutProductNestedInput
+}
+
+export type ProductUncheckedUpdateManyWithoutItemInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  gender?: Prisma.StringFieldUpdateOperationsInput | string
+  brandName?: Prisma.StringFieldUpdateOperationsInput | string
+  brandOrigin?: Prisma.StringFieldUpdateOperationsInput | string
+  currentPrice?: Prisma.FloatFieldUpdateOperationsInput | number
+  oldPrice?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  discountPercent?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  thumbnail?: Prisma.StringFieldUpdateOperationsInput | string
+  stock?: Prisma.IntFieldUpdateOperationsInput | number
+  sold?: Prisma.IntFieldUpdateOperationsInput | number
+  aiStylistInfo?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  isFlashSale?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  flashStartAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  flashExpiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  flashDiscount?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
+  timerLabel?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 
@@ -1384,17 +1548,14 @@ export type ProductSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   gender?: boolean
   brandName?: boolean
   brandOrigin?: boolean
-  mainCategory?: boolean
-  subCategory?: boolean
-  itemCategory?: boolean
+  itemId?: boolean
   currentPrice?: boolean
   oldPrice?: boolean
   discountPercent?: boolean
+  thumbnail?: boolean
   stock?: boolean
   sold?: boolean
   aiStylistInfo?: boolean
-  metadata?: boolean
-  thumbnail?: boolean
   isFlashSale?: boolean
   flashStartAt?: boolean
   flashExpiresAt?: boolean
@@ -1402,6 +1563,7 @@ export type ProductSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   timerLabel?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  item?: boolean | Prisma.ItemDefaultArgs<ExtArgs>
   images?: boolean | Prisma.Product$imagesArgs<ExtArgs>
   variants?: boolean | Prisma.Product$variantsArgs<ExtArgs>
   reviews?: boolean | Prisma.Product$reviewsArgs<ExtArgs>
@@ -1416,17 +1578,14 @@ export type ProductSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
   gender?: boolean
   brandName?: boolean
   brandOrigin?: boolean
-  mainCategory?: boolean
-  subCategory?: boolean
-  itemCategory?: boolean
+  itemId?: boolean
   currentPrice?: boolean
   oldPrice?: boolean
   discountPercent?: boolean
+  thumbnail?: boolean
   stock?: boolean
   sold?: boolean
   aiStylistInfo?: boolean
-  metadata?: boolean
-  thumbnail?: boolean
   isFlashSale?: boolean
   flashStartAt?: boolean
   flashExpiresAt?: boolean
@@ -1434,6 +1593,7 @@ export type ProductSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
   timerLabel?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  item?: boolean | Prisma.ItemDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["product"]>
 
 export type ProductSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -1444,17 +1604,14 @@ export type ProductSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
   gender?: boolean
   brandName?: boolean
   brandOrigin?: boolean
-  mainCategory?: boolean
-  subCategory?: boolean
-  itemCategory?: boolean
+  itemId?: boolean
   currentPrice?: boolean
   oldPrice?: boolean
   discountPercent?: boolean
+  thumbnail?: boolean
   stock?: boolean
   sold?: boolean
   aiStylistInfo?: boolean
-  metadata?: boolean
-  thumbnail?: boolean
   isFlashSale?: boolean
   flashStartAt?: boolean
   flashExpiresAt?: boolean
@@ -1462,6 +1619,7 @@ export type ProductSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
   timerLabel?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  item?: boolean | Prisma.ItemDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["product"]>
 
 export type ProductSelectScalar = {
@@ -1472,17 +1630,14 @@ export type ProductSelectScalar = {
   gender?: boolean
   brandName?: boolean
   brandOrigin?: boolean
-  mainCategory?: boolean
-  subCategory?: boolean
-  itemCategory?: boolean
+  itemId?: boolean
   currentPrice?: boolean
   oldPrice?: boolean
   discountPercent?: boolean
+  thumbnail?: boolean
   stock?: boolean
   sold?: boolean
   aiStylistInfo?: boolean
-  metadata?: boolean
-  thumbnail?: boolean
   isFlashSale?: boolean
   flashStartAt?: boolean
   flashExpiresAt?: boolean
@@ -1492,19 +1647,25 @@ export type ProductSelectScalar = {
   updatedAt?: boolean
 }
 
-export type ProductOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "slug" | "description" | "gender" | "brandName" | "brandOrigin" | "mainCategory" | "subCategory" | "itemCategory" | "currentPrice" | "oldPrice" | "discountPercent" | "stock" | "sold" | "aiStylistInfo" | "metadata" | "thumbnail" | "isFlashSale" | "flashStartAt" | "flashExpiresAt" | "flashDiscount" | "timerLabel" | "createdAt" | "updatedAt", ExtArgs["result"]["product"]>
+export type ProductOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "slug" | "description" | "gender" | "brandName" | "brandOrigin" | "itemId" | "currentPrice" | "oldPrice" | "discountPercent" | "thumbnail" | "stock" | "sold" | "aiStylistInfo" | "isFlashSale" | "flashStartAt" | "flashExpiresAt" | "flashDiscount" | "timerLabel" | "createdAt" | "updatedAt", ExtArgs["result"]["product"]>
 export type ProductInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  item?: boolean | Prisma.ItemDefaultArgs<ExtArgs>
   images?: boolean | Prisma.Product$imagesArgs<ExtArgs>
   variants?: boolean | Prisma.Product$variantsArgs<ExtArgs>
   reviews?: boolean | Prisma.Product$reviewsArgs<ExtArgs>
   _count?: boolean | Prisma.ProductCountOutputTypeDefaultArgs<ExtArgs>
 }
-export type ProductIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
-export type ProductIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
+export type ProductIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  item?: boolean | Prisma.ItemDefaultArgs<ExtArgs>
+}
+export type ProductIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  item?: boolean | Prisma.ItemDefaultArgs<ExtArgs>
+}
 
 export type $ProductPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Product"
   objects: {
+    item: Prisma.$ItemPayload<ExtArgs>
     images: Prisma.$ProductImagePayload<ExtArgs>[]
     variants: Prisma.$VariantPayload<ExtArgs>[]
     reviews: Prisma.$ReviewPayload<ExtArgs>[]
@@ -1517,17 +1678,14 @@ export type $ProductPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     gender: string
     brandName: string
     brandOrigin: string
-    mainCategory: string
-    subCategory: string
-    itemCategory: string
+    itemId: string
     currentPrice: number
-    oldPrice: number
-    discountPercent: number
+    oldPrice: number | null
+    discountPercent: number | null
+    thumbnail: string
     stock: number
     sold: number
-    aiStylistInfo: runtime.JsonValue
-    metadata: runtime.JsonValue
-    thumbnail: string
+    aiStylistInfo: runtime.JsonValue | null
     isFlashSale: boolean
     flashStartAt: Date | null
     flashExpiresAt: Date | null
@@ -1929,6 +2087,7 @@ readonly fields: ProductFieldRefs;
  */
 export interface Prisma__ProductClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
+  item<T extends Prisma.ItemDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ItemDefaultArgs<ExtArgs>>): Prisma.Prisma__ItemClient<runtime.Types.Result.GetResult<Prisma.$ItemPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   images<T extends Prisma.Product$imagesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Product$imagesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ProductImagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   variants<T extends Prisma.Product$variantsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Product$variantsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$VariantPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   reviews<T extends Prisma.Product$reviewsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Product$reviewsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ReviewPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -1968,21 +2127,18 @@ export interface ProductFieldRefs {
   readonly gender: Prisma.FieldRef<"Product", 'String'>
   readonly brandName: Prisma.FieldRef<"Product", 'String'>
   readonly brandOrigin: Prisma.FieldRef<"Product", 'String'>
-  readonly mainCategory: Prisma.FieldRef<"Product", 'String'>
-  readonly subCategory: Prisma.FieldRef<"Product", 'String'>
-  readonly itemCategory: Prisma.FieldRef<"Product", 'String'>
+  readonly itemId: Prisma.FieldRef<"Product", 'String'>
   readonly currentPrice: Prisma.FieldRef<"Product", 'Float'>
   readonly oldPrice: Prisma.FieldRef<"Product", 'Float'>
   readonly discountPercent: Prisma.FieldRef<"Product", 'Int'>
+  readonly thumbnail: Prisma.FieldRef<"Product", 'String'>
   readonly stock: Prisma.FieldRef<"Product", 'Int'>
   readonly sold: Prisma.FieldRef<"Product", 'Int'>
   readonly aiStylistInfo: Prisma.FieldRef<"Product", 'Json'>
-  readonly metadata: Prisma.FieldRef<"Product", 'Json'>
-  readonly thumbnail: Prisma.FieldRef<"Product", 'String'>
   readonly isFlashSale: Prisma.FieldRef<"Product", 'Boolean'>
   readonly flashStartAt: Prisma.FieldRef<"Product", 'DateTime'>
   readonly flashExpiresAt: Prisma.FieldRef<"Product", 'DateTime'>
-  readonly flashDiscount: Prisma.FieldRef<"Product", 'Int'>
+  readonly flashDiscount: Prisma.FieldRef<"Product", 'Float'>
   readonly timerLabel: Prisma.FieldRef<"Product", 'String'>
   readonly createdAt: Prisma.FieldRef<"Product", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Product", 'DateTime'>
@@ -2240,6 +2396,10 @@ export type ProductCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensi
    */
   data: Prisma.ProductCreateManyInput | Prisma.ProductCreateManyInput[]
   skipDuplicates?: boolean
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ProductIncludeCreateManyAndReturn<ExtArgs> | null
 }
 
 /**
@@ -2310,6 +2470,10 @@ export type ProductUpdateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensi
    * Limit how many Products to update.
    */
   limit?: number
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ProductIncludeUpdateManyAndReturn<ExtArgs> | null
 }
 
 /**

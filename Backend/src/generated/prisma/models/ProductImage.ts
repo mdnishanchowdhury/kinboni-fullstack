@@ -268,7 +268,7 @@ export type ProductImageCreateInput = {
   id?: string
   url: string
   alt?: string | null
-  order: number
+  order?: number
   product: Prisma.ProductCreateNestedOneWithoutImagesInput
 }
 
@@ -276,7 +276,7 @@ export type ProductImageUncheckedCreateInput = {
   id?: string
   url: string
   alt?: string | null
-  order: number
+  order?: number
   productId: string
 }
 
@@ -300,7 +300,7 @@ export type ProductImageCreateManyInput = {
   id?: string
   url: string
   alt?: string | null
-  order: number
+  order?: number
   productId: string
 }
 
@@ -407,14 +407,14 @@ export type ProductImageCreateWithoutProductInput = {
   id?: string
   url: string
   alt?: string | null
-  order: number
+  order?: number
 }
 
 export type ProductImageUncheckedCreateWithoutProductInput = {
   id?: string
   url: string
   alt?: string | null
-  order: number
+  order?: number
 }
 
 export type ProductImageCreateOrConnectWithoutProductInput = {
@@ -458,7 +458,7 @@ export type ProductImageCreateManyProductInput = {
   id?: string
   url: string
   alt?: string | null
-  order: number
+  order?: number
 }
 
 export type ProductImageUpdateWithoutProductInput = {

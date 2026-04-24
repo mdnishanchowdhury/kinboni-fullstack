@@ -51,6 +51,9 @@ export const AnyNull = runtime.AnyNull
 
 
 export const ModelName = {
+  Category: 'Category',
+  SubCategory: 'SubCategory',
+  Item: 'Item',
   Product: 'Product',
   ProductImage: 'ProductImage',
   Review: 'Review',
@@ -73,6 +76,38 @@ export const TransactionIsolationLevel = runtime.makeStrictEnum({
 export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof typeof TransactionIsolationLevel]
 
 
+export const CategoryScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  icon: 'icon',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type CategoryScalarFieldEnum = (typeof CategoryScalarFieldEnum)[keyof typeof CategoryScalarFieldEnum]
+
+
+export const SubCategoryScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  categoryId: 'categoryId',
+  createdAt: 'createdAt'
+} as const
+
+export type SubCategoryScalarFieldEnum = (typeof SubCategoryScalarFieldEnum)[keyof typeof SubCategoryScalarFieldEnum]
+
+
+export const ItemScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  image: 'image',
+  subCategoryId: 'subCategoryId',
+  createdAt: 'createdAt'
+} as const
+
+export type ItemScalarFieldEnum = (typeof ItemScalarFieldEnum)[keyof typeof ItemScalarFieldEnum]
+
+
 export const ProductScalarFieldEnum = {
   id: 'id',
   name: 'name',
@@ -81,17 +116,14 @@ export const ProductScalarFieldEnum = {
   gender: 'gender',
   brandName: 'brandName',
   brandOrigin: 'brandOrigin',
-  mainCategory: 'mainCategory',
-  subCategory: 'subCategory',
-  itemCategory: 'itemCategory',
+  itemId: 'itemId',
   currentPrice: 'currentPrice',
   oldPrice: 'oldPrice',
   discountPercent: 'discountPercent',
+  thumbnail: 'thumbnail',
   stock: 'stock',
   sold: 'sold',
   aiStylistInfo: 'aiStylistInfo',
-  metadata: 'metadata',
-  thumbnail: 'thumbnail',
   isFlashSale: 'isFlashSale',
   flashStartAt: 'flashStartAt',
   flashExpiresAt: 'flashExpiresAt',
@@ -117,12 +149,13 @@ export type ProductImageScalarFieldEnum = (typeof ProductImageScalarFieldEnum)[k
 
 export const ReviewScalarFieldEnum = {
   id: 'id',
-  rating: 'rating',
-  comment: 'comment',
-  createdAt: 'createdAt',
+  userId: 'userId',
   userName: 'userName',
   userAvatar: 'userAvatar',
-  productId: 'productId'
+  rating: 'rating',
+  comment: 'comment',
+  productId: 'productId',
+  createdAt: 'createdAt'
 } as const
 
 export type ReviewScalarFieldEnum = (typeof ReviewScalarFieldEnum)[keyof typeof ReviewScalarFieldEnum]
@@ -147,11 +180,12 @@ export const SortOrder = {
 export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
 
 
-export const JsonNullValueInput = {
+export const NullableJsonNullValueInput = {
+  DbNull: DbNull,
   JsonNull: JsonNull
 } as const
 
-export type JsonNullValueInput = (typeof JsonNullValueInput)[keyof typeof JsonNullValueInput]
+export type NullableJsonNullValueInput = (typeof NullableJsonNullValueInput)[keyof typeof NullableJsonNullValueInput]
 
 
 export const QueryMode = {
@@ -162,6 +196,14 @@ export const QueryMode = {
 export type QueryMode = (typeof QueryMode)[keyof typeof QueryMode]
 
 
+export const NullsOrder = {
+  first: 'first',
+  last: 'last'
+} as const
+
+export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
+
+
 export const JsonNullValueFilter = {
   DbNull: DbNull,
   JsonNull: JsonNull,
@@ -169,12 +211,4 @@ export const JsonNullValueFilter = {
 } as const
 
 export type JsonNullValueFilter = (typeof JsonNullValueFilter)[keyof typeof JsonNullValueFilter]
-
-
-export const NullsOrder = {
-  first: 'first',
-  last: 'last'
-} as const
-
-export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
 
