@@ -15,12 +15,15 @@ import CartDropdown from "@/components/layout/navbar/Dropdowns/CartDropdown";
 import AccountDropdown from "@/components/layout/navbar/Dropdowns/AccountDropdown";
 import MobileSearchBar from "@/components/layout/navbar/Mobile/MobileSearchBar";
 import DesktopNavigation from "@/components/layout/navbar/Desktop/DesktopNavigation";
-import { categoriesData } from "@/components/layout/navbar/Category/categories";
+import { useCategories } from "@/hooks/useCategories";
 
 function Navbar() {
   const [open, setOpen] = useState(false);
   const [isSellerMode, setIsSellerMode] = useState(false);
   const [mounted, setMounted] = useState(false);
+  const { data, isLoading } = useCategories();
+
+  const categoriesData = data?.data || [];
 
   useEffect(() => {
     setMounted(true);
@@ -77,12 +80,15 @@ function Navbar() {
                 </div>
 
                 <div className="h-full bg-white">
+                  {/* mobile */}
                   <MobileDrawerContent
                     setOpen={setOpen}
                     logo={logo}
                     isSellerMode={isSellerMode}
                     setIsSellerMode={handleDrawerModeChange}
                     navLinks={navLinks}
+                    categoriesData={categoriesData}
+                    isLoading={isLoading}
                   />
                 </div>
               </SheetContent>
@@ -106,8 +112,8 @@ function Navbar() {
               variant={isSellerMode ? "default" : "outline"}
               onClick={handleModeToggle}
               className={`hidden md:flex gap-2 rounded-full font-bold text-xs h-9 px-5 transition-all active:scale-95 ${isSellerMode
-                  ? "bg-green-600 hover:bg-black text-white border-none"
-                  : "text-gray-600 border-gray-200 hover:bg-gray-50"
+                ? "bg-green-600 hover:bg-black text-white border-none"
+                : "text-gray-600 border-gray-200 hover:bg-gray-50"
                 }`}
             >
               <HiOutlineSwitchHorizontal className="text-lg" />
@@ -129,6 +135,7 @@ function Navbar() {
         <DesktopNavigation
           navLinks={navLinks}
           categoriesData={categoriesData}
+          isLoading={isLoading}
           isSellerMode={isSellerMode}
         />
       </header>

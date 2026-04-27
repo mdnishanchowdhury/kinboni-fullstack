@@ -10,6 +10,7 @@ import {
 } from "react-icons/md";
 import { Button } from "@/components/ui/button";
 import CategoryMenu from "../Category/CategoryMenu";
+import { Loader2 } from "lucide-react";
 
 interface NavLinkItem {
   name: string;
@@ -20,12 +21,14 @@ interface DesktopNavigationProps {
   navLinks: NavLinkItem[];
   categoriesData: any;
   isSellerMode: boolean;
+  isLoading: boolean
 }
 
 export default function DesktopNavigation({
   navLinks,
   categoriesData,
-  isSellerMode
+  isSellerMode,
+  isLoading
 }: DesktopNavigationProps) {
   const pathname = usePathname();
 
@@ -47,7 +50,20 @@ export default function DesktopNavigation({
 
             {/* Category Menu Container */}
             <div className="absolute top-full w-[280px] left-0 invisible opacity-0 group-hover:visible group-hover:opacity-100 transition-all duration-200 z-[120] pt-2">
-              <CategoryMenu categoriesData={categoriesData} />
+              {isLoading ? (
+                <div className="w-[280px] bg-white rounded-2xl shadow-xl border border-gray-100 p-6 flex flex-col items-center justify-center gap-3">
+                  <Loader2 className="w-8 h-8 text-green-500 animate-spin" />
+                  <p className="text-sm font-medium text-gray-500">Loading Categories...</p>
+
+                  <div className="w-full space-y-2 mt-4">
+                    <div className="h-4 bg-gray-100 rounded animate-pulse w-3/4"></div>
+                    <div className="h-4 bg-gray-100 rounded animate-pulse w-1/2"></div>
+                    <div className="h-4 bg-gray-100 rounded animate-pulse w-2/3"></div>
+                  </div>
+                </div>
+              ) : (
+                <CategoryMenu categoriesData={categoriesData} />
+              )}
             </div>
           </div>
 
@@ -60,8 +76,8 @@ export default function DesktopNavigation({
                   key={link.name}
                   href={link.path}
                   className={`px-4 py-2 transition-all rounded-md text-sm ${isActive
-                      ? "bg-green-500 text-white"
-                      : "hover:text-green-600 hover:bg-green-50/50"
+                    ? "bg-green-500 text-white"
+                    : "hover:text-green-600 hover:bg-green-50/50"
                     }`}
                 >
                   {link.name}
