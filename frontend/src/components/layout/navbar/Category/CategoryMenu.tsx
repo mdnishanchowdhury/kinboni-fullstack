@@ -47,7 +47,7 @@ export default function CategoryMenu({ categoriesData }: { categoriesData: any[]
     <div className="hidden md:block col-span-3 relative" onMouseLeave={handleMouseLeave}>
 
       {/* Level 1: Main Categories */}
-      <nav className="w-[280px] bg-white rounded-2xl shadow-md border border-gray-100 p-2.5 relative z-[60]">
+      <nav className="bg-white rounded-2xl shadow-md border border-gray-100 p-2.5 relative z-[60]">
         <div className="px-4 py-3 font-bold text-lg text-gray-900 border-b border-gray-50 mb-2">
           Categories
         </div>
