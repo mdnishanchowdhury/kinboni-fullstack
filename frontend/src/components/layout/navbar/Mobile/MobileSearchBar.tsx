@@ -15,16 +15,17 @@ export default function MobileSearchBar() {
   };
 
   return (
-    <div className="px-4 py-2 lg:hidden w-full bg-white">
+    <div className="px-4 py-2 lg:hidden w-full">
       <form onSubmit={handleSearch} className="relative group">
         <Input
           type="text"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           placeholder="I'm searching for..."
-          className="w-full bg-slate-100 border-none h-11 px-5 pr-12 rounded-full text-sm outline-none focus-visible:ring-2 focus-visible:ring-green-500 focus:bg-white transition-all placeholder:text-slate-400"
+          className="w-full bg-slate-100 border-none h-11 px-5 pr-12 rounded-full text-sm outline-none focus-visible:ring-2 focus-visible:ring-green-500 focus:bg-white transition-all placeholder:text-slate-400
+          dark:border-slate-700 dark:bg-slate-800 dark:focus:bg-slate-900 dark:placeholder:text-slate-500"
         />
-        
+
         <Button
           type="submit"
           size="icon"

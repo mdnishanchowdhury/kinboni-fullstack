@@ -16,7 +16,7 @@ export default function MessageDropdown({ }: MessageDropdownProps) {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <div className="relative cursor-pointer hover:text-green-600 text-gray-700 outline-none transition-colors group">
-          <HiOutlineChatAlt2 className="text-2xl" />
+          <HiOutlineChatAlt2 className="text-2xl  dark:text-white" />
 
           {/* Notification */}
           <span className="absolute top-0 right-0 w-2 h-2 bg-red-500 rounded-full border-2 border-white opacity-0 group-hover:opacity-100 transition-opacity"></span>
@@ -27,9 +27,6 @@ export default function MessageDropdown({ }: MessageDropdownProps) {
         align="end"
         className="w-72 mt-4 p-6 bg-white shadow-2xl rounded-2xl border-gray-100 z-[110] animate-in slide-in-from-top-2"
       >
-        {/* Dropdown Arrow */}
-        <div className="absolute -top-2 right-4 w-4 h-4 bg-white rotate-45 border-t border-l border-gray-100 hidden lg:block"></div>
-
         <h3 className="text-sm font-extrabold text-gray-800 text-left mb-6 uppercase tracking-tight">
           Messages
         </h3>

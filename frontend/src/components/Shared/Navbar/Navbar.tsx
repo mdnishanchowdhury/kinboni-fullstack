@@ -58,7 +58,7 @@ function Navbar() {
     <>
       <AnnouncementBar isSellerMode={isSellerMode} />
 
-      <header className="w-full sticky top-0 z-[100] bg-white shadow-sm font-DM pt-1 lg:pt-0">
+      <header className="w-full sticky top-0 z-[100] bg-white shadow-sm font-DM pt-1 lg:pt-0  dark:bg-black">
         <div className="max-w-[1440px] mx-auto py-[2px] flex items-center justify-between gap-6">
 
           <div className="flex items-center gap-3">
@@ -67,7 +67,7 @@ function Navbar() {
             <Sheet open={open} onOpenChange={setOpen}>
               <SheetTrigger asChild>
                 <Button variant="ghost" size="icon" className="lg:hidden">
-                  <HiOutlineMenu className="text-2xl text-gray-700" />
+                  <HiOutlineMenu className="text-2xl text-gray-700 dark:text-white" />
                 </Button>
               </SheetTrigger>
 
@@ -101,6 +101,7 @@ function Navbar() {
                 fill
                 className="object-contain"
                 priority
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
               />
             </div>
           </div>
@@ -113,10 +114,10 @@ function Navbar() {
               onClick={handleModeToggle}
               className={`hidden md:flex gap-2 rounded-full font-bold text-xs h-9 px-5 transition-all active:scale-95 ${isSellerMode
                 ? "bg-green-600 hover:bg-black text-white border-none"
-                : "text-gray-600 border-gray-200 hover:bg-gray-50"
+                : "text-gray-600 border-gray-200 hover:bg-gray-50 dark:text-white"
                 }`}
             >
-              <HiOutlineSwitchHorizontal className="text-lg" />
+              <HiOutlineSwitchHorizontal className="text-lg dark:text-white" />
               {isSellerMode ? "Switch to Buying" : "Switch to Selling"}
             </Button>
 

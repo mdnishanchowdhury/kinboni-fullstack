@@ -1,5 +1,5 @@
 import BannerSection from "@/components/layout/Home/Banner/BannerSection";
-import FeaturedItems from "@/components/layout/Home/Banner/Featured-Items/FeaturedItems";
+import FeaturedItems from "@/components/layout/Home/Featured-Items/FeaturedItems";
 
 export default function Home() {
   return (

@@ -33,7 +33,7 @@ export default function DesktopNavigation({
   const pathname = usePathname();
 
   return (
-    <div className="hidden lg:block pb-1 bg-white">
+    <div className="hidden lg:block pb-1">
       <div className="max-w-[1440px] mx-auto flex items-center justify-between">
 
         <div className="flex items-center gap-8">
@@ -41,7 +41,7 @@ export default function DesktopNavigation({
           {/* Explore Categories Dropdown */}
           <div className="relative group">
             <Button
-              className="bg-green-500 hover:bg-black text-white px-8 py-5 font-bold flex items-center gap-3 rounded-full transition-all duration-300"
+              className="bg-green-500 hover:bg-black text-white px-8 py-5 font-bold flex items-center gap-3 rounded-full transition-all duration-300 "
             >
               <MdOutlineCategory className="text-xl" />
               Explore Categories
@@ -76,8 +76,8 @@ export default function DesktopNavigation({
                   key={link.name}
                   href={link.path}
                   className={`px-4 py-2 transition-all rounded-md text-sm ${isActive
-                    ? "bg-green-500 text-white"
-                    : "hover:text-green-600 hover:bg-green-50/50"
+                    ? "bg-green-500 text-white dark:text-white"
+                    : "hover:text-green-600 hover:bg-green-50/50 dark:text-white"
                     }`}
                 >
                   {link.name}
@@ -112,11 +112,11 @@ export default function DesktopNavigation({
             </div>
           ) : (
             <div className="flex items-center gap-6 font-bold text-sm text-gray-600">
-              <Link href="/seller-onboarding" className="cursor-pointer hover:text-[#088178] transition-colors">
+              <Link href="/seller-onboarding" className="cursor-pointer hover:text-[#088178] transition-colors dark:text-white">
                 Sell on KINBONi
               </Link>
               <div className="h-4 w-[1px] bg-gray-200" />
-              <Link href="/help" className="cursor-pointer hover:text-[#088178] transition-colors">
+              <Link href="/help" className="cursor-pointer hover:text-[#088178] transition-colors dark:text-white">
                 Help Center
               </Link>
             </div>

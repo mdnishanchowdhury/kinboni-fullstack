@@ -83,13 +83,13 @@ export default function FeaturedItems() {
         }
       `}</style>
 
-      <section className="py-1 select-none bg-white overflow-hidden">
+      <section className="py-1 select-none  overflow-hidden">
         <div className="container mx-auto px-4 md:px-0">
 
           <div className="flex items-start justify-between mb-5">
 
             <div>
-              <h2 className="flex items-center gap-2.5 text-[20px] md:text-[26px] font-bold text-slate-800 leading-tight">
+              <h2 className="flex items-center gap-2.5 text-[20px] md:text-[26px] font-bold text-slate-800 leading-tight dark:text-white">
 
                 <span className="flex-shrink-0 mt-0.5">
                   <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
@@ -101,7 +101,7 @@ export default function FeaturedItems() {
                 </span>
                 Featured Items
               </h2>
-              <p className="text-slate-400 text-[12px] mt-1 font-normal">
+              <p className="text-slate-400 text-[12px] mt-1 font-normal dark:text-white/80">
                 Drag with mouse or use buttons to explore
               </p>
             </div>
@@ -153,7 +153,7 @@ export default function FeaturedItems() {
                 </div>
 
                 {/* Label bold, centered, matches screenshot */}
-                <span className="text-[8px] md:text-sm font-bold text-slate-800 text-center leading-snug line-clamp-2 w-full px-1">
+                <span className="text-[8px] md:text-sm font-bold text-slate-800 text-center leading-snug line-clamp-2 w-full px-1 dark:text-white">
                   {item.name}
                 </span>
               </div>

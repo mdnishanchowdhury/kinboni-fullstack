@@ -65,11 +65,11 @@ export default function Slider({ banners }: SliderProps) {
                     transition={{ duration: 0.8, delay: 0.2 }}
                     className="max-w-xl space-y-4 md:space-y-6 text-foreground"
                 >
-                    <h1 className="text-3xl md:text-5xl font-extrabold leading-tight whitespace-pre-line drop-shadow-sm">
+                    <h1 className="text-3xl md:text-5xl font-extrabold leading-tight whitespace-pre-line drop-shadow-sm dark:text-black">
                         {banners[current].title.replace(", ", "\n")}
                     </h1>
 
-                    <p className="text-sm md:text-lg opacity-90 font-medium max-w-md">
+                    <p className="text-sm md:text-lg opacity-90 font-medium max-w-md dark:text-black">
                         {banners[current].description}
                     </p>
 

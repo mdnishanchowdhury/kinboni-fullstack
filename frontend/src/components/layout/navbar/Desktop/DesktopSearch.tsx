@@ -25,7 +25,7 @@ export default function DesktopSearch() {
                     value={query}
                     onChange={(e) => setQuery(e.target.value)}
                     placeholder="Search for products, brands and more..."
-                    className="w-full bg-slate-100 py-[18px] px-6 rounded-full text-sm outline-none border-2 border-transparent focus:bg-white focus:border-green-600 focus-visible:ring-0 transition-all placeholder:text-slate-400 text-slate-700"
+                    className="w-full bg-slate-100 py-[18px] px-6 rounded-full text-sm outline-none border-2 border-transparent focus:bg-white focus:border-green-600 focus-visible:ring-0 transition-all placeholder:text-slate-400 text-slate-700   dark:border-slate-700 dark:bg-slate-800 dark:focus:bg-slate-900 dark:placeholder:text-slate-500"
                 />
 
                 <Button
