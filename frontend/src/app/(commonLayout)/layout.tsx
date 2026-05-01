@@ -1,4 +1,5 @@
-import Navbar from "@/components/Shared/Navbar/Navbar";
+import Navbar from "../../components/Shared/Navbar/Navbar";
+
 
 export default function CommonLayout({
     children,
@@ -8,7 +9,7 @@ export default function CommonLayout({
 }>) {
     return (
         <div>
-            <Navbar />
+            <Navbar/>
 
             <main className="max-w-[1440px] mx-auto mt-4">
                 {children}

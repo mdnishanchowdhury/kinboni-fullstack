@@ -5,10 +5,10 @@ import { StaticImageData } from "next/image";
 import fashion from "../../../../../public/image/banner/electonic.jpg";
 import mobile from "../../../../../public/image/banner/mobile.jpg";
 import electonic from "../../../../../public/image/banner/electonic.jpg";
-import CategoryMenu from "../../navbar/Category/CategoryMenu";
+import CategoryMenu from "../../NavbarSection/Category/CategoryMenu";
 import Slider from "./Slider";
-import { useCategories } from "@/hooks/useCategories";
-import { BannerSkeleton } from "@/components/Skeleton/BannerSkeleton";
+import { BannerSkeleton } from "../../../Skeleton/BannerSkeleton";
+import { useCategories } from "../../../../hooks/useCategories";
 
 export interface Banner {
     image: StaticImageData | string;

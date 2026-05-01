@@ -2,8 +2,8 @@
 
 import React, { useState } from "react";
 import { FiSearch } from "react-icons/fi";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
+import { Input } from "../../../ui/input";
+import { Button } from "../../../ui/button";
 
 export default function MobileSearchBar() {
   const [query, setQuery] = useState("");

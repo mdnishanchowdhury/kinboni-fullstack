@@ -2,9 +2,9 @@
 
 import React, { useRef, useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { useCategories } from "@/hooks/useCategories";
-import { cn } from "@/lib/utils";
-import FeaturedItemsSkeleton from "@/components/Skeleton/FeaturedItemsSkeleton";
+import FeaturedItemsSkeleton from "../../../Skeleton/FeaturedItemsSkeleton";
+import { useCategories } from "../../../../hooks/useCategories";
+import { cn } from "../../../../lib/utils";
 
 interface CategoryItem {
   name: string;
@@ -152,7 +152,6 @@ export default function FeaturedItems() {
                   />
                 </div>
 
-                {/* Label bold, centered, matches screenshot */}
                 <span className="text-[8px] md:text-sm font-bold text-slate-800 text-center leading-snug line-clamp-2 w-full px-1 dark:text-white">
                   {item.name}
                 </span>

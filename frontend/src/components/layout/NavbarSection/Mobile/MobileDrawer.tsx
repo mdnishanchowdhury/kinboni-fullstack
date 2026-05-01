@@ -3,15 +3,9 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { MdOutlineDashboard, MdOutlineAddBox } from "react-icons/md";
-
-import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-} from "@/components/ui/sheet";
-import { Switch } from "@/components/ui/switch";
-import { Button } from "@/components/ui/button";
+import { Sheet, SheetContent, SheetHeader, SheetTitle } from "../../../ui/sheet";
+import { Switch } from "../../../ui/switch";
+import { Button } from "../../../ui/button";
 
 interface NavLinkItem {
   name: string;

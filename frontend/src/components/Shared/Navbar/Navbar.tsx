@@ -5,17 +5,17 @@ import { HiOutlineMenu, HiOutlineSwitchHorizontal } from "react-icons/hi";
 import Image from "next/image";
 import logo from "../../../../public/image/logo/logoT.png";
 
-import { Button } from "@/components/ui/button";
-import { Sheet, SheetContent, SheetTrigger, SheetTitle } from "@/components/ui/sheet";
-import AnnouncementBar from "@/components/layout/navbar/Announcement/AnnouncementBar";
-import MobileDrawerContent from "@/components/layout/navbar/Mobile/MobileDrawerContent";
-import DesktopSearch from "@/components/layout/navbar/Desktop/DesktopSearch";
-import MessageDropdown from "@/components/layout/navbar/Dropdowns/MessageDropdown";
-import CartDropdown from "@/components/layout/navbar/Dropdowns/CartDropdown";
-import AccountDropdown from "@/components/layout/navbar/Dropdowns/AccountDropdown";
-import MobileSearchBar from "@/components/layout/navbar/Mobile/MobileSearchBar";
-import DesktopNavigation from "@/components/layout/navbar/Desktop/DesktopNavigation";
-import { useCategories } from "@/hooks/useCategories";
+import AnnouncementBar from "../../layout/NavbarSection/Announcement/AnnouncementBar";
+import MobileDrawerContent from "../../layout/NavbarSection/Mobile/MobileDrawerContent";
+import DesktopSearch from "../../layout/NavbarSection/Desktop/DesktopSearch";
+import MessageDropdown from "../../layout/NavbarSection/Dropdowns/MessageDropdown";
+import CartDropdown from "../../layout/NavbarSection/Dropdowns/CartDropdown";
+import AccountDropdown from "../../layout/NavbarSection/Dropdowns/AccountDropdown";
+import MobileSearchBar from "../../layout/NavbarSection/Mobile/MobileSearchBar";
+import DesktopNavigation from "../../layout/NavbarSection/Desktop/DesktopNavigation";
+import { Button } from "../../ui/button";
+import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "../../ui/sheet";
+import { useCategories } from "../../../hooks/useCategories";
 
 function Navbar() {
   const [open, setOpen] = useState(false);

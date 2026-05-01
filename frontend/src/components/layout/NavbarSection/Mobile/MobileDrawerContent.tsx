@@ -3,11 +3,10 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { MdOutlineDashboard, MdOutlineAddBox, MdKeyboardArrowDown } from "react-icons/md";
-import { Button } from "@/components/ui/button";
 import { Loader2 } from "lucide-react";
 import MobileCategoryMenu from "./MobileCategoryMenu";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
-
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "../../../ui/dropdown-menu";
+import { Button } from "../../../ui/button";
 interface MobileDrawerContentProps {
   setOpen: (open: boolean) => void;
   logo: any;

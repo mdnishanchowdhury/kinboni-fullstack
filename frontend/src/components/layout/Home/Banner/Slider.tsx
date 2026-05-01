@@ -4,10 +4,9 @@ import { useState } from "react";
 import Image, { StaticImageData } from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronRight, ChevronLeft } from "lucide-react";
+import { useAutoSlide } from "../../../../hooks/useAutoSlide";
+import { Button } from "../../../ui/button";
 
-import { Button } from "@/components/ui/button";
-
-import { useAutoSlide } from "@/hooks/useAutoSlide";
 
 interface Banner {
     image: StaticImageData | string;
@@ -112,8 +111,8 @@ export default function Slider({ banners }: SliderProps) {
                         type="button"
                         onClick={() => setCurrent(index)}
                         className={`transition-all duration-300 rounded-full ${current === index
-                                ? "w-8 h-2 bg-primary"
-                                : "w-2 h-2 bg-muted-foreground/40 hover:bg-muted-foreground/60"
+                            ? "w-8 h-2 bg-primary"
+                            : "w-2 h-2 bg-muted-foreground/40 hover:bg-muted-foreground/60"
                             }`}
                         aria-label={`Go to slide ${index + 1}`}
                     />

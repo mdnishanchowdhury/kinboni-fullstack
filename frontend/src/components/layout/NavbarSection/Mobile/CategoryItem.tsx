@@ -1,5 +1,5 @@
-import { cn } from "@/lib/utils";
 import Link from "next/link";
+import { cn } from "../../../../lib/utils";
 
 export const CategoryItem = ({ item, pathname, setOpen }: any) => {
   const itemSlug = `/product/${item.slug || item.name.toLowerCase().replace(/\s+/g, '-')}`;

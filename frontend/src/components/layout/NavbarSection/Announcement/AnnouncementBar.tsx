@@ -1,8 +1,8 @@
 "use client";
 
 import { HiArrowRight } from "react-icons/hi";
-import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { Button } from "../../../ui/button";
 
 interface AnnouncementBarProps {
     isSellerMode: boolean;

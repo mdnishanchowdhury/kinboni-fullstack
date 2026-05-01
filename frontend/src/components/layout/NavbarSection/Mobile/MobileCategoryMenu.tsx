@@ -5,8 +5,8 @@ import { usePathname } from "next/navigation";
 import { ChevronDown, ChevronRight } from "lucide-react";
 import { MdOutlineCategory } from "react-icons/md";
 import { motion, AnimatePresence } from "framer-motion";
-import { cn } from "@/lib/utils";
 import { SubCategoryGroup } from "./SubCategoryGroup";
+import { cn } from "../../../../lib/utils";
 
 export default function MobileCategoryMenu({ categoriesData, setOpen }: { categoriesData: any[], setOpen: (val: boolean) => void }) {
     const pathname = usePathname();

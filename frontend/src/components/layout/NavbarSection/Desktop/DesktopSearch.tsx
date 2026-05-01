@@ -2,8 +2,8 @@
 
 import { useState } from "react";
 import { FiSearch } from "react-icons/fi";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import { Input } from "../../../ui/input";
+import { Button } from "../../../ui/button";
 
 export default function DesktopSearch() {
     const [query, setQuery] = useState("");

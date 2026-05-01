@@ -8,9 +8,9 @@ import {
   MdOutlineDashboard,
   MdOutlineAddBox
 } from "react-icons/md";
-import { Button } from "@/components/ui/button";
 import CategoryMenu from "../Category/CategoryMenu";
 import { Loader2 } from "lucide-react";
+import { Button } from "../../../ui/button";
 
 interface NavLinkItem {
   name: string;

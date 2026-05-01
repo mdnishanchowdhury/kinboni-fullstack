@@ -1,7 +1,7 @@
 import { ChevronDown } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { CategoryItem } from "./CategoryItem";
-import { cn } from "@/lib/utils";
+import { cn } from "../../../../lib/utils";
 export const SubCategoryGroup = ({ sub, openSubCategory, setOpenSubCategory, pathname, setOpen }: any) => {
     const isOpen = openSubCategory === sub.name;
 

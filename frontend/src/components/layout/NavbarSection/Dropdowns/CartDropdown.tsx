@@ -1,13 +1,9 @@
 "use client";
 
 import { FiShoppingCart } from "react-icons/fi";
-import { Button } from "@/components/ui/button";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 import Link from "next/link";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from "../../../ui/dropdown-menu";
+import { Button } from "../../../ui/button";
 
 interface CartDropdownProps {
   isSellerMode: boolean;

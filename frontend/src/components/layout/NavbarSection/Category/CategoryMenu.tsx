@@ -3,7 +3,7 @@
 import { useState, useCallback, useMemo } from "react";
 import { ChevronRight } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import { cn } from "@/lib/utils";
+import { cn } from "../../../../lib/utils";
 
 const SubCategoryItems = ({ items }: { items: any[] }) => (
   <motion.div
