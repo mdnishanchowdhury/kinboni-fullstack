@@ -1,3 +1,4 @@
+import Footer from "../../components/Shared/Footer/Footer";
 import Navbar from "../../components/Shared/Navbar/Navbar";
 
 
@@ -9,12 +10,13 @@ export default function CommonLayout({
 }>) {
     return (
         <div>
-            <Navbar/>
+            <Navbar />
 
             <main className="max-w-[1440px] mx-auto mt-4">
                 {children}
             </main>
 
+            <Footer />
         </div>
     )
 }
