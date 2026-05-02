@@ -22,7 +22,7 @@ export interface Product {
   name: string;
   slug: string;
   description: string;
-  price?: number; 
+  price?: number;
   image?: string;
   brand: {
     name: string;
@@ -61,6 +61,8 @@ export interface Product {
     timerLabel: string;
   };
   variants: Variant[];
+  thumbnail: string;
+  timerLabel?: string;
 }
 
 export interface ProductResponse {

@@ -1,4 +1,5 @@
 import BannerSection from "../../components/layout/Home/Banner/BannerSection";
+import DiscountProducts from "../../components/layout/Home/DiscountProducts/DiscountProducts";
 import FeaturedItems from "../../components/layout/Home/Featured-Items/FeaturedItems";
 import Products from "../../components/layout/Home/Product/Products";
 
@@ -8,6 +9,7 @@ export default function Home() {
       <BannerSection/>
       <FeaturedItems/>
       <Products/>
+      <DiscountProducts/>
     </div>
   );
 }
