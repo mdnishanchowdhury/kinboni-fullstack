@@ -4,7 +4,6 @@ import { motion, Variants } from "framer-motion";
 import { LayoutGrid } from "lucide-react";
 import ProductGrid from "./ProductGrid";
 import { Product } from "../../../../types/product.types";
-import { useProducts } from "../../../../hooks/useProduct";
 import { Button } from "../../../ui/button";
 
 const containerVariants: Variants = {
@@ -16,11 +15,12 @@ const containerVariants: Variants = {
   },
 };
 
-export default function Products() {
+interface TopSellingProps {
+    products: Product[];
+    isLoading?: boolean;
+}
 
-  const { data, isLoading } = useProducts();
-
-  const products: Product[] = data?.data || [];
+export default function Products({ products, isLoading }: TopSellingProps) {
 
   return (
     <motion.section
