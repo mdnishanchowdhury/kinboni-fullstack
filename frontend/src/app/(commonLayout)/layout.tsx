@@ -1,22 +1,26 @@
+"use client";
+
+import { usePathname } from "next/navigation";
 import Footer from "../../components/Shared/Footer/Footer";
 import Navbar from "../../components/Shared/Navbar/Navbar";
-
 
 export default function CommonLayout({
     children,
 }: Readonly<{
     children: React.ReactNode;
-
 }>) {
+    const pathname = usePathname();
+    const hideNavbarFooter = pathname === "/login" || pathname === "/register";
+
     return (
         <div>
-            <Navbar />
+            {!hideNavbarFooter && <Navbar />}
 
-            <main className="max-w-[1440px] mx-auto mt-4">
+            <main className={`${!hideNavbarFooter ? "max-w-[1440px] mx-auto mt-4" : "w-full"}`}>
                 {children}
             </main>
 
-            <Footer />
+            {!hideNavbarFooter && <Footer />}
         </div>
-    )
+    );
 }

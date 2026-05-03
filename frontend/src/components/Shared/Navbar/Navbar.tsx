@@ -16,6 +16,7 @@ import DesktopNavigation from "../../layout/NavbarSection/Desktop/DesktopNavigat
 import { Button } from "../../ui/button";
 import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "../../ui/sheet";
 import { useCategories } from "../../../hooks/useCategories";
+import Link from "next/dist/client/link";
 
 function Navbar() {
   const [open, setOpen] = useState(false);
@@ -59,7 +60,7 @@ function Navbar() {
       <AnnouncementBar isSellerMode={isSellerMode} />
 
       <header className="w-full sticky top-0 z-[100] bg-white shadow-sm font-DM pt-1 lg:pt-0  dark:bg-black">
-        <div className="max-w-[1440px] mx-auto py-[2px] flex items-center justify-between gap-6">
+        <div className="max-w-[1440px] mx-auto py-[2px] flex items-center justify-between gap-1">
 
           <div className="flex items-center gap-3">
 
@@ -126,6 +127,19 @@ function Navbar() {
               <CartDropdown isSellerMode={isSellerMode} />
               <AccountDropdown />
             </div>
+          </div>
+          <div className="space-x-2">
+             {/* login button */}
+            <Link href="/login">
+              <Button variant="outline" size="sm">Login</Button>
+            </Link>
+            <Link href="/register">
+
+              {/* sign up button */}
+              <Button size="sm" className="bg-green-600 hover:bg-black">
+                Sign Up
+              </Button>
+            </Link>
           </div>
         </div>
 

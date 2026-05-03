@@ -41,7 +41,7 @@ const DiscountProductCard = ({ product }: DiscountProductCardProps) => {
     };
 
     const isOutOfStock = product.inventory.stock === 0;
-    const stockPercent = getStockPercent(product.inventory.stock, product.inventory.sold);
+    const stockPercent = Math.round(getStockPercent(product.inventory.stock, product.inventory.sold));
     const starsArray = useMemo(() => getStarsArray(product.ratings.average), [product.ratings.average]);
 
     return (
