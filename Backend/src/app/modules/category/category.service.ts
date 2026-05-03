@@ -1,3 +1,5 @@
+import status from "http-status";
+import AppError from "../../errorHelpers/AppError";
 import { prisma } from "../../lib/prisma";
 
 const createCategory = async (payload: ICategoryPayload) => {
@@ -89,7 +91,7 @@ const addItemsToSubCategory = async (payload: any) => {
     });
 
     if (!subCategoryExists) {
-        throw new Error("SubCategory ID not found!");
+        throw new AppError(status.NOT_FOUND, "SubCategory ID not found!");
     }
 
     const result = await prisma.subCategory.update({

@@ -1,42 +1,35 @@
 import { Request, Response } from "express";
 import { ProductService } from "./product.service";
+import { sendResponse } from "../../shared/sendResponse";
+import { catchAsync } from "../../shared/catchAsync";
 
-const createProduct = async (req: Request, res: Response) => {
-    try {
+const createProduct = catchAsync(
+    async (req: Request, res: Response) => {
         const payload = req.body;
         const product = await ProductService.createProduct(payload);
 
-        res.status(201).json({
+        sendResponse(res, {
+            httpStatusCode: 201,
             success: true,
             message: "Product created successfully!",
             data: product
         });
 
-    } catch (error: any) {
-        res.status(400).json({
-            success: false,
-            message: error.message || "Something went wrong"
-        });
     }
-};
+);
 
-const getAllProducts = async (req: Request, res: Response) => {
-    try {
+const getAllProducts = catchAsync(
+    async (req: Request, res: Response) => {
         const products = await ProductService.getAllProducts();
 
-        res.status(200).json({
+        sendResponse(res, {
+            httpStatusCode: 200,
             success: true,
             message: "Products fetched successfully!",
-            count: products.length,
             data: products
         });
-    } catch (error: any) {
-        res.status(500).json({
-            success: false,
-            message: error.message || "Something went wrong"
-        });
     }
-};
+);
 
 export const ProductController = {
     createProduct,

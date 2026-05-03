@@ -1,79 +1,65 @@
 import { Request, Response } from "express";
 import { CategoryService } from "./category.service";
+import { catchAsync } from "../../shared/catchAsync";
+import { sendResponse } from "../../shared/sendResponse";
 
-const createCategory = async (req: Request, res: Response) => {
-    try {
+const createCategory = catchAsync(
+    async (req: Request, res: Response) => {
         const payload = req.body;
         const product = await CategoryService.createCategory(payload);
 
-        res.status(201).json({
+        sendResponse(res, {
+            httpStatusCode: 201,
             success: true,
             message: "Category created successfully!",
             data: product
         });
 
-    } catch (error: any) {
-        res.status(400).json({
-            success: false,
-            message: error.message || "Something went wrong"
-        });
     }
-};
+);
 
-const getSimpleCategories = async (req: Request, res: Response) => {
-    try {
+const getSimpleCategories = catchAsync(
+    async (req: Request, res: Response) => {
         const result = await CategoryService.getSimpleCategories();
 
-        res.status(200).json({
+        sendResponse(res, {
+            httpStatusCode: 200,
             success: true,
             message: "Categories fetched successfully!",
             data: result
         });
-    } catch (error: any) {
-        res.status(500).json({
-            success: false,
-            message: error.message || "Internal server error"
-        });
     }
-};
+);
 
-const addSubCategory = async (req: Request, res: Response) => {
-    try {
+const addSubCategory = catchAsync(
+    async (req: Request, res: Response) => {
         const payload = req.body;
 
         const result = await CategoryService.addSubCategory(payload);
 
-        res.status(201).json({
+        sendResponse(res, {
+            httpStatusCode: 201,
             success: true,
             message: "Sub-category added successfully!",
             data: result
         });
-    } catch (error: any) {
-        res.status(400).json({
-            success: false,
-            message: error.message || "Failed to add sub-category"
-        });
     }
-};
+);
 
-const addItemsToSubCategory = async (req: Request, res: Response) => {
-    try {
+const addItemsToSubCategory = catchAsync(
+    async (req: Request, res: Response) => {
         const payload = req.body;
 
         const result = await CategoryService.addItemsToSubCategory(payload);
 
-        res.status(201).json({
+        sendResponse(res, {
+            httpStatusCode: 201,
             success: true,
             message: "Items added to sub-category successfully!",
             data: result
         });
-    } catch (error: any) {
-        res.status(400).json({
-            success: false,
-            message: error.message || "Failed to add items"
-        });
     }
-};
+);
 
 export const CategoryController = {
     createCategory,
