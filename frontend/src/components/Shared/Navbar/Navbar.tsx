@@ -16,7 +16,7 @@ import DesktopNavigation from "../../layout/NavbarSection/Desktop/DesktopNavigat
 import { Button } from "../../ui/button";
 import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "../../ui/sheet";
 import { useCategories } from "../../../hooks/useCategories";
-import Link from "next/dist/client/link";
+import Link from "next/link";
 
 function Navbar() {
   const [open, setOpen] = useState(false);
@@ -109,6 +109,7 @@ function Navbar() {
 
           <DesktopSearch />
 
+
           <div className="flex items-center gap-2 lg:gap-6">
             <Button
               variant={isSellerMode ? "default" : "outline"}
@@ -129,14 +130,14 @@ function Navbar() {
             </div>
           </div>
           <div className="space-x-2">
-             {/* login button */}
+            {/* login button */}
             <Link href="/login">
               <Button variant="outline" size="sm">Login</Button>
             </Link>
             <Link href="/register">
 
               {/* sign up button */}
-              <Button size="sm" className="bg-green-600 hover:bg-black">
+              <Button size="sm" className="bg-green-500 hover:bg-black">
                 Sign Up
               </Button>
             </Link>

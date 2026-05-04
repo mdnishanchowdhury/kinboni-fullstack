@@ -51,7 +51,7 @@ export default function LoginForm({ redirectPath }: { redirectPath?: string }) {
                         Welcome Back!
                     </CardTitle>
                     <CardDescription className='text-slate-500 text-base'>
-                        Login to your <span className="text-green-600 font-medium">Kinboni</span> account
+                        Login to your <span className="text-green-500 font-medium">Kinboni</span> account
                     </CardDescription>
                 </CardHeader>
 
@@ -89,7 +89,7 @@ export default function LoginForm({ redirectPath }: { redirectPath?: string }) {
                                 <label className="text-sm font-bold text-slate-800">Your Password</label>
                                 <Link
                                     href="/forgot-password"
-                                    className="text-sm text-green-600 hover:underline font-medium"
+                                    className="text-sm text-green-500 hover:underline font-medium"
                                 >
                                     Forgot password?
                                 </Link>
@@ -128,7 +128,7 @@ export default function LoginForm({ redirectPath }: { redirectPath?: string }) {
                         <Button
                             type="submit"
                             disabled={isPending}
-                            className="w-full py-5 bg-green-600 hover:bg-black text-white rounded-xl font-bold text-base transition-all shadow-md shadow-green-100 disabled:opacity-70 disabled:cursor-not-allowed"
+                            className="w-full py-5 bg-green-500 hover:bg-black text-white rounded-xl font-bold text-base transition-all shadow-md shadow-green-100 disabled:opacity-70 disabled:cursor-not-allowed"
                         >
                             {isPending ? (
                                 <span className="flex items-center gap-2">
@@ -168,7 +168,7 @@ export default function LoginForm({ redirectPath }: { redirectPath?: string }) {
 
                     <div className="text-center pt-2">
                         <p className='text-[15px] text-slate-500'>
-                            Don't have an account? <Link href="/register" className='text-green-600 font-bold hover:underline'>Sign up</Link>
+                            Don't have an account? <Link href="/register" className='text-green-500 font-bold hover:underline'>Sign up</Link>
                         </p>
                     </div>
                 </CardContent>

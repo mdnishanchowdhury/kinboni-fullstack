@@ -1,4 +1,4 @@
-import { UserRole } from "../types/auth.type";
+import { UserRole } from "../../types/auth.type";
 
 export const authRoutes = ["/login", "/register", "/forget-password", "/reset-password", "/verify-email"];
 

@@ -5,7 +5,7 @@ import { IRegisterPayload, registerZodSchema } from "../../../../zod/auth.valida
 import { IRegisterResponse, UserRole } from "../../../../types/auth.type";
 import { ApiErrorResponse } from "../../../../types/api.types";
 import { httpClient } from "../../../../lib/axios/httpClient";
-import { getDefaultDashboardRoute, isValidRedirectForRole } from "../../../../lib/authUtils";
+import { getDefaultDashboardRoute, isValidRedirectForRole } from "../../../../lib/auth/authUtils";
 
 export const registerAction = async (payload: IRegisterPayload, redirectPath?: string): Promise<IRegisterResponse | ApiErrorResponse> => {
     const parsedPayload = registerZodSchema.safeParse(payload);

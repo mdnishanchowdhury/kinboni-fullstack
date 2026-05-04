@@ -1,10 +1,10 @@
 "use server";
 import { redirect } from "next/navigation";
 import { httpClient } from "../../../../lib/axios/httpClient";
-import { setTokenINCookies } from "../../../../lib/tokenUtils";
+import { setTokenINCookies } from "../../../../lib/auth/tokenUtils";
 import { ILoginPayload, loginZodSchema } from "../../../../zod/auth.validation";
 import { ILoginResponse, UserRole } from "../../../../types/auth.type";
-import { getDefaultDashboardRoute, isValidRedirectForRole } from "../../../../lib/authUtils";
+import { getDefaultDashboardRoute, isValidRedirectForRole } from "../../../../lib/auth/authUtils";
 
 export const loginAction = async (payload: ILoginPayload, redirectPath?: string) => {
     const parsedPayload = loginZodSchema.safeParse(payload);

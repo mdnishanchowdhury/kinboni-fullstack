@@ -63,7 +63,7 @@ export default function RegisterForm({ redirectPath }: { redirectPath?: string }
                         Create an account
                     </CardTitle>
                     <CardDescription className="text-slate-500 text-[15px]">
-                        Your gateway to sustainable shopping starts at <span className="text-green-600 font-semibold">Kinboni</span>
+                        Your gateway to sustainable shopping starts at <span className="text-green-500 font-semibold">Kinboni</span>
                     </CardDescription>
                 </CardHeader>
 
@@ -87,7 +87,7 @@ export default function RegisterForm({ redirectPath }: { redirectPath?: string }
                                 <AppField
                                     field={field}
                                     label="Full Name"
-                                    placeholder='Nishan Chowdhury'
+                                    placeholder='your name'
                                 />
                             )}
                         </form.Field>
@@ -175,7 +175,7 @@ export default function RegisterForm({ redirectPath }: { redirectPath?: string }
                         <Button
                             type="submit"
                             disabled={isPending}
-                            className="w-full py-5 bg-green-600 hover:bg-black text-white rounded-xl font-bold text-base transition-all shadow-md shadow-green-100 disabled:opacity-70 disabled:cursor-not-allowed"
+                            className="w-full py-5 bg-green-500 hover:bg-black text-white rounded-xl font-bold text-base transition-all shadow-md shadow-green-100 disabled:opacity-70 disabled:cursor-not-allowed"
                         >
                             {isPending ? (
                                 <span className="flex items-center gap-2">
@@ -214,7 +214,7 @@ export default function RegisterForm({ redirectPath }: { redirectPath?: string }
 
                     <div className="text-center pt-2">
                         <p className='text-[15px] text-slate-500'>
-                            Already have an account? <Link href="/login" className='text-green-600 font-bold hover:underline'>Sign in</Link>
+                            Already have an account? <Link href="/login" className='text-green-500 font-bold hover:underline'>Sign in</Link>
                         </p>
                     </div>
                 </CardContent>
