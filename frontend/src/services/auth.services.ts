@@ -2,8 +2,10 @@
 
 import jwt, { JwtPayload } from "jsonwebtoken";
 import { getCookie } from "../lib/auth/cookiesUtils";
-import { UserInfo } from "../types/auth.type";
+import { RefreshTokenResponse, UserInfo } from "../types/auth.type";
 import { httpClient } from "../lib/axios/httpClient";
+import { cookies } from "next/headers";
+import { setTokenINCookies } from "../lib/auth/tokenUtils";
 
 export const getUserInfo = async (): Promise<UserInfo | null> => {
     try {
@@ -46,3 +48,72 @@ export const getUserInfo = async (): Promise<UserInfo | null> => {
         return null;
     }
 };
+
+export async function getNewAccessToken(): Promise<RefreshTokenResponse> {
+    try {
+        const refreshToken = await getCookie("refreshToken");
+        const cookieStore = await cookies();
+        const sessionToken = cookieStore.get("better-auth.session_token")?.value;
+
+        if (!refreshToken) {
+            return { tokenRefreshed: false, success: false };
+        }
+
+        const response = await httpClient.post("/auth/refresh-token",
+            { refreshToken, sessionToken },
+            {
+                headers: {
+                    'Cookie': `refreshToken=${refreshToken}; better-auth.session_token=${sessionToken || ""}`
+                }
+            }
+        );
+
+        const result = response as any;
+        const apiData = result.data || result;
+
+        const finalAccessToken = apiData.accessToken;
+        const finalRefreshToken = apiData.refreshToken;
+        const finalSessionToken = apiData.token || apiData.session?.token;
+
+        if (!finalAccessToken) {
+            throw new Error("New access token not found");
+        }
+
+        // Access Token 
+        cookieStore.set("accessToken", finalAccessToken, {
+            secure: true,
+            httpOnly: true,
+            maxAge: 3600, 
+            path: "/",
+            sameSite: "lax",
+        });
+
+        // Refresh Token
+        if (finalRefreshToken) {
+            cookieStore.set("refreshToken", finalRefreshToken, {
+                secure: true,
+                httpOnly: true,
+                maxAge: 90 * 24 * 60 * 60,
+                path: "/",
+                sameSite: "lax",
+            });
+        }
+
+        if (finalSessionToken) {
+            await setTokenINCookies("better-auth.session_token", finalSessionToken, 24 * 60 * 60);
+        }
+
+        return {
+            tokenRefreshed: true,
+            success: true,
+            accessToken: finalAccessToken
+        };
+
+    } catch (error: any) {
+        console.error("Refresh Failed:", error.message);
+        return {
+            tokenRefreshed: false,
+            success: false
+        };
+    }
+}

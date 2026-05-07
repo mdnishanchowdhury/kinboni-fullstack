@@ -65,3 +65,9 @@ export interface IUserPayload {
     name?: string;
 }
 
+export interface RefreshTokenResponse {
+    tokenRefreshed: boolean;
+    success: boolean;
+    accessToken?: string;
+    message?: string;
+}

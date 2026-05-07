@@ -14,9 +14,14 @@ export const commonProtectedRoutes: RouteConfig = {
     pattern: [/^\/profile/],
 }
 
+export const superAdminProtectedRoutes: RouteConfig = {
+    exact: ["/super-admin/dashboard"],
+    pattern: [/^\/super-admin/],
+}
+
 export const adminProtectedRoutes: RouteConfig = {
     exact: ["/admin/dashboard", "/admin/dashboard/manage-users"],
-    pattern: [/^\/admin\/dashboard/, /^\/super-admin/],
+    pattern: [/^\/admin\/dashboard/],
 }
 
 export const sellerProtectedRoutes: RouteConfig = {
@@ -26,11 +31,11 @@ export const sellerProtectedRoutes: RouteConfig = {
 
 export const customerProtectedRoutes: RouteConfig = {
     exact: [
-        "/member/dashboard",
-        "/member/dashboard/my-purchases",
-        "/member/dashboard/payment/success"
+        "/customer/dashboard",
+        "/customer/dashboard/my-purchases",
+        "/customer/dashboard/payment/success"
     ],
-    pattern: [/^\/member\/dashboard/],
+    pattern: [/^\/customer\/dashboard/],
 }
 
 export const managerProtectedRoutes: RouteConfig = {
@@ -43,6 +48,7 @@ export const isRouteMatch = (pathname: string, routes: RouteConfig) => {
 }
 
 export const getRouteOwner = (pathname: string): UserRole | "COMMON" | null => {
+    if (isRouteMatch(pathname, superAdminProtectedRoutes)) return "SUPER_ADMIN";
     if (isRouteMatch(pathname, adminProtectedRoutes)) return "ADMIN";
     if (isRouteMatch(pathname, sellerProtectedRoutes)) return "SELLER";
     if (isRouteMatch(pathname, customerProtectedRoutes)) return "CUSTOMER";
@@ -56,7 +62,7 @@ export const getDefaultDashboardRoute = (role: UserRole): string => {
         SUPER_ADMIN: "/super-admin/dashboard",
         ADMIN: "/admin/dashboard",
         SELLER: "/seller/dashboard",
-        CUSTOMER: "/user/dashboard",
+        CUSTOMER: "/",
         MANAGER: "/manager/dashboard",
     };
     return dashboardMap[role] || "/";
@@ -67,7 +73,7 @@ export const isValidRedirectForRole = (redirectPath: string, role: UserRole) => 
 
     if (routeOwner === null || routeOwner === "COMMON") return true;
 
-    if (role === "SUPER_ADMIN" && routeOwner === "ADMIN") return true;
+    if (role === "SUPER_ADMIN" && (routeOwner === "ADMIN" || routeOwner === "SUPER_ADMIN")) return true;
 
     return routeOwner === role;
 }
