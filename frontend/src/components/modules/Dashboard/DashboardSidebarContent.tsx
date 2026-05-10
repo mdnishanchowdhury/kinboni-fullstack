@@ -8,8 +8,8 @@ import Image from "next/image";
 import { ScrollArea } from "../../ui/scroll-area";
 import { cn } from "../../../lib/utils";
 import { getIconComponent } from "../../../lib/constants/iconMapper";
-import { LogOut } from "lucide-react";
-import { Button } from "../../ui/button";
+import { MdLogout } from "react-icons/md";
+import { useLogout } from "../../../hooks/useLogout";
 
 interface DashboardSidebarContentProps {
   userInfo: UserInfo;
@@ -20,9 +20,9 @@ interface DashboardSidebarContentProps {
 function DashboardSidebarContent({
   dashboardHome,
   navItems,
-  userInfo,
 }: DashboardSidebarContentProps) {
   const pathname = usePathname();
+  const { logout, isLoading } = useLogout();
 
   return (
     <div
@@ -97,35 +97,31 @@ function DashboardSidebarContent({
         </nav>
       </ScrollArea>
 
-      {/* UPDATED USER CARD WITH LOGOUT */}
-      <div className="p-4 border-t border-slate-200 bg-white">
-        <div className="flex items-center gap-3">
-          <div className="h-10 w-10 shrink-0 rounded-full bg-indigo-600 flex items-center justify-center text-white font-semibold">
-            {userInfo.name?.charAt(0)}
-          </div>
-          <div className="flex-1 min-w-0">
-            <p className="text-sm font-medium text-slate-800 truncate">
-              {userInfo.name}
-            </p>
-            <p className="text-xs text-slate-500 truncate">
-              {userInfo.role}
-            </p>
-          </div>
-
-          {/* Logout Button */}
-          <Button
-            variant="ghost"
-            size="icon"
-            className="text-slate-400 hover:text-rose-500 hover:bg-rose-50 transition-colors"
-            onClick={() => {
-              console.log("Logging out...");
-            }}
-          >
-            <LogOut className="h-5 w-5" />
-          </Button>
+      {/* Logout Button */}
+        <div className="flex items-center gap-3 px-3 pb-3">
+          <button
+          onClick={logout}
+          disabled={isLoading}
+          className={cn(
+            "flex items-center justify-center gap-3 w-full py-2.5 rounded-xl transition-all duration-200 font-bold text-sm",
+            "border border-red-100 bg-red-50 text-red-600 hover:bg-red-600 hover:text-white hover:shadow-md",
+            isLoading && "opacity-50 cursor-not-allowed bg-slate-100 text-slate-400 border-slate-200"
+          )}
+        >
+          {isLoading ? (
+            <>
+              <div className="h-4 w-4 border-2 border-current border-t-transparent rounded-full animate-spin" />
+              <span>Please wait...</span>
+            </>
+          ) : (
+            <>
+              <MdLogout className="text-lg" />
+              <span>Sign out</span>
+            </>
+          )}
+        </button>
         </div>
       </div>
-    </div>
   );
 }
 

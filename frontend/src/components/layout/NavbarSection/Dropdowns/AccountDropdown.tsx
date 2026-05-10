@@ -7,10 +7,12 @@ import { useTheme } from "next-themes";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "../../../ui/dropdown-menu";
+import { useLogout } from "../../../../hooks/useLogout";
 
 export default function AccountDropdown() {
   const { theme, setTheme } = useTheme();
   const pathname = usePathname();
+  const { logout, isLoading } = useLogout();
 
   const getActiveClasses = (path: string) => {
     return pathname === path
@@ -95,8 +97,24 @@ export default function AccountDropdown() {
         </div>
 
         <div className="px-5 py-2 border-t border-gray-100">
-          <button className="flex items-center gap-3 text-[#088178] font-bold text-sm py-2 hover:opacity-70 transition-opacity w-full !bg-transparent">
-            <MdLogout className="text-lg" /> Sign out
+          <button
+            onClick={logout}
+            disabled={isLoading}
+            className={`flex items-center gap-3 text-[#088178] font-bold text-sm py-2 hover:opacity-70 transition-opacity w-full !bg-transparent rounded ${
+              isLoading ? "cursor-not-allowed opacity-50" : "cursor-pointer"
+            }`}
+          >
+            {isLoading ? (
+              <>
+                <div className="h-4 w-4 border-2 border-[#088178] border-t-transparent rounded-full animate-spin"></div>
+                <span>Logging out...</span>
+              </>
+            ) : (
+              <>
+                <MdLogout className="text-lg" />
+                <span>Sign out</span>
+              </>
+            )}
           </button>
         </div>
       </DropdownMenuContent>

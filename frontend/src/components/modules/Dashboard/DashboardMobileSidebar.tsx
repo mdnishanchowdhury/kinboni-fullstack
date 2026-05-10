@@ -9,11 +9,10 @@ import { getIconComponent } from "../../../lib/constants/iconMapper";
 import { cn } from "../../../lib/utils";
 import { ScrollArea } from "../../ui/scroll-area";
 import { SheetClose, SheetHeader, SheetTitle } from "../../ui/sheet";
-import { LogOut } from "lucide-react";
-import { Button } from "../../ui/button";
+import { MdLogout } from "react-icons/md";
+import { useLogout } from "../../../hooks/useLogout";
 
 const DashboardMobileSidebar = ({
-  userInfo,
   navItems,
   dashboardHome,
 }: {
@@ -22,6 +21,8 @@ const DashboardMobileSidebar = ({
   dashboardHome: string;
 }) => {
   const pathname = usePathname();
+  const { logout, isLoading } = useLogout();
+
 
   return (
     <div className="flex h-full flex-col bg-[#f8fafc] text-slate-800">
@@ -87,19 +88,29 @@ const DashboardMobileSidebar = ({
       </ScrollArea>
 
       {/* user action */}
-      <div className="p-4 border-t border-slate-200 bg-white">
-        <div className="flex items-center gap-3 px-2 py-1">
-          <div className="h-10 w-10 shrink-0 rounded-full bg-indigo-600 flex items-center justify-center text-white font-semibold">
-            {userInfo?.name?.charAt(0)}
-          </div>
-          <div className="flex-1 min-w-0">
-            <p className="text-sm font-medium text-slate-800 truncate">{userInfo?.name}</p>
-            <p className="text-xs text-slate-500 truncate">{userInfo?.role}</p>
-          </div>
-          <Button variant="ghost" size="icon" className="text-slate-400 hover:text-rose-500">
-            <LogOut className="h-5 w-5" />
-          </Button>
-        </div>
+      {/* Logout Button */}
+      <div className="flex items-center gap-3 px-3 pb-3">
+        <button
+          onClick={logout}
+          disabled={isLoading}
+          className={cn(
+            "flex items-center justify-center gap-3 w-full py-2.5 rounded-xl transition-all duration-200 font-bold text-sm",
+            "border border-red-100 bg-red-50 text-red-600 hover:bg-red-600 hover:text-white hover:shadow-md",
+            isLoading && "opacity-50 cursor-not-allowed bg-slate-100 text-slate-400 border-slate-200"
+          )}
+        >
+          {isLoading ? (
+            <>
+              <div className="h-4 w-4 border-2 border-current border-t-transparent rounded-full animate-spin" />
+              <span>Please wait...</span>
+            </>
+          ) : (
+            <>
+              <MdLogout className="text-lg" />
+              <span>Sign out</span>
+            </>
+          )}
+        </button>
       </div>
     </div>
   );

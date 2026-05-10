@@ -6,6 +6,7 @@ import { RefreshTokenResponse, UserInfo } from "../types/auth.type";
 import { httpClient } from "../lib/axios/httpClient";
 import { cookies } from "next/headers";
 import { setTokenINCookies } from "../lib/auth/tokenUtils";
+import { redirect } from "next/dist/client/components/navigation";
 
 export const getUserInfo = async (): Promise<UserInfo | null> => {
     try {
@@ -83,7 +84,7 @@ export async function getNewAccessToken(): Promise<RefreshTokenResponse> {
         cookieStore.set("accessToken", finalAccessToken, {
             secure: true,
             httpOnly: true,
-            maxAge: 3600, 
+            maxAge: 3600,
             path: "/",
             sameSite: "lax",
         });
@@ -117,3 +118,29 @@ export async function getNewAccessToken(): Promise<RefreshTokenResponse> {
         };
     }
 }
+
+export const logoutUser = async () => {
+    const cookieStore = await cookies();
+
+    const sessionToken = cookieStore.get("better-auth.session_token")?.value;
+
+    try {
+        if (sessionToken) {
+            await httpClient.post("/auth/logout", {}, {
+                headers: {
+                    Authorization: `Bearer ${sessionToken}`
+                }
+            });
+        }
+    } catch (error: any) {
+        console.error("Backend logout sync failed:", error.message);
+    }
+
+    const deleteOptions = { path: "/", secure: true, httpOnly: true };
+
+    cookieStore.delete({ name: "accessToken", ...deleteOptions });
+    cookieStore.delete({ name: "refreshToken", ...deleteOptions });
+    cookieStore.delete({ name: "better-auth.session_token", ...deleteOptions });
+
+    redirect("/login");
+};
