@@ -3,7 +3,8 @@ import AppError from "../../errorHelpers/AppError";
 import { auth } from "../../lib/auth";
 import { tokenUtils } from "../../utils/token";
 import { ILoginPayload, IRegisterPayload } from "./auth.interface";
-import { UserStatus } from "../../../generated/prisma/browser";
+import { Role, UserStatus } from "../../../generated/prisma/browser";
+import { prisma } from "../../lib/prisma";
 
 
 const registerUser = async (payload: IRegisterPayload) => {
@@ -93,8 +94,33 @@ const loginUser = async (payload: ILoginPayload) => {
 
 }
 
+const getMe = async (user: { userId: string; role: string }) => {
+    const result = await prisma.user.findUnique({
+        where: {
+            id: user.userId,
+        }
+    });
+
+    if (!result) {
+        throw new AppError(status.NOT_FOUND, "User not found");
+    }
+
+    return result;
+};
+
+const logoutUser = async (sessionToken: string) => {
+    const result = await auth.api.signOut({
+        headers: new Headers({
+            Authorization: `Bearer ${sessionToken}`
+        })
+    })
+
+    return result;
+}
 
 export const AuthService = {
     registerUser,
     loginUser,
+    getMe,
+    logoutUser
 }
