@@ -23,7 +23,7 @@ export const getCommonNavItems = (role: UserRole): NavSection[] => {
                     title: "My Profile",
                     href: `/${roleBase}/dashboard/my-profile`,
                     icon: "User"
-                },
+                }
             ]
         },
         {
@@ -67,6 +67,11 @@ export const adminNavItems: NavSection[] = [
         title: "Admin Management",
         items: [
             {
+                title: "Add New Category",
+                href: "/admin/dashboard/add-category",
+                icon: "PlusCircle"
+            },
+            {
                 title: "Pending Approvals",
                 href: "/admin/dashboard/pending-ideas",
                 icon: "Clock"
@@ -75,11 +80,6 @@ export const adminNavItems: NavSection[] = [
                 title: "Manage Categories",
                 href: "/admin/dashboard/all-categories",
                 icon: "Layers"
-            },
-            {
-                title: "Add New Category",
-                href: "/admin/dashboard/add-category",
-                icon: "PlusCircle"
             },
             {
                 title: "User Reports",
