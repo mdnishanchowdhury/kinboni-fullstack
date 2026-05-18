@@ -12,7 +12,7 @@
 export const Gender = {
   MALE: 'MALE',
   FEMALE: 'FEMALE',
-  OTHER: 'OTHER',
+  KIDS: 'KIDS',
   UNSPECIFIED: 'UNSPECIFIED'
 } as const
 

@@ -1,7 +1,7 @@
 enum Gender {
   MALE
   FEMALE
-  OTHER
+  KIDS
   UNSPECIFIED
 }
 
