@@ -61,9 +61,90 @@ const addItemsToSubCategory = catchAsync(
     }
 );
 
+const updateCategory = catchAsync(async (req: Request, res: Response) => {
+    const { id } = req.params;
+    const payload = req.body;
+    const result = await CategoryService.updateCategory(id as string, payload);
+
+    sendResponse(res, {
+        httpStatusCode: 200,
+        success: true,
+        message: "Category updated successfully!",
+        data: result
+    });
+});
+
+const updateSubCategory = catchAsync(async (req: Request, res: Response) => {
+    const { id } = req.params;
+    const payload = req.body;
+    const result = await CategoryService.updateSubCategory(id as string, payload);
+
+    sendResponse(res, {
+        httpStatusCode: 200,
+        success: true,
+        message: "Sub-category updated successfully!",
+        data: result
+    });
+});
+
+const updateItem = catchAsync(async (req: Request, res: Response) => {
+    const { id } = req.params;
+    const payload = req.body;
+    const result = await CategoryService.updateItem(id as string, payload);
+
+    sendResponse(res, {
+        httpStatusCode: 200,
+        success: true,
+        message: "Item updated successfully!",
+        data: result
+    });
+});
+
+const deleteCategory = catchAsync(async (req: Request, res: Response) => {
+    const { id } = req.params;
+    const result = await CategoryService.deleteCategory(id as string);
+
+    sendResponse(res, {
+        httpStatusCode: 200,
+        success: true,
+        message: "Category deleted successfully!",
+        data: result
+    });
+});
+
+const deleteSubCategory = catchAsync(async (req: Request, res: Response) => {
+    const { id } = req.params;
+    const result = await CategoryService.deleteSubCategory(id as string);
+
+    sendResponse(res, {
+        httpStatusCode: 200,
+        success: true,
+        message: "Sub-category deleted successfully!",
+        data: result
+    });
+});
+
+const deleteItem = catchAsync(async (req: Request, res: Response) => {
+    const { id } = req.params;
+    const result = await CategoryService.deleteItem(id as string);
+
+    sendResponse(res, {
+        httpStatusCode: 200,
+        success: true,
+        message: "Item deleted successfully!",
+        data: result
+    });
+});
+
 export const CategoryController = {
     createCategory,
     getSimpleCategories,
     addSubCategory,
-    addItemsToSubCategory
-}
+    addItemsToSubCategory,
+    updateCategory,
+    updateSubCategory,
+    updateItem,
+    deleteCategory,
+    deleteSubCategory,
+    deleteItem
+};

@@ -114,9 +114,54 @@ const addItemsToSubCategory = async (payload: any) => {
     return result;
 };
 
+const updateCategory = async (id: string, payload: { name?: string; icon?: string }) => {
+    return await prisma.category.update({
+        where: { id },
+        data: payload,
+    });
+};
+
+const updateSubCategory = async (id: string, payload: { name: string }) => {
+    return await prisma.subCategory.update({
+        where: { id },
+        data: { name: payload.name },
+    });
+};
+
+const updateItem = async (id: string, payload: { name?: string; image?: string }) => {
+    return await prisma.item.update({
+        where: { id },
+        data: payload,
+    });
+};
+
+const deleteCategory = async (id: string) => {
+    return await prisma.category.delete({
+        where: { id },
+    });
+};
+
+const deleteSubCategory = async (id: string) => {
+    return await prisma.subCategory.delete({
+        where: { id },
+    });
+};
+
+const deleteItem = async (id: string) => {
+    return await prisma.item.delete({
+        where: { id },
+    });
+};
+
 export const CategoryService = {
     createCategory,
     getSimpleCategories,
     addSubCategory,
-    addItemsToSubCategory
+    addItemsToSubCategory,
+    updateCategory,
+    updateSubCategory,
+    updateItem,
+    deleteCategory,
+    deleteSubCategory,
+    deleteItem
 };
