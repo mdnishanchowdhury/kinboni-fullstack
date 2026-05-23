@@ -13,8 +13,7 @@ export const createCategoryAction = async (payload: any) => {
             (response as any)?.id;
 
         if (isSuccessful) {
-            revalidatePath("/dashboard/categories");
-            revalidatePath("/");
+            revalidatePath("/", "layout");
 
             return {
                 success: true,

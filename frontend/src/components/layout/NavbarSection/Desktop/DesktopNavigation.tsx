@@ -50,20 +50,20 @@ export default function DesktopNavigation({
 
             {/* Category Menu Container */}
             <div className="absolute top-full w-[280px] left-0 invisible opacity-0 group-hover:visible group-hover:opacity-100 transition-all duration-200 z-[120] pt-2">
-              {isLoading ? (
-                <div className="w-[280px] bg-white rounded-2xl shadow-xl border border-gray-100 p-6 flex flex-col items-center justify-center gap-3">
-                  <Loader2 className="w-8 h-8 text-green-500 animate-spin" />
-                  <p className="text-sm font-medium text-gray-500">Loading Categories...</p>
+              {
+                isLoading ? (
+                  <div className="w-[280px] bg-white rounded-2xl shadow-xl border border-gray-100 p-6 flex flex-col items-center justify-center gap-3">
 
-                  <div className="w-full space-y-2 mt-4">
-                    <div className="h-4 bg-gray-100 rounded animate-pulse w-3/4"></div>
-                    <div className="h-4 bg-gray-100 rounded animate-pulse w-1/2"></div>
-                    <div className="h-4 bg-gray-100 rounded animate-pulse w-2/3"></div>
+                    <div className="w-full space-y-2 mt-4">
+                      <div className="h-4 bg-gray-100 rounded animate-pulse w-3/4"></div>
+                      <div className="h-4 bg-gray-100 rounded animate-pulse w-1/2"></div>
+                      <div className="h-4 bg-gray-100 rounded animate-pulse w-2/3"></div>
+                    </div>
                   </div>
-                </div>
-              ) : (
-                <CategoryMenu categoriesData={categoriesData} />
-              )}
+                ) : (
+                  <CategoryMenu categoriesData={categoriesData} />
+                )
+              }
             </div>
           </div>
 

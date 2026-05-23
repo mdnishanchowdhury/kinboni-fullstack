@@ -37,70 +37,68 @@ export function ProductCard({
     });
   };
 
-  const stockPercent = useMemo(() => getStockPercent(productData.inventory.stock, productData.inventory.sold), [productData.inventory]);
+  const stockPercent = useMemo(() =>
+    getStockPercent(productData.inventory.stock, productData.inventory.sold),
+    [productData.inventory]
+  );
 
   return (
-    <div className="group relative w-full max-w-[340px] rounded-[24px] lg:rounded-[32px] bg-white p-4 lg:p-7 border border-slate-100 hover:bg-gradient-to-b hover:from-[#9c9c9c] hover:to-[#2d2d2d] transition-all duration-700 shadow-sm">
+    <div className="group relative w-full h-full flex flex-col rounded-[24px] lg:rounded-[32px] bg-white p-4 lg:p-7 border border-slate-100 hover:bg-gradient-to-b hover:from-[#9c9c9c] hover:to-[#2d2d2d] transition-all duration-700 shadow-sm overflow-hidden">
 
-      {/* Flash Sale Badge */}
+      {/* Badge & Wishlist */}
       {productData.timer?.isFlashSale && (
         <Badge variant="secondary" className="absolute left-4 lg:left-6 top-4 lg:top-6 z-20 flex items-center gap-1 rounded-full bg-orange-100 px-2 lg:px-3 py-1 text-[9px] lg:text-[10px] font-bold text-orange-600 group-hover:bg-orange-500 group-hover:text-white transition-all border-none">
           <Flame size={12} /> {productData.timer.timerLabel || "BEST SELLER"}
         </Badge>
       )}
 
-      {/* Wishlist Button */}
       <button
-        onClick={() => setIsWishlisted(!isWishlisted)}
+        onClick={(e) => { e.stopPropagation(); setIsWishlisted(!isWishlisted); }}
         className="absolute right-4 lg:right-6 top-4 lg:top-6 z-20 flex h-8 lg:h-10 w-8 lg:w-10 items-center justify-center rounded-full bg-white/80 backdrop-blur-sm shadow-sm hover:scale-110 transition-transform"
       >
-        <Heart
-          size={18}
-          className={`${isWishlisted ? "fill-red-500 text-red-500" : "text-gray-400"}`}
-        />
+        <Heart size={18} className={`${isWishlisted ? "fill-red-500 text-red-500" : "text-gray-400"}`} />
       </button>
 
       {/* Product Image */}
-      <ProductImage
-        thumbnail={productData.media.thumbnail}
-        name={productData.name}
-      />
+      <ProductImage thumbnail={productData.media.thumbnail} name={productData.name} />
 
-      {/* Content */}
-      <div className="relative z-10 text-black">
-        <h2 className="mb-1 lg:mb-2 text-[18px] lg:text-[22px] font-bold group-hover:text-white transition-colors duration-300 line-clamp-1">
+      {/* Content Wrapper*/}
+      <div className="relative z-10 text-black flex flex-col flex-grow">
+
+        {/* Title*/}
+        <h2 className="text-[18px] lg:text-[22px] font-bold group-hover:text-white transition-colors duration-300 line-clamp-1 min-h-[28px] lg:min-h-[32px]">
           {productData.name}
         </h2>
 
-        {/* Color Variants */}
-        <div className="h-6 mb-2 lg:mb-3">
-          <ColorVariants
-            variants={productData.variants}
-            selectedColor={selectedColor}
-            setSelectedColor={setSelectedColor}
-          />
+        {/* Color Variants*/}
+        <div className="h-6">
+          <ColorVariants variants={productData.variants} selectedColor={selectedColor} setSelectedColor={setSelectedColor} />
         </div>
 
-        <p className="mb-3 lg:mb-4 text-xs lg:text-sm leading-relaxed text-gray-500 group-hover:text-gray-200 line-clamp-2">
+        {/* Description*/}
+        <p className="mb-2 lg:mb-2 text-xs lg:text-sm leading-relaxed text-gray-500 group-hover:text-gray-200 line-clamp-2 min-h-[32px] lg:min-h-[40px]">
           {productData.description}
         </p>
 
-        {/* Ratings & Reviewers */}
-        <ProductRatings
-          average={productData.ratings.average}
-          count={productData.ratings.count}
-          reviews={productData.ratings.reviews}
-        />
+        <div className="mb-auto">
+          <ProductRatings
+            average={productData.ratings.average}
+            count={productData.ratings.count}
+            reviews={productData.ratings.reviews}
+          />
+        </div>
 
-        {/* Price & Stock */}
-        <PriceStock
-          pricing={productData.pricing}
-          inventory={productData.inventory}
-          stockPercent={stockPercent}
-        />
+        {/* Price & Stock Section */}
+        <div className="shrink-0">
+          <PriceStock
+            pricing={productData.pricing}
+            inventory={productData.inventory}
+            stockPercent={stockPercent}
+          />
+        </div>
 
         {/* Action Buttons */}
-        <div className="flex flex-row gap-2">
+        <div className="flex flex-row gap-2 shrink-0">
           <Button
             onClick={handleAddToCart}
             disabled={isLoading}

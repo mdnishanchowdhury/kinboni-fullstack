@@ -19,7 +19,7 @@ export default function PriceStock({
         <div className="mb-5 lg:mb-6 flex items-center justify-between">
             {/* Price Section */}
             <div className="flex items-center gap-1 lg:gap-3 flex-wrap">
-                <span className="text-xl lg:text-2xl font-black group-hover:text-white transition-colors">
+                <span className="text-xl lg:text-xl font-black group-hover:text-white transition-colors">
                     ${pricing.currentPrice}
                 </span>
                 <span className="text-[11px] lg:text-sm text-gray-400 line-through group-hover:text-gray-300 transition-colors">

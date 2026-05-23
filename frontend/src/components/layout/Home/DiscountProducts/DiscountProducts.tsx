@@ -10,26 +10,24 @@ import { NoDealsState } from "./NoDealsState";
 import { Product } from "../../../../types/product.types";
 import DiscountProductsSkeleton from "../../../Skeleton/DiscountSkeleton";
 
+export default function DiscountProducts({ products, isLoading }) {
 
-const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: { opacity: 1, transition: { staggerChildren: 0.12 } },
-};
+    const allProducts = useMemo((): Product[] => {
+        if (!products) return [];
 
-const itemVariants = {
-    hidden: { opacity: 0, y: 30 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
-};
+        if (Array.isArray(products)) return products as Product[];
 
-interface TopSellingProps {
-    products: Product[];
-    isLoading?: boolean;
-}
+        if (
+            typeof products === "object" &&
+            products !== null &&
+            "data" in products &&
+            Array.isArray((products as any).data)
+        ) {
+            return (products as any).data as Product[];
+        }
 
-
-export default function DiscountProducts({ products, isLoading }: TopSellingProps) {
-
-    const allProducts = useMemo(() => products || [], [products]);
+        return [];
+    }, [products]);
 
     const hotDeals = useMemo(() => filterFlashDeals(allProducts), [allProducts]);
 
@@ -56,23 +54,21 @@ export default function DiscountProducts({ products, isLoading }: TopSellingProp
                     label={hotDeals[0]?.timer?.timerLabel || "Limited Offers"}
                 />
 
-                {hotDeals.length > 0 ? (
-                    <motion.div
-                        variants={containerVariants}
-                        initial="hidden"
-                        whileInView="visible"
-                        viewport={{ once: true, margin: "-100px" }}
-                        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
-                    >
-                        {hotDeals.map((singleProduct) => (
-                            <motion.div key={singleProduct.id} variants={itemVariants}>
-                                <DiscountProductCard product={singleProduct} />
-                            </motion.div>
-                        ))}
-                    </motion.div>
-                ) : (
-                    <NoDealsState />
-                )}
+                {
+                    hotDeals.length > 0 ? (
+                        <motion.div
+                            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+                        >
+                            {hotDeals.map((singleProduct) => (
+                                <div key={singleProduct.id}>
+                                    <DiscountProductCard product={singleProduct} />
+                                </div>
+                            ))}
+                        </motion.div>
+                    ) : (
+                        <NoDealsState />
+                    )
+                }
             </div>
         </section>
     );

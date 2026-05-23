@@ -4,40 +4,51 @@ import { useMemo } from 'react';
 import { motion } from "framer-motion";
 import TopSellingBanner from './TopSellingBanner';
 import ProductListContainer from './ProductListContainer';
-import { Product } from '../../../../types/product.types';
 import TopSellingSkeleton from '../../../Skeleton/TopSellingSkeleton';
+import { Product } from "@/types/product.types";
 
-interface TopSellingProps {
-    products: Product[];
-    isLoading?: boolean;
-}
+export default function TopSelling({ products, isLoading }) {
 
-const TopSelling = ({ products, isLoading }: TopSellingProps) => {
+    const allProducts = useMemo((): Product[] => {
+        if (!products) return [];
+        if (Array.isArray(products)) return products as Product[];
 
-    const maxDiscount = useMemo(() => {
-        if (!products || products.length === 0) return "10";
-        const discounts = products.map(p => p.pricing?.discountPercent || 0);
-        return Math.max(...discounts).toString();
+        if (
+            typeof products === "object" &&
+            products !== null &&
+            "data" in products &&
+            Array.isArray((products as any).data)
+        ) {
+            return (products as any).data as Product[];
+        }
+        return [];
     }, [products]);
 
+    const maxDiscount = useMemo(() => {
+        if (allProducts.length === 0) return "10";
+        const discounts = allProducts.map((p: Product) => p.pricing?.discountPercent || 0);
+        return Math.max(...discounts).toString();
+    }, [allProducts]);
+
     const topWomen = useMemo(() =>
-        products
-            .filter(item => ["women", "female"].includes(item.gender?.toLowerCase() || ""))
-            .sort((a, b) => (b.ratings?.average || 0) - (a.ratings?.average || 0)),
-        [products]
+        allProducts
+            .filter((item: Product) => ["women", "female"].includes(item.gender?.toLowerCase() || ""))
+            .sort((a: Product, b: Product) => (b.ratings?.average || 0) - (a.ratings?.average || 0)),
+        [allProducts]
     );
 
     const topMen = useMemo(() =>
-        products
-            .filter(item => ["men", "male"].includes(item.gender?.toLowerCase() || ""))
-            .sort((a, b) => (b.ratings?.average || 0) - (a.ratings?.average || 0)),
-        [products]
+        allProducts
+            .filter((item: Product) => ["men", "male"].includes(item.gender?.toLowerCase() || ""))
+            .sort((a: Product, b: Product) => (b.ratings?.average || 0) - (a.ratings?.average || 0)),
+        [allProducts]
     );
 
     if (isLoading) {
         return <TopSellingSkeleton />;
     }
-    if (!products || products.length === 0) return null;
+
+    if (allProducts.length === 0) return null;
 
     return (
         <section className="px-4 lg:px-0 py-12">
@@ -61,6 +72,4 @@ const TopSelling = ({ products, isLoading }: TopSellingProps) => {
             </div>
         </section>
     );
-};
-
-export default TopSelling;
+}

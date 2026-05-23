@@ -25,13 +25,15 @@ const DiscountProductCard = ({ product }: DiscountProductCardProps) => {
     const timeLeft = useCountdown(targetTime);
 
     const isExpired = useMemo(() => {
+        if (!product.timer?.expiresAt) return false;
+
         return (
             timeLeft.days === 0 &&
             timeLeft.hours === 0 &&
             timeLeft.minutes === 0 &&
             timeLeft.seconds === 0
         );
-    }, [timeLeft]);
+    }, [timeLeft, product.timer?.expiresAt]);
 
     const handleOrder = (e: React.MouseEvent) => {
         e.stopPropagation();

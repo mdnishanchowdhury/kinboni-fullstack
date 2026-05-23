@@ -22,8 +22,6 @@ export interface Product {
   name: string;
   slug: string;
   description: string;
-  price?: number;
-  image?: string;
   brand: {
     name: string;
     origin: string;
@@ -33,7 +31,7 @@ export interface Product {
     sub: string;
     item: string;
   };
-  gender: string;
+  gender: 'MALE' | 'FEMALE' | 'KIDS';
   pricing: {
     currentPrice: number;
     oldPrice: number;
@@ -41,7 +39,11 @@ export interface Product {
   };
   media: {
     thumbnail: string;
-    images: { url: string; alt: string; order: number }[];
+    images: {
+      url: string;
+      alt: string;
+      order: number;
+    }[];
   };
   inventory: {
     stock: number;
@@ -54,20 +56,18 @@ export interface Product {
   };
   timer?: {
     isFlashSale: boolean;
-    startAt: string;
+    startAt?: string;
     expiresAt: string;
-    discountType: string;
-    discountValue: number;
+    discountType?: string;
+    discountValue?: number;
     timerLabel: string;
   };
   variants: Variant[];
-  thumbnail: string;
-  timerLabel?: string;
 }
 
 export interface ProductResponse {
-  data: Product[];
-  success?: boolean;
+  success: boolean;
   message?: string;
   count?: number;
+  data: Product[];
 }

@@ -16,18 +16,20 @@ const SubCategoryItems = ({ items }: { items: any[] }) => (
       Featured Items
     </h4>
     <div className="flex flex-col gap-3">
-      {items.map((item, i) => (
-        <div key={i} className="flex items-center gap-3 text-[14px] text-gray-600 hover:text-orange-600 cursor-pointer group/item transition-all">
-          {item.image && (
-            <div className="w-10 h-10 rounded-lg overflow-hidden border border-gray-100 bg-gray-50 shrink-0">
-              <img src={item.image} className="w-full h-full object-cover" alt={item.name} />
-            </div>
-          )}
-          <span className="font-medium group-hover/item:translate-x-1 transition-transform truncate">
-            {item.name}
-          </span>
-        </div>
-      ))}
+      {
+        items.map((item, i) => (
+          <div key={i} className="flex items-center gap-3 text-[14px] text-gray-600 hover:text-orange-600 cursor-pointer group/item transition-all">
+            {item.image && (
+              <div className="w-10 h-10 rounded-lg overflow-hidden border border-gray-100 bg-gray-50 shrink-0">
+                <img src={item.image} className="w-full h-full object-cover" alt={item.name} />
+              </div>
+            )}
+            <span className="font-medium group-hover/item:translate-x-1 transition-transform truncate">
+              {item.name}
+            </span>
+          </div>
+        ))
+      }
     </div>
   </motion.div>
 );
@@ -54,7 +56,7 @@ export default function CategoryMenu({ categoriesData }: { categoriesData: any[]
         <div className="flex flex-col gap-0.5">
           {categories.map((cat) => (
             <div
-              key={cat.name}
+              key={cat.id}
               onMouseEnter={() => {
                 setActiveCategory(cat.name);
                 setActiveSubCategory(null);
