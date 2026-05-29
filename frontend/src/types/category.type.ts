@@ -6,6 +6,7 @@ export interface IItem {
 
 export interface ISubCategory {
   id: string;
+  image?: string | null;
   name: string;
   items: IItem[];
 }
@@ -22,5 +23,3 @@ export interface ICategoryResponse {
   message: string;
   data: ICategory[] | null;
 }
-
-

@@ -1,69 +1,86 @@
 "use client";
 
 import { useForm } from '@tanstack/react-form';
-import { useMutation } from '@tanstack/react-query';
-import { ListTree, Boxes, Loader2, Tag } from 'lucide-react';
-import { useState, useEffect } from 'react';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { ListTree, Boxes, Loader2, Tag, ChevronDown } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 import { AppField } from '@/components/Shared/Form/Appfield';
 import { Button } from '@/components/ui/button';
 import { toast } from 'sonner';
 import { subCreateCategory } from '@/services/category.services';
 import ItemsListSection from './ItemsListSection';
 import { ISubCategoryPayload, subCategorySchema } from '@/zod/category.validation';
+import { useGetSubCategoryList } from '@/hooks/useGetSubCategoryList';
 
 interface AddSubCategoryFormProps {
     onSuccess?: () => void;
 }
 
 export default function AddSubCategoryForm({ onSuccess }: AddSubCategoryFormProps) {
-    const [isMounted, setIsMounted] = useState(false);
-
-    useEffect(() => {
-        setIsMounted(true);
-    }, []);
+    const router = useRouter();
+    const queryClient = useQueryClient();
+    const { data: categories, isLoading, isError } = useGetSubCategoryList();
 
     const { mutateAsync, isPending } = useMutation({
-        mutationFn: async (payload: ISubCategoryPayload) => {
-            const response = await subCreateCategory(payload);
+        mutationFn: async (formData: FormData) => {
+            const response = await subCreateCategory(formData);
             if (!response || response.success === false) {
                 throw new Error(response.message || "Server rejected the request");
             }
             return response;
         },
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ['categories'] });
+            queryClient.invalidateQueries({ queryKey: ['category-list'] });
+            form.reset();
+            router.refresh();
+            if (onSuccess) onSuccess();
+        }
     });
 
     const form = useForm({
         defaultValues: {
             categoryId: "",
             name: "",
-            items: [{ name: "", image: "" }] as ISubCategoryPayload['items'],
+            items: [{ name: "", image: undefined as unknown as File }] as ISubCategoryPayload['items'],
         },
         validators: {
-            onChange: subCategorySchema,
+            onSubmit: subCategorySchema,
         },
         onSubmit: async ({ value }) => {
-            const toastId = toast.loading("Creating sub-category...");
             try {
-                const res = await mutateAsync(value);
-                toast.success(res?.message || "Sub-Category created successfully!", {
-                    id: toastId,
+                const safeItems = (value.items || []).filter(Boolean);
+
+                const jsonTextData = {
+                    categoryId: value.categoryId,
+                    name: value.name,
+                    items: safeItems.map((item) => ({ name: item.name || "" }))
+                };
+
+                const formData = new FormData();
+                formData.append("data", JSON.stringify(jsonTextData));
+
+                safeItems.forEach((item) => {
+                    if (item?.image && typeof item.image === 'object' && 'size' in item.image) {
+                        formData.append("image", item.image);
+                    } else {
+                        const blankBlob = new Blob([""], { type: "image/png" });
+                        formData.append("image", blankBlob, "empty.png");
+                    }
                 });
-                form.reset();
-                onSuccess?.();
-            } catch (error: any) {
-                toast.error(error.message || "Failed to create sub-category.", {
-                    id: toastId,
+
+                const promise = mutateAsync(formData);
+
+                toast.promise(promise, {
+                    loading: 'Creating sub-category...',
+                    success: "Sub-Category created successfully!",
+                    error: (err) => err.message || "Something went wrong.",
                 });
+            } catch (err: any) {
+                toast.error(err.message || "Failed to process form data.");
             }
         }
     });
-
-    const handleReset = () => {
-        form.reset();
-        toast.info("All fields have been cleared");
-    };
-
-    if (!isMounted) return null;
 
     return (
         <div className="w-full bg-transparent">
@@ -90,12 +107,45 @@ export default function AddSubCategoryForm({ onSuccess }: AddSubCategoryFormProp
                 className="space-y-6"
             >
                 <div className="grid gap-4 md:grid-cols-2">
-                    <div className="space-y-1.5">
+                    {/* Updated Parent Category Dropdown Field */}
+                    <div className="space-y-1.5 pt-[5px]">
                         <label className="text-xs font-bold uppercase flex items-center gap-2 px-1 text-foreground">
-                            <Tag size={14} className="text-blue-500" /> Parent Category ID
+                            <Tag size={14} className="text-blue-500" /> Parent Category
                         </label>
                         <form.Field name="categoryId">
-                            {(field) => <AppField field={field} label="" placeholder="UUID from Main Category" className="rounded-xl h-11" />}
+                            {(field) => (
+                                <div className="relative">
+                                    <select
+                                        id={field.name}
+                                        name={field.name}
+                                        value={field.state.value}
+                                        disabled={isLoading}
+                                        onChange={(e) => field.handleChange(e.target.value)}
+                                        className="w-full h-8 px-3 bg-background border border-input rounded-xl text-xs font-medium text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 appearance-none"
+                                    >
+                                        <option value="" disabled className="text-muted-foreground">
+                                            {isLoading ? "Loading categories..." : "Select a Category"}
+                                        </option>
+                                        {isError && (
+                                            <option value="" disabled>Failed to load categories</option>
+                                        )}
+                                        {categories && categories.map((category: any) => (
+                                            <option key={category.id} value={category.categoryId || category.id}>
+                                                {category.name}
+                                            </option>
+                                        ))}
+                                    </select>
+
+                                    {/* Custom arrow indicator */}
+                                    <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3.5 text-muted-foreground/70">
+                                        {isLoading ? (
+                                            <Loader2 className="h-4 w-4 animate-spin" />
+                                        ) : (
+                                            <ChevronDown size={16} className="transition-transform duration-200" />
+                                        )}
+                                    </div>
+                                </div>
+                            )}
                         </form.Field>
                     </div>
 
@@ -117,7 +167,7 @@ export default function AddSubCategoryForm({ onSuccess }: AddSubCategoryFormProp
                     <Button
                         type="button"
                         variant="outline"
-                        onClick={handleReset}
+                        onClick={() => form.reset()}
                         disabled={isPending}
                         className="px-6 rounded-xl font-semibold h-11 text-xs"
                     >

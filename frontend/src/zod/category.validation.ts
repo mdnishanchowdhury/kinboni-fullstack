@@ -3,14 +3,16 @@ import { z } from 'zod';
 // category validation
 export const categorySchema = z.object({
     name: z.string().min(1, "Category name is required"),
-    icon: z.string().url("Valid Icon URL is required"),
+
+    icon: z.any().refine((file) => file instanceof File, "Icon image file is required"),
+
     subCategories: z.array(
         z.object({
             name: z.string().min(1, "Sub-category name is required"),
             items: z.array(
                 z.object({
                     name: z.string().min(1, "Item name is required"),
-                    image: z.string().url("Valid image URL is required"),
+                    image: z.instanceof(File, { message: "Item image file is required" }),
                 })
             ).min(1, "At least one item is required"),
         })
@@ -26,7 +28,10 @@ export const subCategorySchema = z.object({
     items: z.array(
         z.object({
             name: z.string().min(1, "Item name is required"),
-            image: z.string().url("Please enter a valid image URL"),
+            image: z.any().refine((val) => {
+                if (!val) return false;
+                return val instanceof File || typeof val === "string";
+            }, "Item image file is required"),
         })
     ).min(1, "At least one item is required"),
 });
@@ -39,7 +44,7 @@ export const itemsSchema = z.object({
     items: z.array(
         z.object({
             name: z.string().min(1, "Item name is required"),
-            image: z.string().url("Valid image URL is required"),
+            image: z.instanceof(File, { message: "Item image file is required" }),
         })
     ).min(1, "At least one item is required"),
 });
