@@ -20,6 +20,7 @@ router.post('/',
 
 router.get('/', CategoryController.getSimpleCategories);
 router.get('/sub-categories', CategoryController.getSubCategories);
+router.get('/items', CategoryController.getItemsCategories);
 
 router.post(
     "/add-sub-category",

@@ -1,7 +1,7 @@
 import status from "http-status";
 import AppError from "../../errorHelpers/AppError";
 import { prisma } from "../../lib/prisma";
-import { SubCategory } from "../../../generated/prisma/client";
+import { Item, SubCategory } from "../../../generated/prisma/client";
 import { deleteFileFromCloudinary } from "../../config/cloudinary.config";
 
 const createCategory = async (payload: ICategoryPayload) => {
@@ -229,6 +229,11 @@ const getSubCategories = async (): Promise<SubCategory[]> => {
     return result;
 };
 
+const getItemsCategories = async (): Promise<Item[]> => {
+    const result = await prisma.item.findMany();
+    return result;
+};
+
 export const CategoryService = {
     createCategory,
     getSimpleCategories,
@@ -241,4 +246,5 @@ export const CategoryService = {
     deleteSubCategory,
     deleteItem,
     getSubCategories,
+    getItemsCategories,
 };

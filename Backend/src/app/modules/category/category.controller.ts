@@ -177,6 +177,16 @@ const getSubCategories = catchAsync(async (req: Request, res: Response) => {
         data: result
     });
 });
+const getItemsCategories = catchAsync(async (req: Request, res: Response) => {
+    const result = await CategoryService.getItemsCategories();
+
+    sendResponse(res, {
+        httpStatusCode: 200,
+        success: true,
+        message: "Items fetched successfully!",
+        data: result
+    });
+});
 
 
 export const CategoryController = {
@@ -190,5 +200,6 @@ export const CategoryController = {
     deleteCategory,
     deleteSubCategory,
     deleteItem,
-    getSubCategories
+    getSubCategories,
+    getItemsCategories
 };
