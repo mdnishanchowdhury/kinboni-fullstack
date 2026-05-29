@@ -1,6 +1,8 @@
 import status from "http-status";
 import AppError from "../../errorHelpers/AppError";
 import { prisma } from "../../lib/prisma";
+import { SubCategory } from "../../../generated/prisma/client";
+import { deleteFileFromCloudinary } from "../../config/cloudinary.config";
 
 const createCategory = async (payload: ICategoryPayload) => {
     const { name, icon, subCategories = [] } = payload;
@@ -32,7 +34,6 @@ const createCategory = async (payload: ICategoryPayload) => {
 
     return result;
 };
-
 
 const getSimpleCategories = async () => {
     const result = await prisma.category.findMany({
@@ -136,21 +137,96 @@ const updateItem = async (id: string, payload: { name?: string; image?: string }
 };
 
 const deleteCategory = async (id: string) => {
-    return await prisma.category.delete({
+    const deletedCategory = await prisma.category.delete({
         where: { id },
+        include: {
+            subCategories: {
+                include: {
+                    items: true,
+                },
+            },
+        },
     });
+
+    const deletePromises: Promise<void>[] = [];
+
+    if (deletedCategory.icon) {
+        deletePromises.push(
+            (async () => {
+                try {
+                    await deleteFileFromCloudinary(deletedCategory.icon as string);
+                } catch (err) {
+                    console.error("Failed to delete category icon from Cloudinary:", err);
+                }
+            })()
+        );
+    }
+
+    if (deletedCategory.subCategories && deletedCategory.subCategories.length > 0) {
+        deletedCategory.subCategories.forEach((sub: any) => {
+            if (sub.items && sub.items.length > 0) {
+                sub.items.forEach((item: any) => {
+                    if (item.image) {
+                        deletePromises.push(
+                            (async () => {
+                                try {
+                                    await deleteFileFromCloudinary(item.image as string);
+                                } catch (err) {
+                                    console.error(`Failed to delete image for item ${item.id} from Cloudinary:`, err);
+                                }
+                            })()
+                        );
+                    }
+                });
+            }
+        });
+    }
+
+    if (deletePromises.length > 0) {
+        await Promise.all(deletePromises);
+    }
+
+    return deletedCategory;
 };
 
 const deleteSubCategory = async (id: string) => {
-    return await prisma.subCategory.delete({
+    const deletedSubCategory = await prisma.subCategory.delete({
         where: { id },
+        include: { items: true },
     });
+
+    if (deletedSubCategory.items && deletedSubCategory.items.length > 0) {
+
+        const deletePromises = deletedSubCategory.items.map(async (item: any) => {
+            if (item.image) {
+                try {
+                    await deleteFileFromCloudinary(item.image);
+                } catch (err) {
+                    console.error(`Failed to delete image from Cloudinary:`, err);
+                }
+            }
+        });
+        await Promise.all(deletePromises);
+    }
+
+    return deletedSubCategory;
 };
 
 const deleteItem = async (id: string) => {
-    return await prisma.item.delete({
+    const deletedItem = await prisma.item.delete({
         where: { id },
     });
+
+    if (deletedItem.image) {
+        await deleteFileFromCloudinary(deletedItem.image);
+    }
+
+    return deletedItem;
+};
+
+const getSubCategories = async (): Promise<SubCategory[]> => {
+    const result = await prisma.subCategory.findMany();
+    return result;
 };
 
 export const CategoryService = {
@@ -163,5 +239,6 @@ export const CategoryService = {
     updateItem,
     deleteCategory,
     deleteSubCategory,
-    deleteItem
+    deleteItem,
+    getSubCategories,
 };

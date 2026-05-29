@@ -3,20 +3,33 @@ import { CategoryService } from "./category.service";
 import { catchAsync } from "../../shared/catchAsync";
 import { sendResponse } from "../../shared/sendResponse";
 
-const createCategory = catchAsync(
-    async (req: Request, res: Response) => {
-        const payload = req.body;
-        const product = await CategoryService.createCategory(payload);
+const createCategory = catchAsync(async (req: Request, res: Response) => {
 
-        sendResponse(res, {
-            httpStatusCode: 201,
-            success: true,
-            message: "Category created successfully!",
-            data: product
-        });
+    const data = JSON.parse(req.body.data || "{}");
+    const files = req.files as { [key: string]: Express.Multer.File[] };
+    let imgIdx = 0;
 
-    }
-);
+    const payload = {
+        ...data,
+        icon: files.icon?.[0]?.path || data.icon || "",
+        subCategories: (data.subCategories || []).map((sub: any) => ({
+            ...sub,
+            items: (sub.items || []).map((item: any) => ({
+                ...item,
+                image: files.image?.[imgIdx++]?.path || item.image || ""
+            }))
+        }))
+    };
+
+    const product = await CategoryService.createCategory(payload);
+    sendResponse(res, {
+        httpStatusCode: 201,
+        success: true,
+        message: "Category created successfully!",
+        data: product
+    });
+});
+
 
 const getSimpleCategories = catchAsync(
     async (req: Request, res: Response) => {
@@ -31,25 +44,42 @@ const getSimpleCategories = catchAsync(
     }
 );
 
-const addSubCategory = catchAsync(
-    async (req: Request, res: Response) => {
-        const payload = req.body;
+const addSubCategory = catchAsync(async (req: Request, res: Response) => {
+    const data = JSON.parse(req.body.data || "{}");
+    const files = req.files as { [key: string]: Express.Multer.File[] };
+    let imgIdx = 0;
 
-        const result = await CategoryService.addSubCategory(payload);
+    const payload = {
+        ...data,
+        items: (data.items || []).map((item: any) => ({
+            ...item,
+            image: files.image?.[imgIdx++]?.path || item.image || ""
+        }))
+    };
+    const result = await CategoryService.addSubCategory(payload);
 
-        sendResponse(res, {
-            httpStatusCode: 201,
-            success: true,
-            message: "Sub-category added successfully!",
-            data: result
-        });
-    }
-);
+    sendResponse(res, {
+        httpStatusCode: 201,
+        success: true,
+        message: "Sub-category added successfully!",
+        data: result
+    });
+});
 
 const addItemsToSubCategory = catchAsync(
     async (req: Request, res: Response) => {
-        const payload = req.body;
+        const data = JSON.parse(req.body.data || "{}");
 
+        const files = req.files as { [key: string]: Express.Multer.File[] };
+        let imgIdx = 0;
+
+        const payload = {
+            ...data,
+            items: (data.items || []).map((item: any) => ({
+                ...item,
+                image: files?.image?.[imgIdx++]?.path || item.image || ""
+            }))
+        };
         const result = await CategoryService.addItemsToSubCategory(payload);
 
         sendResponse(res, {
@@ -124,6 +154,7 @@ const deleteSubCategory = catchAsync(async (req: Request, res: Response) => {
     });
 });
 
+
 const deleteItem = catchAsync(async (req: Request, res: Response) => {
     const { id } = req.params;
     const result = await CategoryService.deleteItem(id as string);
@@ -136,6 +167,18 @@ const deleteItem = catchAsync(async (req: Request, res: Response) => {
     });
 });
 
+const getSubCategories = catchAsync(async (req: Request, res: Response) => {
+    const result = await CategoryService.getSubCategories();
+
+    sendResponse(res, {
+        httpStatusCode: 200,
+        success: true,
+        message: "Sub-categories fetched successfully!",
+        data: result
+    });
+});
+
+
 export const CategoryController = {
     createCategory,
     getSimpleCategories,
@@ -146,5 +189,6 @@ export const CategoryController = {
     updateItem,
     deleteCategory,
     deleteSubCategory,
-    deleteItem
+    deleteItem,
+    getSubCategories
 };

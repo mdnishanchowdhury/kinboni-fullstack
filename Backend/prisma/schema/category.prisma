@@ -12,6 +12,7 @@ model SubCategory {
     id         String   @id @default(uuid())
     name       String
     categoryId String
+    image      String?
     category   Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
     items      Item[]
 

@@ -1,12 +1,36 @@
 import express from 'express';
 import { CategoryController } from './category.controller';
+import { multerUpload } from '../../config/multer.config';
 
 const router = express.Router();
 
-router.post('/', CategoryController.createCategory);
+const uploadFieldsCategory = multerUpload.fields([
+    { name: 'icon', maxCount: 1 },
+    { name: 'image' }
+]);
+
+const uploadFieldsSubAndItems = multerUpload.fields([
+    { name: 'image' }
+]);
+
+router.post('/',
+    uploadFieldsCategory,
+    CategoryController.createCategory
+);
+
 router.get('/', CategoryController.getSimpleCategories);
-router.post("/add-sub-category", CategoryController.addSubCategory);
-router.post("/add-items", CategoryController.addItemsToSubCategory);
+router.get('/sub-categories', CategoryController.getSubCategories);
+
+router.post(
+    "/add-sub-category",
+    uploadFieldsSubAndItems,
+    CategoryController.addSubCategory
+);
+
+router.post("/add-items",
+    uploadFieldsSubAndItems,
+    CategoryController.addItemsToSubCategory
+);
 
 router.patch("/:id", CategoryController.updateCategory);
 router.patch("/sub-category/:id", CategoryController.updateSubCategory);

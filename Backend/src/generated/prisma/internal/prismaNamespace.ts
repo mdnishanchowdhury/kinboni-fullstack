@@ -1347,6 +1347,7 @@ export const SubCategoryScalarFieldEnum = {
   id: 'id',
   name: 'name',
   categoryId: 'categoryId',
+  image: 'image',
   createdAt: 'createdAt'
 } as const
 
