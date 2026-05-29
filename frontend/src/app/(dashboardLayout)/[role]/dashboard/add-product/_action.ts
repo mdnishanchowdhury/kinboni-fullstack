@@ -1,6 +1,6 @@
 "use server";
 
-import { createProduct } from "@/services/product.services"; 
+import { createProduct } from "@/services/product.services";
 import { revalidatePath } from "next/cache";
 
 export const createProductAction = async (payload: any) => {

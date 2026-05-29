@@ -14,7 +14,7 @@ import BasicInfoSection from './BasicInfoSection';
 import ProductImagesSection from './ProductImagesSection';
 import ColorVariantsSection from './ColorVariantsSection';
 import MetadataSection from './MetadataSection';
-import { IProductInput, IProductOutput, productSchema } from '@/zod/product.validation';
+import { IProductInput, productSchema } from '@/zod/product.validation';
 
 export default function AddProductForm() {
     const queryClient = useQueryClient();
@@ -23,14 +23,14 @@ export default function AddProductForm() {
     useEffect(() => { setIsMounted(true); }, []);
 
     const { mutateAsync, isPending } = useMutation({
-        mutationFn: (payload: IProductOutput) => createProductAction(payload),
+        mutationFn: (payload: FormData) => createProductAction(payload),
+
         onSuccess: (res) => {
             if (res?.success) {
                 queryClient.invalidateQueries({ queryKey: ["products"] });
             }
         },
     });
-
     const form = useForm({
         defaultValues: {
             name: "",
@@ -45,7 +45,7 @@ export default function AddProductForm() {
             discountPercent: "",
             stock: "",
             sold: "0",
-            thumbnail: "",
+            thumbnail: undefined as any,
             timerLabel: "",
             aiStylistInfo: {
                 suitableFor: [],
@@ -58,7 +58,7 @@ export default function AddProductForm() {
                 pattern: "",
                 fabric: "",
             },
-            images: [{ url: "", alt: "", order: 1 }],
+            images: [{ file: undefined as any, alt: "", order: 1 }],
             variants: [{ name: "", hex: "#000000", sizes: ["40"] }],
         } as IProductInput,
 
@@ -68,9 +68,15 @@ export default function AddProductForm() {
         onSubmit: async ({ value }) => {
             try {
                 const validatedData = productSchema.parse(value);
+                const formData = new FormData();
+                const { thumbnail, images, ...otherData } = validatedData;
+                formData.append("data", JSON.stringify(otherData));
+                if (thumbnail) formData.append("thumbnail", thumbnail);
+                images.forEach((img) => {
+                    if (img.file) formData.append("images", img.file);
+                });
 
-                console.log("Submitting perfectly parsed data:", validatedData);
-                const res = await mutateAsync(validatedData);
+                const res = await mutateAsync(formData);
 
                 if (res?.success) {
                     form.reset();
@@ -79,8 +85,7 @@ export default function AddProductForm() {
                     toast.error(res?.message || "Failed to create product");
                 }
             } catch (err: any) {
-                console.error("Submit error:", err);
-                toast.error(err?.message || "Something went wrong.");
+                toast.error(err?.message || "Validation failed");
             }
         },
         onSubmitInvalid: () => {
@@ -95,7 +100,7 @@ export default function AddProductForm() {
         toast.info("All fields have been cleared");
     };
     return (
-      <div className="relative flex items-center justify-center w-full">
+        <div className="relative flex items-center justify-center w-full">
 
             {/* Background Decorations */}
             <div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -103,7 +108,7 @@ export default function AddProductForm() {
                 <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-emerald-500/5 dark:bg-emerald-500/10 blur-[120px] rounded-full" />
             </div>
 
-          <Card className="w-full max-w-5xl bg-white dark:bg-zinc-950 border border-slate-200 dark:border-zinc-800 shadow-2xl rounded-[20px] md:rounded-[28px] overflow-hidden z-10">
+            <Card className="w-full max-w-5xl bg-white dark:bg-zinc-950 border border-slate-200 dark:border-zinc-800 shadow-2xl rounded-[20px] md:rounded-[28px] overflow-hidden z-10">
                 <CardHeader className="border-b border-slate-100 dark:border-zinc-900 pb-6 px-5 md:px-8">
                     <div className="flex items-center gap-4">
                         <div className="flex h-12 w-12 md:h-14 md:w-14 items-center justify-center rounded-2xl bg-green-500/10 text-green-600 dark:text-green-500 shadow-sm">

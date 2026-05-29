@@ -135,3 +135,15 @@ export const getSubCategoryList = async (): Promise<ICategoryResponse> => {
         };
     }
 };
+export const getItemCategoryList = async (): Promise<ICategoryResponse> => {
+    try {
+        const result = await httpClient.get<ICategoryResponse>("/category/items");
+        return result;
+    } catch (error: any) {
+        return {
+            success: false,
+            message: error.response?.data?.message || "Failed to fetch Items-Category",
+            data: null
+        };
+    }
+};

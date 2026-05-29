@@ -6,8 +6,12 @@ const GENDER_MAP = {
     Kids: "KIDS",
 } as const
 
+const MAX_FILE_SIZE = 2 * 1024 * 1024;
+
 const imageSchema = z.object({
-    url: z.string().url("Valid image URL required"),
+    file: z
+        .instanceof(File, { message: "Image file is required" })
+        .refine((file) => file.size <= MAX_FILE_SIZE, "Each image must be under 2MB"),
     alt: z.string().min(1, "Alt text required"),
     order: z.coerce.number().min(1),
 });
@@ -50,14 +54,14 @@ export const productSchema = z.object({
         .min(3, "Slug must be at least 3 characters")
         .regex(/^[a-z0-9-]+$/, "Slug: only lowercase letters, numbers and hyphens"),
     description: z.string().min(20, "Description must be at least 20 characters"),
-    
+
     gender: z.string().min(1, "Please select a gender").pipe(
-    z.enum(["Men", "Women", "Kids"]).transform((val) => GENDER_MAP[val])
-),
+        z.enum(["Men", "Women", "Kids"]).transform((val) => GENDER_MAP[val])
+    ),
 
     brandName: z.string().min(1, "Brand name required"),
     brandOrigin: z.string().min(1, "Brand origin required"),
-    itemId: z.string().uuid("Must be a valid UUID"),
+    itemId: z.string().uuid("Select a valid item from the list"),
 
 
     currentPrice: z.coerce
@@ -84,7 +88,10 @@ export const productSchema = z.object({
         .min(0, "Sold cannot be negative"),
 
 
-    thumbnail: z.string().url("Valid thumbnail URL required"),
+    thumbnail: z
+        .instanceof(File, { message: "Product thumbnail image is required" })
+        .refine((file) => file.size > 0, "File cannot be empty"),
+
     timerLabel: z.string().min(1, "Timer label required"),
     aiStylistInfo: aiStylistInfoSchema,
     metadata: metadataSchema,

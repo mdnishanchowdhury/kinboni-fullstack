@@ -9,13 +9,14 @@ export interface ApiResponse<T> {
     data: T;
 }
 
-export const createProduct = async (
-    payload: Partial<Product>
-): Promise<ApiResponse<Product | null>> => {
+export const createProduct = async (payload: FormData): Promise<ApiResponse<Product | null>> => {
     try {
-        const res = await httpClient.post<ApiResponse<Product>>("/product", payload);
-        console.log(res)
-        return res.data;
+        const result = await httpClient.post<ApiResponse<Product>>("/product", payload, {
+            headers: {
+                "Content-Type": "multipart/form-data",
+            },
+        });
+        return result.data;
     } catch (error: any) {
         return {
             success: false,

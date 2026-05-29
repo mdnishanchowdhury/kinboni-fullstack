@@ -1,7 +1,9 @@
 "use client";
 
+import { useEffect } from "react";
 import { BarChart2 } from 'lucide-react';
 import { AppField } from '@/components/Shared/Form/Appfield';
+import { useStore } from "@tanstack/react-form";
 
 function Section({ icon: Icon, title, children }: { icon: any; title: string; children: React.ReactNode }) {
     return (
@@ -24,64 +26,59 @@ function FieldLabel({ children }: { children: React.ReactNode }) {
     );
 }
 
-const numCls = "w-full rounded-xl border border-input bg-background px-4 h-12 text-sm shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500/40 dark:bg-zinc-950 dark:border-zinc-800";
+function ErrorMessage({ meta }: { meta: any }) {
+    if (!meta.errors || meta.errors.length === 0) return null;
+    const error = meta.errors[0];
+    const message = typeof error === 'object' ? (error as any)?.message || "Invalid input" : String(error);
+    return (
+        <p className="text-xs text-red-500 mt-1 px-1 font-medium animate-in fade-in-50 duration-200">
+            {message}
+        </p>
+    );
+}
+
+const numCls = "w-full rounded-xl border border-input bg-background px-4 h-12 text-sm shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500/40 dark:bg-zinc-950 dark:border-zinc-800 transition-all duration-200";
 
 export default function PricingStockSection({ form }: { form: any }) {
+
+    const oldPrice = useStore(form.store, (state: any) => state.values.oldPrice);
+    const discountPercent = useStore(form.store, (state: any) => state.values.discountPercent);
+    
+
+    useEffect(() => {
+        const original = parseFloat(oldPrice) || 0;
+        const discount = parseFloat(discountPercent) || 0;
+
+        if (original > 0) {
+            const calculatedPrice = original - (original * discount) / 100;
+            const integerPrice = Math.round(calculatedPrice);
+
+            form.setFieldValue("currentPrice", integerPrice > 0 ? integerPrice : 0);
+        } else {
+            form.setFieldValue("currentPrice", 0);
+        }
+    }, [oldPrice, discountPercent, form]);
+
     return (
         <Section icon={BarChart2} title="Pricing & Stock">
 
             <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-4">
-                {/* Current Price */}
-                <div>
-                    <FieldLabel>Current Price ($)</FieldLabel>
-                    <form.Field name="currentPrice">
-                        {(field: any) => (
-                            <div>
-                                <input
-                                    type="number"
-                                    step="0.01"
-                                    min={0}
-                                    value={field.state.value}
-                                    onChange={(e) => field.handleChange(e.target.value)}
-                                    onBlur={field.handleBlur}
-                                    placeholder="0.00"
-                                    className={numCls}
-                                />
-                                {field.state.meta.errors && field.state.meta.errors.length > 0 && (
-                                    <p className="text-xs text-red-500 mt-1 px-1">
-                                        {typeof field.state.meta.errors[0] === 'object'
-                                            ? field.state.meta.errors[0]?.message
-                                            : String(field.state.meta.errors[0])}
-                                    </p>
-                                )}
-                            </div>
-                        )}
-                    </form.Field>
-                </div>
-
                 {/* Old Price */}
                 <div>
-                    <FieldLabel>Old Price ($)</FieldLabel>
+                    <FieldLabel>Price ($)</FieldLabel>
                     <form.Field name="oldPrice">
                         {(field: any) => (
                             <div>
                                 <input
                                     type="number"
-                                    step="0.01"
                                     min={0}
-                                    value={field.state.value}
-                                    onChange={(e) => field.handleChange(e.target.value)}
+                                    value={field.state.value || ""}
+                                    onChange={(e) => field.handleChange(e.target.value === "" ? "" : parseInt(e.target.value, 10))}
                                     onBlur={field.handleBlur}
-                                    placeholder="0.00"
-                                    className={numCls}
+                                    placeholder="0"
+                                    className={`${numCls} !h-8 ${field.state.meta.errors?.length > 0 ? "border-red-500 focus:ring-red-500/20" : ""}`}
                                 />
-                                {field.state.meta.errors && field.state.meta.errors.length > 0 && (
-                                    <p className="text-xs text-red-500 mt-1 px-1">
-                                        {typeof field.state.meta.errors[0] === 'object'
-                                            ? field.state.meta.errors[0]?.message
-                                            : String(field.state.meta.errors[0])}
-                                    </p>
-                                )}
+                                <ErrorMessage meta={field.state.meta} />
                             </div>
                         )}
                     </form.Field>
@@ -97,19 +94,33 @@ export default function PricingStockSection({ form }: { form: any }) {
                                     type="number"
                                     min={0}
                                     max={100}
-                                    value={field.state.value}
-                                    onChange={(e) => field.handleChange(e.target.value)}
+                                    value={field.state.value || ""}
+                                    onChange={(e) => field.handleChange(e.target.value === "" ? "" : parseInt(e.target.value, 10))}
                                     onBlur={field.handleBlur}
                                     placeholder="0"
-                                    className={numCls}
+                                    className={`${numCls} !h-8 ${field.state.meta.errors?.length > 0 ? "border-red-500 focus:ring-red-500/20" : ""}`}
                                 />
-                                {field.state.meta.errors && field.state.meta.errors.length > 0 && (
-                                    <p className="text-xs text-red-500 mt-1 px-1">
-                                        {typeof field.state.meta.errors[0] === 'object'
-                                            ? field.state.meta.errors[0]?.message
-                                            : String(field.state.meta.errors[0])}
-                                    </p>
-                                )}
+                                <ErrorMessage meta={field.state.meta} />
+                            </div>
+                        )}
+                    </form.Field>
+                </div>
+
+                {/* Current Price */}
+                <div>
+                    <FieldLabel>Current Price ($)</FieldLabel>
+                    <form.Field name="currentPrice">
+                        {(field: any) => (
+                            <div>
+                                <input
+                                    type="number"
+                                    value={field.state.value !== undefined ? field.state.value : 0}
+                                    disabled
+                                    readOnly
+                                    placeholder="0"
+                                    className={`${numCls} !h-8 bg-slate-50 dark:bg-zinc-900/50 font-bold text-green-600 dark:text-green-400 cursor-not-allowed border-dashed`}
+                                />
+                                <ErrorMessage meta={field.state.meta} />
                             </div>
                         )}
                     </form.Field>
@@ -124,19 +135,13 @@ export default function PricingStockSection({ form }: { form: any }) {
                                 <input
                                     type="number"
                                     min={0}
-                                    value={field.state.value}
-                                    onChange={(e) => field.handleChange(e.target.value)}
+                                    value={field.state.value || ""}
+                                    onChange={(e) => field.handleChange(e.target.value === "" ? "" : parseInt(e.target.value, 10))}
                                     onBlur={field.handleBlur}
                                     placeholder="0"
-                                    className={numCls}
+                                    className={`${numCls} !h-8 ${field.state.meta.errors?.length > 0 ? "border-red-500 focus:ring-red-500/20" : ""}`}
                                 />
-                                {field.state.meta.errors && field.state.meta.errors.length > 0 && (
-                                    <p className="text-xs text-red-500 mt-1 px-1">
-                                        {typeof field.state.meta.errors[0] === 'object'
-                                            ? field.state.meta.errors[0]?.message
-                                            : String(field.state.meta.errors[0])}
-                                    </p>
-                                )}
+                                <ErrorMessage meta={field.state.meta} />
                             </div>
                         )}
                     </form.Field>
@@ -153,19 +158,12 @@ export default function PricingStockSection({ form }: { form: any }) {
                                 <input
                                     type="number"
                                     min={0}
-                                    value={field.state.value}
-                                    onChange={(e) => field.handleChange(e.target.value)}
+                                    value={field.state.value || ""}
+                                    onChange={(e) => field.handleChange(e.target.value === "" ? "" : parseInt(e.target.value, 10))}
                                     onBlur={field.handleBlur}
                                     placeholder="0"
-                                    className={numCls}
+                                    className={`${numCls} !h-8 mt-1 ${field.state.meta.errors?.length > 0 ? "border-red-500 focus:ring-red-500/20" : ""}`}
                                 />
-                                {field.state.meta.errors && field.state.meta.errors.length > 0 && (
-                                    <p className="text-xs text-red-500 mt-1 px-1">
-                                        {typeof field.state.meta.errors[0] === 'object'
-                                            ? field.state.meta.errors[0]?.message
-                                            : String(field.state.meta.errors[0])}
-                                    </p>
-                                )}
                             </div>
                         )}
                     </form.Field>
@@ -175,7 +173,11 @@ export default function PricingStockSection({ form }: { form: any }) {
                 <div>
                     <FieldLabel>Timer Label</FieldLabel>
                     <form.Field name="timerLabel">
-                        {(field: any) => <AppField field={field} label="" placeholder="e.g. Footwear Extravaganza" className="rounded-xl h-12" />}
+                        {(field: any) => (
+                            <div>
+                                <AppField field={field} label="" placeholder="e.g. Footwear Extravaganza" className="rounded-xl h-12" />
+                            </div>
+                        )}
                     </form.Field>
                 </div>
             </div>
