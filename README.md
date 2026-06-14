@@ -1,7 +1,7 @@
 # Kinboni E-Commerce Platform
-
-Kinboni is a high-performance, enterprise-grade full-stack e-commerce platform designed to deliver a seamless shopping experience. Built with a modern tech stack, it features a robust multi-role management system and optimized media handling to ensure scalability and speed.
 ---
+Kinboni is a high-performance, enterprise-grade full-stack e-commerce platform designed to deliver a seamless shopping experience. Built with a modern tech stack, it features a robust multi-role management system and optimized media handling to ensure scalability and speed.
+
 
 ## 🚀 Features
 - Multi-Role Access Control (RBAC): Features a secure 5-role management system (Super Admin, Admin, Manager, Seller, Customer) for streamlined operations.
