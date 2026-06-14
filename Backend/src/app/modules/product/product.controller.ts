@@ -32,27 +32,26 @@ const createProduct = catchAsync(async (req: Request, res: Response) => {
     });
 });
 
-const getAllProducts = catchAsync(
-    async (req: Request, res: Response) => {
-        const filters = {
-            search: req.query.search as string,
-            gender: req.query.gender as string,
-            status: req.query.status as string,
-            sort: req.query.sort as string,
-            page: req.query.page ? Number(req.query.page) : undefined,
-            limit: req.query.limit ? Number(req.query.limit) : undefined,
-        };
-
-        const result = await ProductService.getAllProducts(filters);
-
-        sendResponse(res, {
-            httpStatusCode: 200,
-            success: true,
-            message: "Products fetched successfully!",
-            data: result
-        });
-    }
-);
+const getAllProducts = catchAsync(async (req: Request, res: Response) => {
+    const filters = {
+        search: req.query.search as string,
+        gender: req.query.gender as string,
+        status: req.query.status as string,
+        sort: req.query.sort as string,
+        page: req.query.page ? Number(req.query.page) : undefined,
+        limit: req.query.limit ? Number(req.query.limit) : undefined,
+        itemId: req.query.itemId as string,
+        min: req.query.min ? Number(req.query.min) : undefined,
+        max: req.query.max ? Number(req.query.max) : undefined,
+    };
+    const result = await ProductService.getAllProducts(filters);
+    sendResponse(res, {
+        httpStatusCode: 200,
+        success: true,
+        message: "Products fetched successfully!",
+        data: result
+    });
+});
 export const ProductController = {
     createProduct,
     getAllProducts

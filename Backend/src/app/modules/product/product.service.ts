@@ -30,13 +30,22 @@ const getAllProducts = async (filters: {
     sort?: string;
     page?: number;
     limit?: number;
+    itemId?: string;
+    min?: number;
+    max?: number;
 }) => {
     const page = Number(filters.page) || 1;
     const limit = Number(filters.limit) || 5;
     const skip = (page - 1) * limit;
 
-    const { search, gender, status, sort } = filters;
+    const { search, gender, status, sort, itemId, min, max } = filters;
     const whereClause: any = {};
+
+    if (min !== undefined || max !== undefined) {
+        whereClause.currentPrice = {};
+        if (min !== undefined) whereClause.currentPrice.gte = Number(min);
+        if (max !== undefined) whereClause.currentPrice.lte = Number(max);
+    }
 
     if (search) {
         whereClause.OR = [
@@ -44,6 +53,10 @@ const getAllProducts = async (filters: {
             { description: { contains: search, mode: 'insensitive' } },
             { brandName: { contains: search, mode: 'insensitive' } }
         ];
+    }
+
+    if (itemId) {
+        whereClause.itemId = itemId;
     }
 
     if (gender) {
@@ -150,6 +163,8 @@ const getAllProducts = async (filters: {
         products: mappedProducts
     };
 };
+
+
 
 export const ProductService = {
     createProduct,
