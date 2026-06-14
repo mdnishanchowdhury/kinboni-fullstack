@@ -23,15 +23,69 @@ const createProduct = async (payload: any): Promise<Product> => {
     });
 };
 
-const getAllProducts = async () => {
+const getAllProducts = async (filters: {
+    search?: string;
+    gender?: string;
+    status?: string;
+    sort?: string;
+    page?: number;
+    limit?: number;
+}) => {
+    const page = Number(filters.page) || 1;
+    const limit = Number(filters.limit) || 5;
+    const skip = (page - 1) * limit;
+
+    const { search, gender, status, sort } = filters;
+    const whereClause: any = {};
+
+    if (search) {
+        whereClause.OR = [
+            { name: { contains: search, mode: 'insensitive' } },
+            { description: { contains: search, mode: 'insensitive' } },
+            { brandName: { contains: search, mode: 'insensitive' } }
+        ];
+    }
+
+    if (gender) {
+        whereClause.gender = gender;
+    }
+
+    if (status) {
+        if (status === "Flash sale") {
+            whereClause.isFlashSale = true;
+        } else if (status === "Out of stock") {
+            whereClause.stock = 0;
+        } else if (status === "Active") {
+            whereClause.stock = { gt: 0 };
+        }
+    }
+
+    let orderByClause: any = { id: 'desc' };
+
+    if (sort === "Price: low → high") {
+        orderByClause = { currentPrice: 'asc' };
+    } else if (sort === "Price: high → low") {
+        orderByClause = { currentPrice: 'desc' };
+    } else if (sort === "Stock: low → high") {
+        orderByClause = { stock: 'asc' };
+    }
+
+    const totalProducts = await prisma.product.count({
+        where: whereClause
+    });
+
     const products = await prisma.product.findMany({
+        where: whereClause,
+        orderBy: orderByClause,
+        skip: skip,
+        take: limit,
         include: {
             images: true,
             variants: true,
         }
     });
 
-    return products.map((product: any) => ({
+    const mappedProducts = products.map((product: any) => ({
         id: product.id,
         name: product.name,
         slug: product.slug,
@@ -40,13 +94,11 @@ const getAllProducts = async () => {
             name: product.brandName || "Unknown",
             origin: product.brandOrigin || "Imported"
         },
-
         aiStylistInfo: {
             suitableFor: product.aiStylistInfo?.suitableFor || [],
             compatibleCategories: product.aiStylistInfo?.compatibleCategories || [],
             styleNote: product.aiStylistInfo?.styleNote || "No style note available."
         },
-
         category: {
             main: product.categoryMain,
             sub: product.categorySub,
@@ -78,9 +130,8 @@ const getAllProducts = async () => {
         timer: product.isFlashSale ? {
             isFlashSale: true,
             expiresAt: product.flashExpiresAt,
-            timerLabel: product.timerLabel || "Flash Sale"
+            timerLabel: product.timerLabel,
         } : undefined,
-
         variants: product.variants.map((v: any) => ({
             id: v.id,
             name: v.name,
@@ -88,6 +139,16 @@ const getAllProducts = async () => {
             sizes: v.sizes
         }))
     }));
+
+    return {
+        meta: {
+            page,
+            limit,
+            totalProducts,
+            totalPages: Math.ceil(totalProducts / limit)
+        },
+        products: mappedProducts
+    };
 };
 
 export const ProductService = {

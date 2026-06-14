@@ -34,17 +34,25 @@ const createProduct = catchAsync(async (req: Request, res: Response) => {
 
 const getAllProducts = catchAsync(
     async (req: Request, res: Response) => {
-        const products = await ProductService.getAllProducts();
+        const filters = {
+            search: req.query.search as string,
+            gender: req.query.gender as string,
+            status: req.query.status as string,
+            sort: req.query.sort as string,
+            page: req.query.page ? Number(req.query.page) : undefined,
+            limit: req.query.limit ? Number(req.query.limit) : undefined,
+        };
+
+        const result = await ProductService.getAllProducts(filters);
 
         sendResponse(res, {
             httpStatusCode: 200,
             success: true,
             message: "Products fetched successfully!",
-            data: products
+            data: result
         });
     }
 );
-
 export const ProductController = {
     createProduct,
     getAllProducts
