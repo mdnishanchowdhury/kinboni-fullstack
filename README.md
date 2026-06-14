@@ -1,4 +1,5 @@
 # Kinboni E-Commerce Platform
+
 Kinboni is a high-performance, enterprise-grade full-stack e-commerce platform designed to deliver a seamless shopping experience. Built with a modern tech stack, it features a robust multi-role management system and optimized media handling to ensure scalability and speed.
 ---
 
