@@ -7,7 +7,7 @@ import { useState, useEffect } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { toast } from 'sonner';
-import { createProductAction } from '@/app/(dashboardLayout)/[role]/dashboard/add-product/_action';
+import { createProductAction } from '@/app/(dashboardLayout)/[role]/dashboard/products/_action';
 import AIStylistSection from './AIStylistSection';
 import PricingStockSection from './PricingStockSection';
 import BasicInfoSection from './BasicInfoSection';
@@ -16,7 +16,7 @@ import ColorVariantsSection from './ColorVariantsSection';
 import MetadataSection from './MetadataSection';
 import { IProductInput, productSchema } from '@/zod/product.validation';
 
-export default function AddProductForm() {
+export default function AddProductForm({ onSuccess }: { onSuccess: () => void }) {
     const queryClient = useQueryClient();
     const [isMounted, setIsMounted] = useState(false);
 
@@ -63,7 +63,7 @@ export default function AddProductForm() {
         } as IProductInput,
 
         validators: {
-            onChange: productSchema,
+            onBlur: productSchema,
         },
         onSubmit: async ({ value }) => {
             try {
@@ -81,6 +81,7 @@ export default function AddProductForm() {
                 if (res?.success) {
                     form.reset();
                     toast.success(res.message || "Product created successfully!");
+                    onSuccess();
                 } else {
                     toast.error(res?.message || "Failed to create product");
                 }

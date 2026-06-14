@@ -126,7 +126,7 @@ export default function BasicInfoSection({ form }: { form: any }) {
                                     className={`${selectCls} ${field.state.meta.errors?.length > 0 ? "border-red-500 focus:ring-red-500/20" : ""}`}
                                 >
                                     <option value="" disabled>Select Gender</option>
-                                    {(["Men", "Women", "Kids"] as const).map((g) => (
+                                    {(["Male", "Female", "Kids"] as const).map((g) => (
                                         <option key={g} value={g}>{g}</option>
                                     ))}
                                 </select>

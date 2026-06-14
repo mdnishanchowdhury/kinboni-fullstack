@@ -121,8 +121,8 @@ function Navbar() {
               variant={isSellerMode ? "default" : "outline"}
               onClick={handleModeToggle}
               className={`hidden md:flex gap-2 rounded-full font-bold text-xs h-9 px-5 transition-all active:scale-95 ${isSellerMode
-                  ? "bg-green-600 hover:bg-black text-white border-none"
-                  : "text-gray-600 border-gray-200 hover:bg-gray-50 dark:text-white"
+                ? "bg-green-600 hover:bg-black text-white border-none"
+                : "text-gray-600 border-gray-200 hover:bg-gray-50 dark:text-white"
                 }`}
             >
               <HiOutlineSwitchHorizontal className="text-lg" />
@@ -131,20 +131,23 @@ function Navbar() {
 
             {/* Icons & Account Section */}
             <div className="flex items-center gap-1 lg:gap-3">
-              <MessageDropdown />
-              <CartDropdown isSellerMode={isSellerMode} />
 
-              {/* Conditional Auth Rendering */}
+              <CartDropdown isSellerMode={isSellerMode} />
               {!isUserLoading && (
                 user ? (
-                  <AccountDropdown />
+                  <>
+                    <MessageDropdown />
+                    <AccountDropdown />
+                  </>
                 ) : (
-                  <div className="hidden lg:flex items-center space-x-2 ml-2">
+                  <div className="flex items-center space-x-1 lg:space-x-2 ml-1 lg:ml-2">
                     <Link href="/login">
-                      <Button variant="outline" size="sm" className="h-8">Login</Button>
+                      <Button variant="outline" size="sm" className="h-7 text-xs lg:h-8 lg:text-sm px-2 lg:px-4">
+                        Login
+                      </Button>
                     </Link>
                     <Link href="/register">
-                      <Button size="sm" className="h-8 bg-green-500 hover:bg-black text-white">
+                      <Button size="sm" className="h-7 text-xs lg:h-8 lg:text-sm px-2 lg:px-4 bg-green-500 hover:bg-black text-white">
                         Sign Up
                       </Button>
                     </Link>

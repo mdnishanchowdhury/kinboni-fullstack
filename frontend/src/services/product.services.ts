@@ -1,6 +1,6 @@
 "use server";
 
-import { Product } from "@/types/product.types";
+import { Product, ProductFilters, ProductPaginatedResponse, ProductResponse } from "@/types/product.types";
 import { httpClient } from "../lib/axios/httpClient";
 
 export interface ApiResponse<T> {
@@ -26,16 +26,32 @@ export const createProduct = async (payload: FormData): Promise<ApiResponse<Prod
     }
 };
 
-export const getProducts = async (): Promise<ApiResponse<Product[] | null>> => {
+export const getProducts = async (filters: ProductFilters): Promise<ProductPaginatedResponse | null> => {
     try {
-        const res = await httpClient.get<ApiResponse<Product[]>>("/product");
-        return res.data;
+        const res = await httpClient.get<ProductResponse>("/product", {
+            params: {
+                search: filters.search || undefined,
+                gender: filters.gender || undefined,
+                status: filters.status || undefined,
+                sort: filters.sort || undefined,
+                page: filters.page || 1,
+                limit: filters.limit || 5,
+            }
+        });
+
+        if (res.data && res.data.data) {
+            return res.data.data;
+        }
+
+        if (res.data && ('products' in res.data)) {
+            return res.data as unknown as ProductPaginatedResponse;
+        }
+
+        console.warn("Backend response structure mismatched:", res.data);
+        return null;
 
     } catch (error: any) {
-        return {
-            success: false,
-            message: error.response?.data?.message || "Failed to fetch products",
-            data: null,
-        };
+        console.error("Error fetching products:", error);
+        return null;
     }
 };

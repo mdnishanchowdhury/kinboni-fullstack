@@ -67,19 +67,14 @@ export const adminNavItems: NavSection[] = [
         title: "Admin Management",
         items: [
             {
-                title: "Category",
+                title: "Categorys",
                 href: "/admin/dashboard/category",
                 icon: "Tags"
             },
             {
-                title: "Add Product",
-                href: "/admin/dashboard/add-product",
-                icon: "PlusCircle"
-            },
-            {
-                title: "Manage Categories",
-                href: "/admin/dashboard/all-categories",
-                icon: "Layers"
+                title: "Products",
+                href: "/admin/dashboard/products",
+               icon: "PlusCircle"
             },
             {
                 title: "User Reports",

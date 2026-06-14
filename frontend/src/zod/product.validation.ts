@@ -1,8 +1,8 @@
 import { z } from 'zod';
 
 const GENDER_MAP = {
-    Men: "MALE",
-    Women: "FEMALE",
+    Male: "MALE",
+    Female: "FEMALE",
     Kids: "KIDS",
 } as const
 
@@ -56,7 +56,7 @@ export const productSchema = z.object({
     description: z.string().min(20, "Description must be at least 20 characters"),
 
     gender: z.string().min(1, "Please select a gender").pipe(
-        z.enum(["Men", "Women", "Kids"]).transform((val) => GENDER_MAP[val])
+        z.enum(["Male", "Female", "Kids"]).transform((val) => GENDER_MAP[val])
     ),
 
     brandName: z.string().min(1, "Brand name required"),

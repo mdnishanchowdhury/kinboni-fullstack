@@ -14,7 +14,7 @@ interface ProductGridProps {
 export default function ProductGrid({ products, isLoading }: ProductGridProps) {
     const [isCartOpen, setIsCartOpen] = useState<boolean>(false);
     const [activeCartItem, setActiveCartItem] = useState<Product | null>(null);
-
+console.log("Products in ProductGrid:", products);
     if (isLoading) {
         return (
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-12">
