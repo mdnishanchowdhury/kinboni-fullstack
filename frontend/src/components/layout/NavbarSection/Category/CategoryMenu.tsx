@@ -4,6 +4,7 @@ import { useState, useCallback, useMemo } from "react";
 import { ChevronRight } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "../../../../lib/utils";
+import Link from "next/link";
 
 const SubCategoryItems = ({ items }: { items: any[] }) => (
   <motion.div
@@ -18,7 +19,9 @@ const SubCategoryItems = ({ items }: { items: any[] }) => (
     <div className="flex flex-col gap-3">
       {
         items.map((item, i) => (
-          <div key={i} className="flex items-center gap-3 text-[14px] text-gray-600 hover:text-orange-600 cursor-pointer group/item transition-all">
+          <Link key={i}
+            href={`/shop?itemId=${item.id}`}
+            className="flex items-center gap-3 text-[14px] text-gray-600 hover:text-orange-600 cursor-pointer group/item transition-all">
             {item.image && (
               <div className="w-10 h-10 rounded-lg overflow-hidden border border-gray-100 bg-gray-50 shrink-0">
                 <img src={item.image} className="w-full h-full object-cover" alt={item.name} />
@@ -27,7 +30,7 @@ const SubCategoryItems = ({ items }: { items: any[] }) => (
             <span className="font-medium group-hover/item:translate-x-1 transition-transform truncate">
               {item.name}
             </span>
-          </div>
+          </Link>
         ))
       }
     </div>

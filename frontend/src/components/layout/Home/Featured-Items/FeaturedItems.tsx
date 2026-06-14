@@ -5,8 +5,10 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import FeaturedItemsSkeleton from "../../../Skeleton/FeaturedItemsSkeleton";
 import { useCategories } from "../../../../hooks/useCategories";
 import { cn } from "../../../../lib/utils";
+import Link from "next/link";
 
 interface CategoryItem {
+  id: string;
   name: string;
   image?: string;
   slug?: string;
@@ -137,26 +139,30 @@ export default function FeaturedItems() {
               isDragging ? "cursor-grabbing" : "cursor-grab"
             )}
           >
-            {allFinalItems.map((item: CategoryItem, index: number) => (
-              <div
-                key={index}
-                className="fi-item flex flex-col items-center gap-2 md:gap-3 w-[80px] md:w-[150px]"
-              >
-                {/* Card rounded square with white bg */}
-                <div className="fi-item-card w-full aspect-square rounded-[20px] border border-slate-200 bg-white flex items-center justify-center p-4 overflow-hidden">
-                  <img
-                    src={item.image}
-                    alt={item.name}
-                    className="fi-item-img w-full h-full object-contain"
-                    draggable={false}
-                  />
-                </div>
+            {
+              allFinalItems.map((item: CategoryItem, index: number) => (
+                console.log(item),
+                <Link
+                  key={index}
+                  href={`/shop?itemId=${item.id}`}
+                  className="fi-item flex flex-col items-center gap-2 md:gap-3 w-[80px] md:w-[150px]"
+                >
+                  {/* Card rounded square with white bg */}
+                  <div className="fi-item-card w-full aspect-square rounded-[20px] border border-slate-200 bg-white flex items-center justify-center p-4 overflow-hidden">
+                    <img
+                      src={item.image}
+                      alt={item.name}
+                      className="fi-item-img w-full h-full object-contain"
+                      draggable={false}
+                    />
+                  </div>
 
-                <span className="text-[8px] md:text-sm font-bold text-slate-800 text-center leading-snug line-clamp-2 w-full px-1 dark:text-white">
-                  {item.name}
-                </span>
-              </div>
-            ))}
+                  <span className="text-[8px] md:text-sm font-bold text-slate-800 text-center leading-snug line-clamp-2 w-full px-1 dark:text-white">
+                    {item.name}
+                  </span>
+                </Link>
+              ))
+            }
           </div>
 
         </div>

@@ -36,6 +36,9 @@ export const getProducts = async (filters: ProductFilters): Promise<ProductPagin
                 sort: filters.sort || undefined,
                 page: filters.page || 1,
                 limit: filters.limit || 5,
+                itemId: filters.itemId || undefined,
+                min: filters.min || undefined, 
+                max: filters.max || undefined,
             }
         });
 

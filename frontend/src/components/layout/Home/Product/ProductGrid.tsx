@@ -14,7 +14,7 @@ interface ProductGridProps {
 export default function ProductGrid({ products, isLoading }: ProductGridProps) {
     const [isCartOpen, setIsCartOpen] = useState<boolean>(false);
     const [activeCartItem, setActiveCartItem] = useState<Product | null>(null);
-console.log("Products in ProductGrid:", products);
+
     if (isLoading) {
         return (
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-12">
@@ -36,8 +36,8 @@ console.log("Products in ProductGrid:", products);
     return (
         <div className="relative">
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-12 items-stretch">
-                {products.map((product) => (
-                    <div key={product.id} className="h-full">
+                {products.map((product, index) => (
+                    <div key={`${product.id}-${index}`} className="h-full">
                         <ProductCard
                             productData={product}
                             setIsCartOpen={setIsCartOpen}

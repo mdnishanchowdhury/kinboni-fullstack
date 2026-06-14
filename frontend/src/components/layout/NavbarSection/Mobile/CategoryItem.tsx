@@ -2,13 +2,13 @@ import Link from "next/link";
 import { cn } from "../../../../lib/utils";
 
 export const CategoryItem = ({ item, pathname, setOpen }: any) => {
-  const itemSlug = `/product/${item.slug || item.name.toLowerCase().replace(/\s+/g, '-')}`;
-  const isActive = pathname === itemSlug;
+  const itemLink = `/shop?itemId=${item.id}`;
+  const isActive = pathname === "/shop" && new URLSearchParams(window.location.search).get("itemId") === String(item.id);
 
   return (
     <Link
-      href={itemSlug}
-      onClick={() => setOpen(false)}
+      href={itemLink}
+      onClick={() => setOpen?.(false)}
       className={cn(
         "flex items-center gap-3 p-1 rounded-lg transition-all border",
         isActive
