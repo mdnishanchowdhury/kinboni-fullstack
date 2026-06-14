@@ -1,7 +1,13 @@
 # Admin
 
-Email: ```bash nishanchowdhury4130@gmail.com ```
-Password: ```bash Nishan@12 ```
+Email: 
+```bash 
+nishanchowdhury4130@gmail.com
+```
+Password: 
+```bash 
+Nishan@12
+```
 
 
 # Kinboni E-Commerce Platform
