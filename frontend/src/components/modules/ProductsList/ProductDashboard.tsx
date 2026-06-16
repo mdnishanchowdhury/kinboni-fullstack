@@ -16,7 +16,7 @@ import { StatsRow } from "./StatsRow";
 import { ProductTable } from "./ProductTable";
 import { ProductGrid } from "./ProductGrid";
 import { useProducts } from "@/hooks/useProduct";
-import { SortOption, StatusFilter, ViewMode } from "@/types/product.types";
+import { SortOption, StatusFilter, ViewMode, Gender, ProductFilters } from "@/types/product.types";
 
 const PER_PAGE = 10;
 
@@ -30,7 +30,6 @@ export function ProductDashboard() {
   const [view, setView] = useState<ViewMode>("list");
   const [page, setPage] = useState(1);
 
-  // Debounce logic (400ms)
   useEffect(() => {
     const handler = setTimeout(() => {
       setDebouncedQuery(query);
@@ -39,7 +38,7 @@ export function ProductDashboard() {
     return () => clearTimeout(handler);
   }, [query]);
 
-  const backendFilters = useMemo(() => {
+  const backendFilters: ProductFilters = useMemo(() => {
     let status = undefined;
     if (statusFilter === "active") status = "Active";
     if (statusFilter === "flash") status = "Flash sale";
@@ -52,9 +51,9 @@ export function ProductDashboard() {
 
     return {
       search: debouncedQuery || undefined,
-      gender: genderFilter === "all" ? undefined : genderFilter,
-      status,
-      sort,
+      gender: (genderFilter === "all" ? undefined : genderFilter) as Gender | undefined,
+      status: status as any,
+      sort: sort as any,
       page,
       limit: PER_PAGE
     };
@@ -62,8 +61,8 @@ export function ProductDashboard() {
 
   const { data: apiResponse, isLoading, isFetching } = useProducts(backendFilters);
 
-  const products = (apiResponse?.products || []) as any[];
-  const totalFiltered = apiResponse?.meta?.totalProducts || 0;
+  const products = (apiResponse as any)?.products || (apiResponse as any)?.data?.products || [];
+  const totalFiltered = (apiResponse as any)?.meta?.totalProducts || (apiResponse as any)?.data?.meta?.totalProducts || 0;
 
   function handleDelete(id: string) {
     if (!confirm("Are you sure you want to delete this product?")) return;
@@ -91,7 +90,6 @@ export function ProductDashboard() {
   return (
     <div className="min-h-screen bg-background">
       <div>
-        {/* Header */}
         <div className="mb-6 flex items-start justify-between gap-4">
           <div className="flex items-center gap-3">
             <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary/10">
@@ -105,12 +103,10 @@ export function ProductDashboard() {
           <AddProductDialog />
         </div>
 
-        {/* Stats Row */}
         <div className="mb-6">
           <StatsRow products={products} />
         </div>
 
-        {/* Toolbar */}
         <div className="mb-4 flex flex-wrap items-center gap-2">
           <div className="relative flex-1 min-w-48">
             <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
@@ -168,32 +164,27 @@ export function ProductDashboard() {
           </div>
         </div>
 
-        {/* Main Interface Content */}
         <div className={`relative transition-opacity duration-200 ${isFetching ? "opacity-70 pointer-events-none" : "opacity-100"}`}>
-          {
-            isFetching && (
-              <div className="absolute top-2 right-25 flex items-center gap-2 bg-background/90 px-3 py-1 rounded-md border text-xs text-muted-foreground z-10 shadow-sm">
-                <Loader2 className="h-3 w-3 animate-spin text-green-500" />
-                Syncing...
-              </div>
-            )
-          }
+          {isFetching && (
+            <div className="absolute top-2 right-25 flex items-center gap-2 bg-background/90 px-3 py-1 rounded-md border text-xs text-muted-foreground z-10 shadow-sm">
+              <Loader2 className="h-3 w-3 animate-spin text-green-500" />
+              Syncing...
+            </div>
+          )}
 
-          {
-            view === "list" ? (
-              <ProductTable
-                products={products}
-                page={page}
-                perPage={PER_PAGE}
-                totalFiltered={totalFiltered}
-                onPageChange={setPage}
-                onEdit={handleEdit}
-                onDelete={handleDelete}
-              />
-            ) : (
-              <ProductGrid products={products} />
-            )
-          }
+          {view === "list" ? (
+            <ProductTable
+              products={products}
+              page={page}
+              perPage={PER_PAGE}
+              totalFiltered={totalFiltered}
+              onPageChange={setPage}
+              onEdit={handleEdit}
+              onDelete={handleDelete}
+            />
+          ) : (
+            <ProductGrid products={products} />
+          )}
         </div>
       </div>
     </div>

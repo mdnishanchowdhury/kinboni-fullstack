@@ -1,3 +1,12 @@
+import { PaginationMeta } from "./api.types";
+
+export interface ApiResponse<TData = unknown> {
+  success: true;
+  message: string;
+  data: TData;
+  meta?: PaginationMeta;
+}
+
 export interface Review {
   id: string;
   user: {
@@ -62,21 +71,16 @@ export interface Product {
     expiresAt: string;
     discountType?: string;
     discountValue?: number;
+    flashDiscount?: number;
     timerLabel: string;
   };
   variants: Variant[];
 }
 
 export interface ProductPaginatedResponse {
-  meta: {
-    page: number;
-    limit: number;
-    totalProducts: number;
-    totalPages: number;
-  };
   products: Product[];
+  meta: PaginationMeta;
 }
-
 export interface ProductResponse {
   success: boolean;
   message?: string;
@@ -85,7 +89,7 @@ export interface ProductResponse {
 
 export interface ProductFilters {
   search?: string;
-  gender?: string;
+  gender?: Gender;
   status?: string;
   sort?: string;
   page?: number;
@@ -93,11 +97,13 @@ export interface ProductFilters {
   itemId?: string;
   min?: number;
   max?: number;
+
+  [key: string]: string | number | undefined;
 }
 
 export interface ProductFilters {
   search?: string;
-  gender?: string;
+  gender?: Gender;
   status?: string;
   sort?: string;
   page?: number;

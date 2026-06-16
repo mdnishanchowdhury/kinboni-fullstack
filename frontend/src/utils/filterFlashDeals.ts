@@ -1,7 +1,6 @@
 import { Product } from "../types/product.types";
 
-
-export const filterFlashDeals = (products: Product[]): Product[] => {
+export const filterFlashDeals = (products: Product[], minDiscount: number = 0): Product[] => {
   const now = new Date();
 
   return products.filter((item) => {
@@ -10,7 +9,7 @@ export const filterFlashDeals = (products: Product[]): Product[] => {
 
     return (
       item.timer?.isFlashSale &&
-      (item.pricing?.discountPercent ?? 0) >= 20 &&
+      (item.timer?.flashDiscount ?? 0) >= minDiscount &&
       expireDate > now
     );
   });

@@ -6,8 +6,10 @@ import TopSellingBanner from './TopSellingBanner';
 import ProductListContainer from './ProductListContainer';
 import TopSellingSkeleton from '../../../Skeleton/TopSellingSkeleton';
 import { Product } from "@/types/product.types";
+import { useProductsList } from '@/hooks/useProductsList';
 
-export default function TopSelling({ products, isLoading }) {
+export default function TopSelling() {
+    const { data: products, isLoading } = useProductsList();
 
     const allProducts = useMemo((): Product[] => {
         if (!products) return [];

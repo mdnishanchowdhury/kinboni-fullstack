@@ -7,7 +7,7 @@ import ShopSidebar from "./ShopSidebar";
 import { useProducts } from "@/hooks/useProduct";
 import { ProductCard } from "@/components/layout/Home/Product/ProductCard/ProductCard";
 import CartDrawer from "@/components/layout/Home/Product/Cart/CartDrawer";
-import { Product } from "@/types/product.types";
+import { Product, Gender } from "@/types/product.types";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import ShopBanner from "./ShopBanner";
@@ -24,7 +24,7 @@ function ShopContent() {
 
     const filters = {
         itemId: searchParams.get("itemId") || undefined,
-        gender: searchParams.get("gender") || undefined,
+        gender: (searchParams.get("gender") as Gender) || undefined,
         status: searchParams.get("status") || undefined,
         sort: searchParams.get("sort") || undefined,
         min: searchParams.get("min") ? Number(searchParams.get("min")) : undefined,
@@ -33,15 +33,17 @@ function ShopContent() {
         limit: 9,
     };
 
-    const { data, isLoading, isError, isFetching } = useProducts(filters);
-    const products = data?.products || [];
-    const totalPages = data?.meta?.totalPages || 1;
+    const { data: apiResponse, isLoading, isError, isFetching } = useProducts(filters);
+
+    const response = apiResponse as any;
+    const products = response?.products || [];
+    const totalPages = response?.meta?.totalPages || 1;
 
     const handleSort = (value: string) => {
         const params = new URLSearchParams(searchParams.toString());
         if (value) params.set("sort", value);
         else params.delete("sort");
-        
+
         startTransition(() => {
             router.push(`/shop?${params.toString()}`, { scroll: false });
         });
@@ -84,42 +86,44 @@ function ShopContent() {
                         </select>
                     </div>
 
-                    {isLoading ? (
-                        <FeaturedItemsSkeleton />
-                    ) : isError ? (
-                        <div className="text-center py-20 text-red-500">Error loading products!</div>
-                    ) : products.length === 0 ? (
-                        <div className="text-center py-20 text-slate-500">No products found.</div>
-                    ) : (
-                        <div className={`transition-opacity duration-300 ${(isFetching || isPending) ? "opacity-50" : "opacity-100"}`}>
-                            <div className="grid grid-cols-2 lg:grid-cols-3 gap-6">
-                                {products.map((product: Product) => (
-                                    <ProductCard
-                                        key={product.id}
-                                        productData={product}
-                                        setIsCartOpen={setIsCartOpen}
-                                        setActiveCartItem={setActiveCartItem}
-                                    />
-                                ))}
-                            </div>
-
-                            {totalPages > 1 && (
-                                <div className="flex justify-center items-center gap-2 mt-12 pb-10">
-                                    <Button variant="outline" disabled={currentPage === 1} onClick={() => handlePageChange(currentPage - 1)}>Prev</Button>
-                                    {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
-                                        <Button
-                                            key={page}
-                                            variant={currentPage === page ? "default" : "outline"}
-                                            onClick={() => handlePageChange(page)}
-                                        >
-                                            {page}
-                                        </Button>
+                    {
+                        isLoading ? (
+                            <FeaturedItemsSkeleton />
+                        ) : isError ? (
+                            <div className="text-center py-20 text-red-500">Error loading products!</div>
+                        ) : products.length === 0 ? (
+                            <div className="text-center py-20 text-slate-500">No products found.</div>
+                        ) : (
+                            <div className={`transition-opacity duration-300 ${(isFetching || isPending) ? "opacity-50" : "opacity-100"}`}>
+                                <div className="grid grid-cols-2 lg:grid-cols-3 gap-6">
+                                    {products.map((product: Product) => (
+                                        <ProductCard
+                                            key={product.id}
+                                            productData={product}
+                                            setIsCartOpen={setIsCartOpen}
+                                            setActiveCartItem={setActiveCartItem}
+                                        />
                                     ))}
-                                    <Button variant="outline" disabled={currentPage === totalPages} onClick={() => handlePageChange(currentPage + 1)}>Next</Button>
                                 </div>
-                            )}
-                        </div>
-                    )}
+
+                                {totalPages > 1 && (
+                                    <div className="flex justify-center items-center gap-2 mt-12 pb-10">
+                                        <Button variant="outline" disabled={currentPage === 1} onClick={() => handlePageChange(currentPage - 1)}>Prev</Button>
+                                        {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+                                            <Button
+                                                key={page}
+                                                variant={currentPage === page ? "default" : "outline"}
+                                                onClick={() => handlePageChange(page)}
+                                            >
+                                                {page}
+                                            </Button>
+                                        ))}
+                                        <Button variant="outline" disabled={currentPage === totalPages} onClick={() => handlePageChange(currentPage + 1)}>Next</Button>
+                                    </div>
+                                )}
+                            </div>
+                        )
+                    }
                 </main>
             </div>
 

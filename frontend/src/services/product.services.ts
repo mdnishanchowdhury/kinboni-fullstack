@@ -1,13 +1,9 @@
 "use server";
 
-import { Product, ProductFilters, ProductPaginatedResponse, ProductResponse } from "@/types/product.types";
+import { Product, ProductFilters, ProductPaginatedResponse } from "@/types/product.types";
 import { httpClient } from "../lib/axios/httpClient";
+import { ApiResponse } from "@/types/api.types";
 
-export interface ApiResponse<T> {
-    success: boolean;
-    message: string;
-    data: T;
-}
 
 export const createProduct = async (payload: FormData): Promise<ApiResponse<Product | null>> => {
     try {
@@ -26,35 +22,24 @@ export const createProduct = async (payload: FormData): Promise<ApiResponse<Prod
     }
 };
 
-export const getProducts = async (filters: ProductFilters): Promise<ProductPaginatedResponse | null> => {
+export const getProducts = async (filters: ProductFilters = {}): Promise<ApiResponse<ProductPaginatedResponse> | null> => {
     try {
-        const res = await httpClient.get<ProductResponse>("/product", {
-            params: {
-                search: filters.search || undefined,
-                gender: filters.gender || undefined,
-                status: filters.status || undefined,
-                sort: filters.sort || undefined,
-                page: filters.page || 1,
-                limit: filters.limit || 5,
-                itemId: filters.itemId || undefined,
-                min: filters.min || undefined, 
-                max: filters.max || undefined,
-            }
+        const { data } = await httpClient.get<ApiResponse<ProductPaginatedResponse>>("/product", {
+            params: filters
         });
-
-        if (res.data && res.data.data) {
-            return res.data.data;
-        }
-
-        if (res.data && ('products' in res.data)) {
-            return res.data as unknown as ProductPaginatedResponse;
-        }
-
-        console.warn("Backend response structure mismatched:", res.data);
-        return null;
-
+        return data;
     } catch (error: any) {
-        console.error("Error fetching products:", error);
+        console.error("Error fetching products:", error?.response?.data?.message || error.message);
         return null;
+    }
+};
+
+export const getProductsList = async () => {
+    try {
+        const res = await httpClient.get<ApiResponse<Product[]>>("/product/lists");
+        return res.data;
+    } catch (error) {
+        console.error("Error fetching products List:", error);
+        throw error;
     }
 };
