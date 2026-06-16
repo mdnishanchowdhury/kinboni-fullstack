@@ -52,7 +52,17 @@ const getAllProducts = catchAsync(async (req: Request, res: Response) => {
         data: result
     });
 });
+const getAllProductList = catchAsync(async (req: Request, res: Response) => {
+    const products = await ProductService.getALlProductList();
+    sendResponse(res, {
+        httpStatusCode: 200,
+        success: true,
+        message: "All products fetched successfully!",
+        data: products
+    });
+});
 export const ProductController = {
     createProduct,
-    getAllProducts
+    getAllProducts,
+    getAllProductList
 }

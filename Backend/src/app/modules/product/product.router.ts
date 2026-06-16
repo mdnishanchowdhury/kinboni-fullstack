@@ -4,7 +4,9 @@ import { multerUpload } from '../../config/multer.config';
 
 const router = express.Router();
 
+router.get('/lists', ProductController.getAllProductList);
 router.get('/', ProductController.getAllProducts);
+
 
 router.post(
     '/',
@@ -14,5 +16,7 @@ router.post(
     ]),
     ProductController.createProduct
 );
+
+
 
 export const ProductRouter = router;

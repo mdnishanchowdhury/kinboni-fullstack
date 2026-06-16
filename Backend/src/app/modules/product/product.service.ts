@@ -140,11 +140,12 @@ const getAllProducts = async (filters: {
             count: product.ratingCount || 0,
             reviews: []
         },
-        timer: product.isFlashSale ? {
-            isFlashSale: true,
-            expiresAt: product.flashExpiresAt,
-            timerLabel: product.timerLabel,
-        } : undefined,
+        timer: {
+            isFlashSale: !!product.isFlashSale,
+            expiresAt: product.flashExpiresAt || null,
+            timerLabel: product.timerLabel || "Flash Sale",
+            flashDiscount: product.flashDiscount || 0
+        },
         variants: product.variants.map((v: any) => ({
             id: v.id,
             name: v.name,
@@ -164,9 +165,25 @@ const getAllProducts = async (filters: {
     };
 };
 
+const getALlProductList = async (): Promise<Product[]> => {
+    const products = await prisma.product.findMany({
+        include: { images: true, variants: true }
+    });
 
+    return products.map((p: any) => ({
+        ...p,
+        brand: { name: p.brandName || "Unknown", origin: p.brandOrigin || "Imported" },
+        category: { main: p.categoryMain || "", sub: p.categorySub || "", item: p.categoryItem || "" },
+        pricing: { currentPrice: p.currentPrice, oldPrice: p.oldPrice, discountPercent: p.discountPercent },
+        media: { thumbnail: p.thumbnail, images: p.images || [] },
+        inventory: { stock: p.stock, sold: p.sold || 0 },
+        ratings: { average: p.ratingAvg || 0, count: p.ratingCount || 0, reviews: [] },
+        timer: { isFlashSale: !!p.isFlashSale, expiresAt: p.flashExpiresAt, timerLabel: p.timerLabel || "Flash Sale" }
+    })) as unknown as Product[];
+};
 
 export const ProductService = {
     createProduct,
-    getAllProducts
+    getAllProducts,
+    getALlProductList
 };
