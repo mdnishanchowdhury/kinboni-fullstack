@@ -52,6 +52,7 @@ const getAllProducts = catchAsync(async (req: Request, res: Response) => {
         data: result
     });
 });
+
 const getAllProductList = catchAsync(async (req: Request, res: Response) => {
     const products = await ProductService.getALlProductList();
     sendResponse(res, {
@@ -61,8 +62,21 @@ const getAllProductList = catchAsync(async (req: Request, res: Response) => {
         data: products
     });
 });
+
+const getProductById = catchAsync(async (req: Request, res: Response) => {
+    const { id } = req.params;
+    const product = await ProductService.getProductById(id as string);
+    sendResponse(res, {
+        httpStatusCode: 200,
+        success: true,
+        message: "Product fetched successfully!",
+        data: product
+    });
+});
+
 export const ProductController = {
     createProduct,
     getAllProducts,
-    getAllProductList
+    getAllProductList,
+    getProductById
 }

@@ -182,8 +182,47 @@ const getALlProductList = async (): Promise<Product[]> => {
     })) as unknown as Product[];
 };
 
+const getProductById = async (id: string) => {
+    const product = await prisma.product.findUnique({
+        where: { id },
+        include: {
+            images: true,
+            variants: true
+        }
+    });
+
+    if (!product) return null;
+
+    return {
+        ...product,
+        brand: {
+            name: product.brandName,
+            origin: product.brandOrigin
+        },
+        pricing: {
+            currentPrice: product.currentPrice,
+            oldPrice: product.oldPrice,
+            discountPercent: product.discountPercent
+        },
+        media: {
+            thumbnail: product.thumbnail,
+            images: product.images
+        },
+        inventory: {
+            stock: product.stock,
+            sold: product.sold
+        },
+        timer: {
+            isFlashSale: product.isFlashSale,
+            expiresAt: product.flashExpiresAt,
+            timerLabel: product.timerLabel
+        }
+    };
+};
+
 export const ProductService = {
     createProduct,
     getAllProducts,
-    getALlProductList
+    getALlProductList,
+    getProductById
 };
