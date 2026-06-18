@@ -57,11 +57,13 @@ const ProductListContainer = ({ title, allItems, itemsPerPage = 3 }: ProductList
             <div className="flex flex-col gap-4 min-h-[400px]">
                 <AnimatePresence mode="wait">
                     <motion.div key={startIndex} initial="hidden" animate="visible" exit="exit" variants={{ visible: { transition: { staggerChildren: 0.1 } } }} className="flex flex-col gap-4">
-                        {visibleItems.map((item) => (
+                        {
+                        visibleItems.map((item) => (
                             <motion.div key={item.id} variants={itemVariants} layout transition={{ duration: 0.3 }}>
                                 <DiscountProductCard product={item} />
                             </motion.div>
-                        ))}
+                        ))
+                        }
                     </motion.div>
                 </AnimatePresence>
                 {allItems.length === 0 && <p className="text-center text-slate-400 py-10 text-sm">No products found</p>}

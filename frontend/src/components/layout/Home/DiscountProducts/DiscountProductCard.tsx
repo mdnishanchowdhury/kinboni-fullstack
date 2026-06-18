@@ -1,10 +1,9 @@
 "use client";
 
-import React, { useMemo } from 'react';
-import { Clock, ShoppingCart } from 'lucide-react';
+import React from 'react';
+import { ShoppingCart } from 'lucide-react';
 import Image from 'next/image';
 import { Product } from '../../../../types/product.types';
-import { useCountdown } from '../../../../hooks/useCountdown';
 import { Badge } from '../../../ui/badge';
 import { Button } from '../../../ui/button';
 import { cn } from '../../../../lib/utils';
@@ -20,17 +19,6 @@ const DiscountProductCard = ({ product }: DiscountProductCardProps) => {
     const currentPrice = flashDiscount > 0
         ? Math.round(oldPrice - (oldPrice * flashDiscount / 100))
         : product.pricing.currentPrice;
-
-    const targetTime = useMemo(
-        () => (product.timer?.expiresAt ? new Date(product.timer.expiresAt).getTime() : 0),
-        [product.timer?.expiresAt]
-    );
-
-    const timeLeft = useCountdown(targetTime);
-    const isExpired = useMemo(() => {
-        if (!product.timer?.expiresAt) return false;
-        return timeLeft.days === 0 && timeLeft.hours === 0 && timeLeft.minutes === 0 && timeLeft.seconds === 0;
-    }, [timeLeft, product.timer?.expiresAt]);
 
     const isOutOfStock = product.inventory.stock === 0;
 
@@ -63,12 +51,6 @@ const DiscountProductCard = ({ product }: DiscountProductCardProps) => {
                                 {product.timer.timerLabel}
                             </Badge>
                         )}
-                        <div className="flex items-center gap-1 text-[10px] font-mono font-bold">
-                            <Clock size={12} className={isExpired ? "text-gray-400" : "text-[#C6002C]"} />
-                            <span className={isExpired ? "text-gray-400" : "text-slate-500"}>
-                                {isExpired ? "Expired" : `${timeLeft.days}d:${timeLeft.hours}h:${timeLeft.minutes}m`}
-                            </span>
-                        </div>
                     </div>
 
                     <h3 className="text-sm font-bold text-slate-800 line-clamp-1">{product.name}</h3>
@@ -80,7 +62,12 @@ const DiscountProductCard = ({ product }: DiscountProductCardProps) => {
                             <span className="text-lg font-black text-[#007b70]">${currentPrice}</span>
                             <span className="text-xs text-gray-400 line-through font-medium">${oldPrice}</span>
                         </div>
-                        <Button size="icon" onClick={handleOrder} disabled={isOutOfStock || isExpired} className={cn("h-8 w-8 rounded-xl", isOutOfStock || isExpired ? "bg-gray-200" : "bg-green-500")}>
+                        <Button 
+                            size="icon" 
+                            onClick={handleOrder} 
+                            disabled={isOutOfStock} 
+                            className={cn("h-8 w-8 rounded-xl", isOutOfStock ? "bg-gray-200" : "bg-green-500")}
+                        >
                             <ShoppingCart size={14} />
                         </Button>
                     </div>

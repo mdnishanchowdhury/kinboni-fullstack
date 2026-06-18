@@ -25,11 +25,13 @@ export default function PriceStock({
                 <span className="text-[11px] lg:text-sm text-gray-400 line-through group-hover:text-gray-300 transition-colors">
                     ${pricing.oldPrice}
                 </span>
-                {pricing.discountPercent && (
-                    <Badge className="bg-red-500 hover:bg-red-600 text-white border-none text-[9px] px-2 py-0">
-                        {pricing.discountPercent}% OFF
-                    </Badge>
-                )}
+                {
+                    pricing.discountPercent > 0 && (
+                        <Badge className="bg-red-500 hover:bg-red-600 text-white border-none text-[9px] px-2 py-0">
+                            {pricing.discountPercent}% OFF
+                        </Badge>
+                    )
+                }
             </div>
 
             {/* Stock Section */}

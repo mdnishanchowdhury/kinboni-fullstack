@@ -43,3 +43,13 @@ export const getProductsList = async () => {
         throw error;
     }
 };
+
+export const getProductById = async (id: string): Promise<ApiResponse<Product> | null> => {
+    try {
+        const { data } = await httpClient.get<ApiResponse<Product>>(`/product/${id}`);
+        return data;
+    } catch (error: any) {
+        console.error("Error fetching product by ID:", error);
+        throw error;
+    }
+};
