@@ -1,8 +1,8 @@
 model Variant {
-    id        String   @id @default(uuid())
-    name      String
-    hex       String?
-    sizes     String[]
-    productId String
-    product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  id        String    @id @default(uuid())
+  name      String
+  hex       String?
+  sizes     String[]
+  productId String
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
 }

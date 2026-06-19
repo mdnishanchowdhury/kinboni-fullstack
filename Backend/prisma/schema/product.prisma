@@ -1,38 +1,40 @@
 model Product {
-    id          String @id @default(uuid())
-    name        String
-    slug        String @unique
-    description String
-    gender      String
+  id              String          @id @default(uuid())
+  name            String
+  slug            String          @unique
+  description     String
+  gender          String
 
-    brandName   String
-    brandOrigin String
+  brandName       String
+  brandOrigin     String
 
-    itemId String
-    item   Item   @relation(fields: [itemId], references: [id])
+  itemId          String
+  item            Item           @relation(fields: [itemId], references: [id])
 
-    currentPrice    Float
-    oldPrice        Float?
-    discountPercent Int?
+  currentPrice    Float
+  oldPrice        Float?
+  discountPercent Int?
 
-    thumbnail String
-    images    ProductImage[]
+  thumbnail       String
+  images          ProductImage[]
 
-    stock Int @default(0)
-    sold  Int @default(0)
+  stock           Int             @default(0)
+  sold            Int             @default(0)
 
-    aiStylistInfo Json?
+  aiStylistInfo   Json?
 
-    isFlashSale    Boolean   @default(false)
-    flashStartAt   DateTime?
-    flashExpiresAt DateTime?
-    flashDiscount  Float?
+  isFlashSale     Boolean         @default(false)
+  flashStartAt    DateTime?
+  flashExpiresAt  DateTime?
+  flashDiscount   Float?
 
-    timerLabel String?
+  timerLabel      String?
 
-    variants Variant[]
-    reviews  Review[]
+  variants        Variant[]
+  reviews         Review[]
 
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
+  orderItems      OrderItem[]
+
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
 }
