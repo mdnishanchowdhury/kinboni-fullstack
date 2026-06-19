@@ -4,11 +4,11 @@ import { useParams, useRouter } from "next/navigation";
 import { useProductsById } from "@/hooks/useProductsById";
 import { useState } from "react";
 import { Loader2, ArrowLeft } from "lucide-react";
-import AIChat from "@/components/modules/Ai-Style-Panel/AIChat";
-import ProductGallery from "@/components/modules/Ai-Style-Panel/ProductGallery";
-import ProductActions from "@/components/modules/Ai-Style-Panel/ProductActions";
-import ProductInfoChips from "@/components/modules/Ai-Style-Panel/ProductInfoChips";
-import ProductHeader from "@/components/modules/Ai-Style-Panel/ProductHeader";
+import AIChat from "@/components/modules/ProductDetails/AIChat";
+import ProductGallery from "@/components/modules/ProductDetails/ProductGallery";
+import ProductActions from "@/components/modules/ProductDetails/ProductActions";
+import ProductInfoChips from "@/components/modules/ProductDetails/ProductInfoChips";
+import ProductHeader from "@/components/modules/ProductDetails/ProductHeader";
 import ReviewSection from "@/components/modules/ProductReviews/ReviewSection";
 
 export default function ProductPage() {

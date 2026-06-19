@@ -53,3 +53,17 @@ export const getProductById = async (id: string): Promise<ApiResponse<Product> |
         throw error;
     }
 };
+
+
+export const productOrder = async (orderData: any) => {
+    try {
+        const result = await httpClient.post("/order", orderData);
+        return {
+            success: true,
+            data: result.data
+        };
+    } catch (error: any) {
+        console.error("Order API Error:", error.response?.data || error.message);
+        throw error;
+    }
+};
