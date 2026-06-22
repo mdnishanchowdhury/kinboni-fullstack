@@ -49,7 +49,7 @@ export default function ProductPage() {
                     className="flex items-center gap-2 text-sm text-gray-600 hover:text-indigo-600 transition mb-6 font-medium"
                 >
                     <ArrowLeft size={18} />
-                    Back to shopping
+                    Back
                 </button>
 
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">

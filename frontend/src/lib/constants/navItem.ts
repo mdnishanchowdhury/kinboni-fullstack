@@ -74,12 +74,12 @@ export const adminNavItems: NavSection[] = [
             {
                 title: "Products",
                 href: "/admin/dashboard/products",
-               icon: "PlusCircle"
+                icon: "PlusCircle"
             },
             {
-                title: "User Reports",
-                href: "/admin/dashboard/reports",
-                icon: "FileText"
+                title: "Orders",
+                href: "/admin/dashboard/orders",
+                icon: "ListOrdered"
             },
         ]
     }

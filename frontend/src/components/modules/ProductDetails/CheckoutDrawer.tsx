@@ -49,7 +49,7 @@ export default function CheckoutDrawer({ isOpen, onClose, orderData }: any) {
     }
 
     const finalOrderData = {
-      userId: "efpK2xfFpIfpMoMguEgfgSBpALbtgG4m",
+      userId: orderData.userId,
       totalAmount: orderData.totalAmount,
       provider: orderData.provider,
       items: orderData.items.map((item: any) => ({
