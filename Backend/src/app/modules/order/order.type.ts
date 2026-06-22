@@ -22,3 +22,10 @@ interface IOrderPayload {
   provider: string;
   items: IOrderItem[];
 }
+
+interface IOrderQueryParams {
+  status?: string;
+  searchTerm?: string;
+  page?: string | number;
+  limit?: string | number;
+}

@@ -1,17 +1,19 @@
 model Order {
-  id          String       @id @default(uuid())
-  userId      String
+  id String @id @default(uuid())
 
-  addressId   String
-  address     Address     @relation(fields: [addressId], references: [id])
+  userId String
+  user   User   @relation(fields: [userId], references: [id])
+
+  addressId String
+  address   Address @relation(fields: [addressId], references: [id])
 
   totalAmount Float
-  status      OrderStatus  @default(PENDING)
+  status      OrderStatus @default(PENDING)
 
-  payment     Payment?
-  orderItems  OrderItem[]
+  payment    Payment?
+  orderItems OrderItem[]
 
-  createdAt   DateTime     @default(now())
+  createdAt DateTime @default(now())
 
   @@index([userId])
 }

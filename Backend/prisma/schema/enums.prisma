@@ -21,6 +21,7 @@ enum UserStatus {
 
 enum OrderStatus {
   PENDING
+  ACCEPTED
   PROCESSING
   SHIPPED
   DELIVERED

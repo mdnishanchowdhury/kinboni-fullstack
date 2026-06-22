@@ -15,6 +15,36 @@ const createOrder = async (req: Request, res: Response) => {
     });
 };
 
+
+const getAllOrders = async (req: Request, res: Response) => {
+    const filters = req.query;
+
+    const data = await OrderService.getAllOrders(filters);
+
+    sendResponse(res, {
+        httpStatusCode: 200,
+        success: true,
+        message: "Order details retrieved successfully!",
+        data: data
+    });
+};
+
+const updateOrderStatus = async (req: Request, res: Response) => {
+    const { orderId } = req.params;
+    const { status } = req.body;
+
+    const updatedOrder = await OrderService.updateOrderStatus(orderId as string, status);
+
+    sendResponse(res, {
+        httpStatusCode: 200,
+        success: true,
+        message: "Order status updated successfully!",
+        data: updatedOrder
+    });
+};
+
 export const OrderController = {
-    createOrder
+    createOrder,
+    getAllOrders,
+    updateOrderStatus
 }
